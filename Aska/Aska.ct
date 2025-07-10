@@ -1,0 +1,585 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="45">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>326</ID>
+      <Description>"high jump"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : Aska.exe
+  Version: 
+  Date   : 2024-06-22
+  Author : SERGEJ
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(high_jump,UnityPlayer.dll,89 81 60 01 00 00 8B 42) // should be unique
+alloc(newmem,$1000,high_jump)
+alloc(addition,4)
+label(code)
+label(return)
+
+addition:
+dd (float)1.01
+
+newmem:
+
+code:
+  mov [rcx+00000160],eax
+  movss xmm2,[rcx+00000160]
+  mulss xmm2,[addition]
+  movss [rcx+00000160],xmm2
+  jmp return
+
+high_jump:
+  jmp newmem
+  nop
+return:
+registersymbol(high_jump)
+
+[DISABLE]
+
+high_jump:
+  db 89 81 60 01 00 00
+
+unregistersymbol(high_jump)
+dealloc(newmem)
+dealloc(addition)
+
+{
+// ORIGINAL CODE - INJECTION POINT: UnityPlayer.dll+1440169
+
+UnityPlayer.dll+1440145: 48 89 6C 24 10        - mov [rsp+10],rbp
+UnityPlayer.dll+144014A: 48 89 74 24 18        - mov [rsp+18],rsi
+UnityPlayer.dll+144014F: 57                    - push rdi
+UnityPlayer.dll+1440150: 48 83 EC 20           - sub rsp,20
+UnityPlayer.dll+1440154: 8B 02                 - mov eax,[rdx]
+UnityPlayer.dll+1440156: 41 0F B6 E8           - movzx ebp,r8b
+UnityPlayer.dll+144015A: 89 81 5C 01 00 00     - mov [rcx+0000015C],eax
+UnityPlayer.dll+1440160: 48 8B FA              - mov rdi,rdx
+UnityPlayer.dll+1440163: 8B 42 04              - mov eax,[rdx+04]
+UnityPlayer.dll+1440166: 48 8B F1              - mov rsi,rcx
+// ---------- INJECTING HERE ----------
+UnityPlayer.dll+1440169: 89 81 60 01 00 00     - mov [rcx+00000160],eax
+// ---------- DONE INJECTING  ----------
+UnityPlayer.dll+144016F: 8B 42 08              - mov eax,[rdx+08]
+UnityPlayer.dll+1440172: 89 81 64 01 00 00     - mov [rcx+00000164],eax
+UnityPlayer.dll+1440178: 8B 41 68              - mov eax,[rcx+68]
+UnityPlayer.dll+144017B: C1 E8 1E              - shr eax,1E
+UnityPlayer.dll+144017E: 83 F8 03              - cmp eax,03
+UnityPlayer.dll+1440181: 74 1D                 - je UnityPlayer.dll+14401A0
+UnityPlayer.dll+1440183: 83 F8 02              - cmp eax,02
+UnityPlayer.dll+1440186: 75 0D                 - jne UnityPlayer.dll+1440195
+UnityPlayer.dll+1440188: 48 8B 41 60           - mov rax,[rcx+60]
+UnityPlayer.dll+144018C: 80 B8 09 1E 00 00 00  - cmp byte ptr [rax+00001E09],00
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>333</ID>
+      <Description>"infinite health"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : Aska.exe
+  Version: 
+  Date   : 2024-06-22
+  Author : SERGEJ
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(infinite_health,GameAssembly.dll,F3 0F 11 73 28 48 85 C0) // should be unique
+alloc(newmem,$1000,infinite_health)
+globalalloc(_health,4)
+label(code)
+label(hero_code)
+label(return)
+
+newmem:
+  cmp [rbx+44],(float)160 // compare with max health
+  je hero_code
+
+code:
+  movss [rbx+28],xmm6
+  jmp return
+
+hero_code:
+  mov [rbx+28],(float)160 // current health
+  push rax
+  mov rax,_health
+  mov [rax],rcx
+  pop rax
+  jmp return
+
+infinite_health:
+  jmp newmem
+return:
+registersymbol(infinite_health)
+
+[DISABLE]
+
+infinite_health:
+  db F3 0F 11 73 28
+
+unregistersymbol(infinite_health)
+dealloc(newmem)
+dealloc(_health)
+
+{
+// ORIGINAL CODE - INJECTION POINT: GameAssembly.dll+28C428A
+
+GameAssembly.dll+28C4267: 48 8B 43 30     - mov rax,[rbx+30]
+GameAssembly.dll+28C426B: 48 85 C0        - test rax,rax
+GameAssembly.dll+28C426E: 74 4B           - je GameAssembly.dll+28C42BB
+GameAssembly.dll+28C4270: 48 8B 50 28     - mov rdx,[rax+28]
+GameAssembly.dll+28C4274: 48 8B 48 40     - mov rcx,[rax+40]
+GameAssembly.dll+28C4278: 0F 28 74 24 20  - movaps xmm6,[rsp+20]
+GameAssembly.dll+28C427D: 48 83 C4 30     - add rsp,30
+GameAssembly.dll+28C4281: 5B              - pop rbx
+GameAssembly.dll+28C4282: 48 FF 60 18     - jmp qword ptr [rax+18]
+GameAssembly.dll+28C4286: 48 8B 43 18     - mov rax,[rbx+18]
+// ---------- INJECTING HERE ----------
+GameAssembly.dll+28C428A: F3 0F 11 73 28  - movss [rbx+28],xmm6
+// ---------- DONE INJECTING  ----------
+GameAssembly.dll+28C428F: 48 85 C0        - test rax,rax
+GameAssembly.dll+28C4292: 74 0B           - je GameAssembly.dll+28C429F
+GameAssembly.dll+28C4294: 48 8B 50 28     - mov rdx,[rax+28]
+GameAssembly.dll+28C4298: 48 8B 48 40     - mov rcx,[rax+40]
+GameAssembly.dll+28C429C: FF 50 18        - call qword ptr [rax+18]
+GameAssembly.dll+28C429F: 48 8B 43 20     - mov rax,[rbx+20]
+GameAssembly.dll+28C42A3: 48 85 C0        - test rax,rax
+GameAssembly.dll+28C42A6: 74 13           - je GameAssembly.dll+28C42BB
+GameAssembly.dll+28C42A8: 4C 8B 48 28     - mov r9,[rax+28]
+GameAssembly.dll+28C42AC: F3 0F 10 53 28  - movss xmm2,[rbx+28]
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>340</ID>
+      <Description>"cold"</Description>
+      <ShowAsSigned>0</ShowAsSigned>
+      <VariableType>Float</VariableType>
+      <Address>_health</Address>
+      <Offsets>
+        <Offset>-3c8</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>337</ID>
+      <Description>"water"</Description>
+      <ShowAsSigned>0</ShowAsSigned>
+      <VariableType>Float</VariableType>
+      <Address>_health</Address>
+      <Offsets>
+        <Offset>-278</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>338</ID>
+      <Description>"food"</Description>
+      <ShowAsSigned>0</ShowAsSigned>
+      <VariableType>Float</VariableType>
+      <Address>_health</Address>
+      <Offsets>
+        <Offset>-208</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>334</ID>
+      <Description>"health"</Description>
+      <ShowAsSigned>0</ShowAsSigned>
+      <VariableType>Float</VariableType>
+      <Address>_health</Address>
+      <Offsets>
+        <Offset>28</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>344</ID>
+      <Description>"stamina"</Description>
+      <ShowAsSigned>0</ShowAsSigned>
+      <VariableType>Float</VariableType>
+      <Address>_health</Address>
+      <Offsets>
+        <Offset>108</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1179</ID>
+      <Description>"camera far"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : Aska.exe
+  Version: 
+  Date   : 2024-06-22
+  Author : SERGEJ
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(camera_distance,GameAssembly.dll,F3 0F 59 40 48 F3) // should be unique
+alloc(newmem,$1000,camera_distance)
+
+label(code)
+label(hero_code)
+label(return)
+
+newmem:
+  cmp [rax-00000178],(float)12
+  je hero_code
+
+code:
+  mulss xmm0,[rax+48]
+  jmp return
+
+hero_code:
+  mulss xmm0,[rax+48]
+  mov [rax+48],(float)15 // by default=7.0
+  jmp return
+
+camera_distance:
+  jmp newmem
+return:
+registersymbol(camera_distance)
+
+[DISABLE]
+
+camera_distance:
+  db F3 0F 59 40 48
+
+unregistersymbol(camera_distance)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: GameAssembly.dll+7DDD52
+
+GameAssembly.dll+7DDD26: 45 33 C0              - xor r8d,r8d
+GameAssembly.dll+7DDD29: 48 8D 54 24 40        - lea rdx,[rsp+40]
+GameAssembly.dll+7DDD2E: E8 9D 2C 26 00        - call CameraConfig.UpdateZoomLevel
+GameAssembly.dll+7DDD33: 48 8B 47 30           - mov rax,[rdi+30]
+GameAssembly.dll+7DDD37: 48 85 C0              - test rax,rax
+GameAssembly.dll+7DDD3A: 0F 84 E3 03 00 00     - je GameAssembly.dll+7DE123
+GameAssembly.dll+7DDD40: 48 8B 4F 18           - mov rcx,[rdi+18]
+GameAssembly.dll+7DDD44: 48 85 C9              - test rcx,rcx
+GameAssembly.dll+7DDD47: 0F 84 D6 03 00 00     - je GameAssembly.dll+7DE123
+GameAssembly.dll+7DDD4D: F3 0F 10 40 20        - movss xmm0,[rax+20]
+// ---------- INJECTING HERE ----------
+GameAssembly.dll+7DDD52: F3 0F 59 40 48        - mulss xmm0,[rax+48]
+// ---------- DONE INJECTING  ----------
+GameAssembly.dll+7DDD57: F3 0F 11 41 48        - movss [rcx+48],xmm0
+GameAssembly.dll+7DDD5C: 48 8B 86 10 01 00 00  - mov rax,[rsi+00000110]
+GameAssembly.dll+7DDD63: FF C3                 - inc ebx
+GameAssembly.dll+7DDD65: 8B CB                 - mov ecx,ebx
+GameAssembly.dll+7DDD67: 48 85 C0              - test rax,rax
+GameAssembly.dll+7DDD6A: 0F 84 B3 03 00 00     - je GameAssembly.dll+7DE123
+GameAssembly.dll+7DDD70: E9 6B FF FF FF        - jmp GameAssembly.dll+7DDCE0
+GameAssembly.dll+7DDD75: 48 8B 0D 54 C9 F5 03  - mov rcx,[GameAssembly.dll+473A6D0]
+GameAssembly.dll+7DDD7C: 83 B9 E0 00 00 00 00  - cmp dword ptr [rcx+000000E0],00
+GameAssembly.dll+7DDD83: 75 05                 - jne GameAssembly.dll+7DDD8A
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1180</ID>
+      <Description>"camera near (firstperson)"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : Aska.exe
+  Version: 
+  Date   : 2024-06-22
+  Author : SERGEJ
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(camera_distance,GameAssembly.dll,F3 0F 59 40 48 F3) // should be unique
+alloc(newmem,$1000,camera_distance)
+
+label(code)
+label(hero_code)
+label(return)
+
+newmem:
+  cmp [rax-00000178],(float)12
+  je hero_code
+
+code:
+  mulss xmm0,[rax+48]
+  jmp return
+
+hero_code:
+  mulss xmm0,[rax+48]
+  mov [rax+48],(float)0 // by default=7.0
+  jmp return
+
+camera_distance:
+  jmp newmem
+return:
+registersymbol(camera_distance)
+
+[DISABLE]
+
+camera_distance:
+  db F3 0F 59 40 48
+
+unregistersymbol(camera_distance)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: GameAssembly.dll+7DDD52
+
+GameAssembly.dll+7DDD26: 45 33 C0              - xor r8d,r8d
+GameAssembly.dll+7DDD29: 48 8D 54 24 40        - lea rdx,[rsp+40]
+GameAssembly.dll+7DDD2E: E8 9D 2C 26 00        - call CameraConfig.UpdateZoomLevel
+GameAssembly.dll+7DDD33: 48 8B 47 30           - mov rax,[rdi+30]
+GameAssembly.dll+7DDD37: 48 85 C0              - test rax,rax
+GameAssembly.dll+7DDD3A: 0F 84 E3 03 00 00     - je GameAssembly.dll+7DE123
+GameAssembly.dll+7DDD40: 48 8B 4F 18           - mov rcx,[rdi+18]
+GameAssembly.dll+7DDD44: 48 85 C9              - test rcx,rcx
+GameAssembly.dll+7DDD47: 0F 84 D6 03 00 00     - je GameAssembly.dll+7DE123
+GameAssembly.dll+7DDD4D: F3 0F 10 40 20        - movss xmm0,[rax+20]
+// ---------- INJECTING HERE ----------
+GameAssembly.dll+7DDD52: F3 0F 59 40 48        - mulss xmm0,[rax+48]
+// ---------- DONE INJECTING  ----------
+GameAssembly.dll+7DDD57: F3 0F 11 41 48        - movss [rcx+48],xmm0
+GameAssembly.dll+7DDD5C: 48 8B 86 10 01 00 00  - mov rax,[rsi+00000110]
+GameAssembly.dll+7DDD63: FF C3                 - inc ebx
+GameAssembly.dll+7DDD65: 8B CB                 - mov ecx,ebx
+GameAssembly.dll+7DDD67: 48 85 C0              - test rax,rax
+GameAssembly.dll+7DDD6A: 0F 84 B3 03 00 00     - je GameAssembly.dll+7DE123
+GameAssembly.dll+7DDD70: E9 6B FF FF FF        - jmp GameAssembly.dll+7DDCE0
+GameAssembly.dll+7DDD75: 48 8B 0D 54 C9 F5 03  - mov rcx,[GameAssembly.dll+473A6D0]
+GameAssembly.dll+7DDD7C: 83 B9 E0 00 00 00 00  - cmp dword ptr [rcx+000000E0],00
+GameAssembly.dll+7DDD83: 75 05                 - jne GameAssembly.dll+7DDD8A
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1272</ID>
+      <Description>"fov"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : Aska.exe
+  Version: 
+  Date   : 2024-06-22
+  Author : SERGEJ
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(fov,UnityPlayer.dll,F3 0F 11 B7 80 01 00 00) // should be unique
+alloc(newmem,$1000,fov)
+
+label(code)
+label(return)
+
+newmem:
+
+code:
+  mov [rdi+00000180],(float)60 // by default=45
+  jmp return
+
+fov:
+  jmp newmem
+  nop 3
+return:
+registersymbol(fov)
+
+[DISABLE]
+
+fov:
+  db F3 0F 11 B7 80 01 00 00
+
+unregistersymbol(fov)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: UnityPlayer.dll+3D6FED
+
+UnityPlayer.dll+3D6FC6: 48 8B D7                    - mov rdx,rdi
+UnityPlayer.dll+3D6FC9: E8 C2 65 1D 00              - call UnityPlayer.dll+5AD590
+UnityPlayer.dll+3D6FCE: 8B 47 0C                    - mov eax,[rdi+0C]
+UnityPlayer.dll+3D6FD1: C1 E8 15                    - shr eax,15
+UnityPlayer.dll+3D6FD4: 2B 05 F6 02 7F 01           - sub eax,[UnityPlayer.dll+1BC72D0]
+UnityPlayer.dll+3D6FDA: 3B 05 F4 02 7F 01           - cmp eax,[UnityPlayer.dll+1BC72D4]
+UnityPlayer.dll+3D6FE0: 73 0B                       - jae UnityPlayer.dll+3D6FED
+UnityPlayer.dll+3D6FE2: 0F B6 D3                    - movzx edx,bl
+UnityPlayer.dll+3D6FE5: 48 8B CF                    - mov rcx,rdi
+UnityPlayer.dll+3D6FE8: E8 83 97 1D 00              - call UnityPlayer.dll+5B0770
+// ---------- INJECTING HERE ----------
+UnityPlayer.dll+3D6FED: F3 0F 11 B7 80 01 00 00     - movss [rdi+00000180],xmm6
+// ---------- DONE INJECTING  ----------
+UnityPlayer.dll+3D6FF5: 83 BF 14 05 00 00 02        - cmp dword ptr [rdi+00000514],02
+UnityPlayer.dll+3D6FFC: 66 C7 87 10 05 00 00 01 01  - mov word ptr [rdi+00000510],0101
+UnityPlayer.dll+3D7005: 75 3B                       - jne UnityPlayer.dll+3D7042
+UnityPlayer.dll+3D7007: F3 0F 10 87 80 01 00 00     - movss xmm0,[rdi+00000180]
+UnityPlayer.dll+3D700F: F3 0F 59 05 11 F5 69 01     - mulss xmm0,[UnityPlayer.dll+1A76528]
+UnityPlayer.dll+3D7017: F3 0F 10 77 6C              - movss xmm6,[rdi+6C]
+UnityPlayer.dll+3D701C: F3 0F 59 35 30 F6 69 01     - mulss xmm6,[UnityPlayer.dll+1A76654]
+UnityPlayer.dll+3D7024: F3 0F 59 05 28 F6 69 01     - mulss xmm0,[UnityPlayer.dll+1A76654]
+UnityPlayer.dll+3D702C: E8 5F 7E 41 01              - call UnityPlayer.dll+17EEE90
+UnityPlayer.dll+3D7031: F3 0F 5E F0                 - divss xmm6,xmm0
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1184</ID>
+      <Description>"MovementStats (need jump)"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : Aska.exe
+  Version: 
+  Date   : 2024-06-22
+  Author : SERGEJ
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(MovementStats,GameAssembly.dll,F3 0F 10 51 2C 45 33 C9 8B) // should be unique
+alloc(newmem,$1000,MovementStats)
+globalalloc(_MovementStats,4)
+label(code)
+label(return)
+
+newmem:
+  push rax
+  mov rax,_MovementStats
+  mov [rax],rcx
+  pop rax
+
+code:
+  movss xmm2,[rcx+2C]
+  jmp return
+
+MovementStats:
+  jmp newmem
+return:
+registersymbol(MovementStats)
+
+[DISABLE]
+
+MovementStats:
+  db F3 0F 10 51 2C
+
+unregistersymbol(MovementStats)
+dealloc(newmem)
+dealloc(_MovementStats)
+
+{
+// ORIGINAL CODE - INJECTION POINT: GameAssembly.dll+BC8882
+
+GameAssembly.dll+BC8853: 0F 84 1A 02 00 00     - je GameAssembly.dll+BC8A73
+GameAssembly.dll+BC8859: 45 33 C0              - xor r8d,r8d
+GameAssembly.dll+BC885C: 48 8D 4C 24 30        - lea rcx,[rsp+30]
+GameAssembly.dll+BC8861: 48 8B D7              - mov rdx,rdi
+GameAssembly.dll+BC8864: E8 87 B8 AB 02        - call UnityEngine.Rigidbody.get_velocity
+GameAssembly.dll+BC8869: 48 8B 8B 88 00 00 00  - mov rcx,[rbx+00000088]
+GameAssembly.dll+BC8870: 48 85 C9              - test rcx,rcx
+GameAssembly.dll+BC8873: 0F 84 FA 01 00 00     - je GameAssembly.dll+BC8A73
+GameAssembly.dll+BC8879: F2 0F 10 00           - movsd xmm0,[rax]
+GameAssembly.dll+BC887D: 48 8D 54 24 20        - lea rdx,[rsp+20]
+// ---------- INJECTING HERE ----------
+GameAssembly.dll+BC8882: F3 0F 10 51 2C        - movss xmm2,[rcx+2C]
+// ---------- DONE INJECTING  ----------
+GameAssembly.dll+BC8887: 45 33 C9              - xor r9d,r9d
+GameAssembly.dll+BC888A: 8B 40 08              - mov eax,[rax+08]
+GameAssembly.dll+BC888D: 48 8D 4C 24 30        - lea rcx,[rsp+30]
+GameAssembly.dll+BC8892: F2 0F 11 44 24 20     - movsd [rsp+20],xmm0
+GameAssembly.dll+BC8898: 89 44 24 28           - mov [rsp+28],eax
+GameAssembly.dll+BC889C: E8 6F 0E CC 01        - call Extensions.WithY
+GameAssembly.dll+BC88A1: 45 33 C0              - xor r8d,r8d
+GameAssembly.dll+BC88A4: 48 8D 54 24 20        - lea rdx,[rsp+20]
+GameAssembly.dll+BC88A9: 48 8B CF              - mov rcx,rdi
+GameAssembly.dll+BC88AC: F2 0F 10 00           - movsd xmm0,[rax]
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1185</ID>
+      <Description>"speed"</Description>
+      <ShowAsSigned>0</ShowAsSigned>
+      <VariableType>Float</VariableType>
+      <Address>_MovementStats</Address>
+      <Offsets>
+        <Offset>18</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1186</ID>
+      <Description>"gravity"</Description>
+      <ShowAsSigned>0</ShowAsSigned>
+      <VariableType>Float</VariableType>
+      <Address>_MovementStats</Address>
+      <Offsets>
+        <Offset>28</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1187</ID>
+      <Description>"jumpForce"</Description>
+      <ShowAsSigned>0</ShowAsSigned>
+      <VariableType>Float</VariableType>
+      <Address>_MovementStats</Address>
+      <Offsets>
+        <Offset>2c</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1188</ID>
+      <Description>"maxFallVelocity"</Description>
+      <ShowAsSigned>0</ShowAsSigned>
+      <VariableType>Float</VariableType>
+      <Address>_MovementStats</Address>
+      <Offsets>
+        <Offset>44</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1189</ID>
+      <Description>"minSlideAgle"</Description>
+      <ShowAsSigned>0</ShowAsSigned>
+      <VariableType>Float</VariableType>
+      <Address>_MovementStats</Address>
+      <Offsets>
+        <Offset>48</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1190</ID>
+      <Description>"minFallAngle"</Description>
+      <ShowAsSigned>0</ShowAsSigned>
+      <VariableType>Float</VariableType>
+      <Address>_MovementStats</Address>
+      <Offsets>
+        <Offset>4c</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1191</ID>
+      <Description>"slideSpeed"</Description>
+      <ShowAsSigned>0</ShowAsSigned>
+      <VariableType>Float</VariableType>
+      <Address>_MovementStats</Address>
+      <Offsets>
+        <Offset>58</Offset>
+      </Offsets>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols>
+    <SymbolEntry>
+      <Name>_health</Name>
+      <Address>1BE17F20000</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>_MovementStats</Name>
+      <Address>29413590000</Address>
+    </SymbolEntry>
+  </UserdefinedSymbols>
+</CheatTable>
