@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="46">
+  <CheatEntries>
+    <CheatEntry NoCheckbox="1">
+      <ID>57</ID>
+      <Description>"======================================"</Description>
+      <GroupHeader>1</GroupHeader>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>0</ID>
+      <Description>"                   [F2] Vista Compacta / Vista completa"</Description>
+      <Color>0080FF</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+
+LuaCall(function cycleFullCompact(sender,force) local state = not(compactmenuitem.Caption == 'Vista Compacta'); if force~=nil then state = not force end; compactmenuitem.Caption = state and 'Vista Compacta' or 'Vista completa'; getMainForm().Splitter1.Visible = state; getMainForm().Panel4.Visible    = state; getMainForm().Panel5.Visible    = state; end; function addCompactMenu() if compactmenualreadyexists then return end; local parent = getMainForm().Menu.Items; compactmenuitem = createMenuItem(parent); parent.add(compactmenuitem); compactmenuitem.Caption = 'Vista Compacta'; compactmenuitem.OnClick = cycleFullCompact; compactmenualreadyexists = 'yes'; end; addCompactMenu(); cycleFullCompact(nil,true))
+
+[DISABLE]
+
+LuaCall(cycleFullCompact(nil,false))
+
+</AssemblerScript>
+      <Hotkeys>
+        <Hotkey>
+          <Action>Toggle Activation</Action>
+          <Keys>
+            <Key>113</Key>
+          </Keys>
+          <ID>0</ID>
+        </Hotkey>
+      </Hotkeys>
+    </CheatEntry>
+    <CheatEntry NoCheckbox="1">
+      <ID>104990</ID>
+      <Description>"======================================"</Description>
+      <GroupHeader>1</GroupHeader>
+    </CheatEntry>
+    <CheatEntry NoCheckbox="1">
+      <ID>10</ID>
+      <Description>"                                       -  GAME NAME  -"</Description>
+      <Color>008000</Color>
+      <GroupHeader>1</GroupHeader>
+    </CheatEntry>
+    <CheatEntry NoCheckbox="1">
+      <ID>11</ID>
+      <Description>"                                     Steam Early Access"</Description>
+      <GroupHeader>1</GroupHeader>
+    </CheatEntry>
+    <CheatEntry NoCheckbox="1">
+      <ID>104989</ID>
+      <Description>"======================================"</Description>
+      <GroupHeader>1</GroupHeader>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>104783</ID>
+      <Description>"      [ Activar ] - { Haga clic Para Activar } - [Version Game]"</Description>
+      <Color>0000FF</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : Game.exe
+  Version: *.*.*
+  Date   : AAAA-MM-DD
+  Author : *** , HaRrY
+
+}
+
+[ENABLE]
+
+{$lua}
+OpenProcess("Game.exe")
+mono_initialize()
+if (LaunchMonoDataCollector())==0
+then error ('Falla en el lanzamiento')
+end
+
+{$asm}
+
+[DISABLE]
+
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry NoCheckbox="1">
+      <ID>104797</ID>
+      <Description>"                                        Agregar Scripts"</Description>
+      <Options moHideChildren="1"/>
+      <Color>FF0000</Color>
+      <GroupHeader>1</GroupHeader>
+    </CheatEntry>
+    <CheatEntry NoCheckbox="1">
+      <ID>104991</ID>
+      <Description>"======================================"</Description>
+      <GroupHeader>1</GroupHeader>
+    </CheatEntry>
+  </CheatEntries>
+</CheatTable>

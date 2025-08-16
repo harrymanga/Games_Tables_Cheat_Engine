@@ -1,0 +1,684 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="42">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>104290</ID>
+      <Description>"[ Activate ] - {Click here to add process automatically} - [ v1.0.20970 ]"</Description>
+      <Options moHideChildren="0"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+
+{$lua}
+OpenProcess("Floodland.exe")
+if (LaunchMonoDataCollector())==0
+then error ('Failure To Launch')
+end
+
+if getCEVersion() &lt; 7.4 then showMessage("If you are getting this message means your Cheat Engine software is outdated. Please update to the latest Cheat Engine version! Latest official public release version can be found at https://cheatengine.org/\nYour Cheat Engine Version : "..getCEVersion().."\nLatest Public Cheat Engine Version : 7.4") --[[MainForm.close()]]
+return end
+
+{$asm}
+
+luacall(function cycleFullCompact(sender,force); local state = not(compactmenuitem.Caption == 'Compact View Mode'); if force~=nil then state = not force end; compactmenuitem.Caption = state and 'Compact View Mode' or 'Full view Mode'; getMainForm().Splitter1.Visible = state; getMainForm().Panel4.Visible = state; getMainForm().Panel5.Visible = state; end; function addCompactMenu(); if compactmenualreadyexists then return end; local parent = getMainForm().Menu.Items; compactmenuitem = createMenuItem(parent); parent.add(compactmenuitem); compactmenuitem.Caption = 'Compact View Mode'; compactmenuitem.OnClick = cycleFullCompact; compactmenualreadyexists = 'yes'; end; addCompactMenu(); cycleFullCompact(nil,true))
+
+[DISABLE]
+
+luacall(cycleFullCompact(nil,false))
+
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>104291</ID>
+          <Description>"+++ SCRIPT +++ "</Description>
+          <Options moHideChildren="1"/>
+          <Color>FF0000</Color>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>105312</ID>
+              <Description>"Recursos Ilimitados - [ Need Collect Resources Effect To Point Reseach ]"</Description>
+              <Color>0080FF</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{ Game   : Floodland.exe
+  Version: 
+  Date   : 2022-11-15
+  Author : BabyGroot
+
+}
+
+[ENABLE]
+
+aobscanregion(pData_uResources,PC.PCIntValue:set_Value,PC.PCIntValue:set_Value+64,89 87 A0 00 00 00 48 8B 8F 98) // should be unique
+alloc(newmem,$1000,pData_uResources)
+
+label(code)
+label(return)
+
+newmem:
+  mov eax, #9999999
+
+code:
+  mov [rdi+000000A0],eax
+  jmp return
+
+pData_uResources:
+  jmp newmem
+  nop
+return:
+registersymbol(pData_uResources)
+
+[DISABLE]
+
+pData_uResources:
+  db 89 87 A0 00 00 00
+
+unregistersymbol(pData_uResources)
+dealloc(newmem)
+
+
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>105325</ID>
+              <Description>"Instant Build"</Description>
+              <Color>0080FF</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{ Game   : Floodland.exe
+  Version:
+  Date   : 2022-11-15
+  Author : BabyGroot
+
+}
+
+//define(address,PC.PCProductionCycle:UpdateProductionCycleProgress+157)
+//define(bytes,0F 87 86 00 00 00)
+
+[ENABLE]
+PC.PCProductionCycle:UpdateProductionCycleProgress+157:
+db 90 90 90 90 90 90
+
+
+[DISABLE]
+PC.PCProductionCycle:UpdateProductionCycleProgress+157:
+db 0F 87 86 00 00 00
+
+
+
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>105295</ID>
+              <Description>"Camera Data"</Description>
+              <Color>FF0000</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{ Game   : Floodland.exe
+  Version:
+  Date   : 2022-11-15
+  Author : BabyGroot
+
+}
+
+[ENABLE]
+
+aobscanregion(pBase_Camera,PC.WorldView.RTS_Camera:Update,PC.WorldView.RTS_Camera:Update+b4,0F B6 86 C8 00 00 00 85 C0 75 32) // should be unique
+alloc(newmem,$1000,pBase_Camera)
+
+alloc(mygg_Camera,8)
+registersymbol(mygg_Camera)
+
+label(code)
+label(return)
+
+mygg_Camera:
+dq
+
+newmem:
+
+code:
+  mov [mygg_Camera],rsi
+  movzx eax,byte ptr [rsi+000000C8]
+  jmp return
+
+pBase_Camera:
+  jmp newmem
+  nop 2
+return:
+registersymbol(pBase_Camera mygg_Camera)
+
+[DISABLE]
+
+pBase_Camera:
+  db 0F B6 86 C8 00 00 00
+
+unregistersymbol(*)
+dealloc(*)
+
+
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>105313</ID>
+              <Description>"Edit Resources"</Description>
+              <Color>FF0000</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{ Game   : Floodland.exe
+  Version:
+  Date   : 2022-11-15
+  Author : BabyGroot
+
+}
+
+[ENABLE]
+
+aobscanregion(pData_uResources,PC.PCIntValue:set_Value,PC.PCIntValue:set_Value+64,89 87 A0 00 00 00 48 8B 8F 98) // should be unique
+alloc(newmem,$1000,pData_uResources)
+
+alloc(mygg_uResources,8)
+registersymbol(mygg_uResources)
+
+label(code)
+label(return)
+
+mygg_uResources:
+dq
+
+newmem:
+
+code:
+  mov [mygg_uResources],rdi
+  mov [rdi+000000A0],eax
+  jmp return
+
+pData_uResources:
+  jmp newmem
+  nop
+return:
+registersymbol(pData_uResources mygg_uResources)
+
+[DISABLE]
+
+pData_uResources:
+  db 89 87 A0 00 00 00
+
+unregistersymbol(*)
+dealloc(*)
+
+
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>105319</ID>
+              <Description>"Time Data"</Description>
+              <Color>FF0000</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{ Game   : Floodland.exe
+  Version:
+  Date   : 2022-11-15
+  Author : BabyGroot
+
+}
+
+[ENABLE]
+
+aobscanregion(pBase_TimeData,PC.PCTimeManager:get_CurrentTick,PC.PCTimeManager:get_CurrentTick+4a,48 8B 8E 98 00 00 00 33 D2 48 8D 64 24 00 90 49 BB ?0) // should be unique
+alloc(newmem,$1000,pBase_TimeData)
+
+alloc(mygg_TimeData,8)
+registersymbol(mygg_TimeData)
+
+label(code)
+label(return)
+
+mygg_TimeData:
+dq
+
+newmem:
+
+code:
+  mov [mygg_TimeData],rsi
+  mov rcx,[rsi+00000098]
+  jmp return
+
+pBase_TimeData:
+  jmp newmem
+  nop 2
+return:
+registersymbol(pBase_TimeData mygg_TimeData)
+
+[DISABLE]
+
+pBase_TimeData:
+  db 48 8B 8E 98 00 00 00
+
+unregistersymbol(*)
+dealloc(*)
+
+
+</AssemblerScript>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>104292</ID>
+          <Description>"+++ POINTER +++"</Description>
+          <Options moHideChildren="1"/>
+          <Color>FF8000</Color>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>105297</ID>
+              <Description>"Camera Data"</Description>
+              <Options moHideChildren="1" moManualExpandCollapse="1"/>
+              <Color>FF8000</Color>
+              <GroupHeader>1</GroupHeader>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>105296</ID>
+                  <Description>"pBase - [ Color Silver Don't Chance ]"</Description>
+                  <ShowAsHex>1</ShowAsHex>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>C0C0C0</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>[mygg_Camera]</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>105298</ID>
+                  <Description>"Min Zoom Keyboard Movement Speed"</Description>
+                  <Color>0000FF</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[mygg_Camera]+DC</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>105299</ID>
+                  <Description>"Max Zoom Keyboard Movement Speed"</Description>
+                  <Color>0000FF</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[mygg_Camera]+E0</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>105300</ID>
+                  <Description>"Min Screen Edge Movement Speed"</Description>
+                  <Color>0000FF</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[mygg_Camera]+EC</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>105301</ID>
+                  <Description>"Max Screen Edge Movement Speed"</Description>
+                  <Color>0000FF</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[mygg_Camera]+F0</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>105302</ID>
+                  <Description>"Following Speed"</Description>
+                  <Color>0000FF</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[mygg_Camera]+FC</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>105303</ID>
+                  <Description>"Min Zoom Panning Speed"</Description>
+                  <Color>0000FF</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[mygg_Camera]+104</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>105304</ID>
+                  <Description>"Max Zoom Panning Speed"</Description>
+                  <Color>0000FF</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[mygg_Camera]+108</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>105305</ID>
+                  <Description>"Mouse Rotation Speed"</Description>
+                  <Color>0000FF</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[mygg_Camera]+10C</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>105306</ID>
+                  <Description>"Keyboard Rotation Speed"</Description>
+                  <Color>0000FF</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[mygg_Camera]+114</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>105307</ID>
+                  <Description>"Max Zoom"</Description>
+                  <Color>0000FF</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[mygg_Camera]+15C</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>105308</ID>
+                  <Description>"Min Zoom"</Description>
+                  <Color>0000FF</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[mygg_Camera]+160</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>105309</ID>
+                  <Description>"Default Min Zoom"</Description>
+                  <Color>0000FF</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[mygg_Camera]+164</Address>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>105314</ID>
+              <Description>"Edit Resources - [ Active, Need Collect Resources - Effect To Point Reseach ]"</Description>
+              <Options moHideChildren="1" moManualExpandCollapse="1"/>
+              <Color>FF8000</Color>
+              <GroupHeader>1</GroupHeader>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>105311</ID>
+                  <Description>"pBase - [ Color Silver Don't Chance ]"</Description>
+                  <ShowAsHex>1</ShowAsHex>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>C0C0C0</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>[mygg_uResources]</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>105316</ID>
+                  <Description>"Name Resources"</Description>
+                  <Color>4080FF</Color>
+                  <VariableType>String</VariableType>
+                  <Length>128</Length>
+                  <Unicode>1</Unicode>
+                  <CodePage>0</CodePage>
+                  <ZeroTerminate>1</ZeroTerminate>
+                  <Address>[mygg_uResources]+58</Address>
+                  <Offsets>
+                    <Offset>14</Offset>
+                    <Offset>68</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>105317</ID>
+                  <Description>"Max Resources"</Description>
+                  <Color>0000FF</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>[mygg_uResources]+58</Address>
+                  <Offsets>
+                    <Offset>144</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>105315</ID>
+                  <Description>"Current Resources"</Description>
+                  <Color>0000FF</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>[mygg_uResources]+A0</Address>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>105320</ID>
+              <Description>"Time Data"</Description>
+              <Options moHideChildren="1" moManualExpandCollapse="1"/>
+              <Color>FF8000</Color>
+              <GroupHeader>1</GroupHeader>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>105318</ID>
+                  <Description>"pBase - [ Color Silver Don't Chance ]"</Description>
+                  <ShowAsHex>1</ShowAsHex>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>C0C0C0</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>[mygg_TimeData]</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>105324</ID>
+                  <Description>"Active?"</Description>
+                  <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">0:No/Off/Disabled
+1:Yes/On/Enabled
+</DropDownList>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>808000</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>[mygg_TimeData]+98</Address>
+                  <Offsets>
+                    <Offset>12C</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>105321</ID>
+                  <Description>"Telemetry Current Day"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>0000FF</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>[mygg_TimeData]+98</Address>
+                  <Offsets>
+                    <Offset>13C</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>105322</ID>
+                  <Description>"Ticks Per Half Cycle"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>0000FF</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>[mygg_TimeData]+98</Address>
+                  <Offsets>
+                    <Offset>140</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>105323</ID>
+                  <Description>"Current Tick"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>0000FF</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>[mygg_TimeData]+98</Address>
+                  <Offsets>
+                    <Offset>124</Offset>
+                  </Offsets>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>105274</ID>
+      <Description>"============================"</Description>
+      <GroupHeader>1</GroupHeader>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>104596</ID>
+      <Description>"[&lt;--CHECKBOX] NOTES"</Description>
+      <Options moHideChildren="1" moManualExpandCollapse="1"/>
+      <Color>0080FF</Color>
+      <GroupHeader>1</GroupHeader>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>105326</ID>
+          <Description>"Select One [ Unlimited Rsources ] Or [ Edit Resources ]"</Description>
+          <Color>0000FF</Color>
+          <GroupHeader>1</GroupHeader>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>104603</ID>
+          <Description>"====================="</Description>
+          <GroupHeader>1</GroupHeader>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>104601</ID>
+          <Description>"[&lt;--CHECKBOX] If You Like This Table, Don't Forget To Give A Thumbs Up On This Link"</Description>
+          <Options moHideChildren="1"/>
+          <Color>0080FF</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>{$LUA}
+if syntaxcheck then return end
+[ENABLE]
+ShellExecute('https://fearlessrevolution.com/viewtopic.php?p=275563#p275563')
+{$asm}
+nop
+[DISABLE]
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>104602</ID>
+              <Description>"https://www.cheatengine.org/"</Description>
+              <Color>008000</Color>
+              <GroupHeader>1</GroupHeader>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>105327</ID>
+          <Description>"====================="</Description>
+          <GroupHeader>1</GroupHeader>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>105268</ID>
+          <Description>"[&lt;--CHECKBOX] Check build Id / Date Patches Game"</Description>
+          <Options moHideChildren="1"/>
+          <Color>0080FF</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>{$LUA}
+if syntaxcheck then return end
+[ENABLE]
+ShellExecute('https://steamdb.info/app/1336180/patchnotes/')
+{$asm}
+nop
+[DISABLE]
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>105269</ID>
+              <Description>"https://www.cheatengine.org/"</Description>
+              <Color>008000</Color>
+              <GroupHeader>1</GroupHeader>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>105270</ID>
+          <Description>"====================="</Description>
+          <GroupHeader>1</GroupHeader>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>105271</ID>
+          <Description>"[&lt;--CHECKBOX] Link Game"</Description>
+          <Options moHideChildren="1"/>
+          <Color>0080FF</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>{$LUA}
+if syntaxcheck then return end
+[ENABLE]
+ShellExecute('https://store.steampowered.com/app/1336180/Floodland/')
+{$asm}
+nop
+[DISABLE]
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>105272</ID>
+              <Description>"https://www.cheatengine.org/"</Description>
+              <Color>008000</Color>
+              <GroupHeader>1</GroupHeader>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>105273</ID>
+          <Description>"====================="</Description>
+          <GroupHeader>1</GroupHeader>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>104151</ID>
+          <Description>"[&lt;--CHECKBOX] Download Cheat Engine"</Description>
+          <Options moHideChildren="1"/>
+          <Color>0080FF</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>{$LUA}
+if syntaxcheck then return end
+[ENABLE]
+ShellExecute('https://www.cheatengine.org/')
+{$asm}
+nop
+[DISABLE]
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>104154</ID>
+              <Description>"https://www.cheatengine.org/"</Description>
+              <Color>008000</Color>
+              <GroupHeader>1</GroupHeader>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>105275</ID>
+          <Description>"====================="</Description>
+          <GroupHeader>1</GroupHeader>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>105294</ID>
+          <Description>"Build ID : 9976400"</Description>
+          <Color>0000FF</Color>
+          <GroupHeader>1</GroupHeader>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <CheatCodes>
+    <CodeEntry>
+      <Description>Change of ja PC.PCProductionCycle:UpdateProductionCycleProgress+1e3</Description>
+      <AddressString>19EAFA78E97</AddressString>
+      <Before>
+        <Byte>8A</Byte>
+        <Byte>8C</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Before>
+      <Actual>
+        <Byte>0F</Byte>
+        <Byte>87</Byte>
+        <Byte>86</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>48</Byte>
+        <Byte>8B</Byte>
+        <Byte>CE</Byte>
+        <Byte>48</Byte>
+        <Byte>8D</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry>
+      <Description>Change of inc ecx</Description>
+      <AddressString>19EAFA06D92</AddressString>
+      <Before>
+        <Byte>89</Byte>
+        <Byte>24</Byte>
+        <Byte>01</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Before>
+      <Actual>
+        <Byte>FF</Byte>
+        <Byte>C1</Byte>
+      </Actual>
+      <After>
+        <Byte>89</Byte>
+        <Byte>88</Byte>
+        <Byte>24</Byte>
+        <Byte>01</Byte>
+        <Byte>00</Byte>
+      </After>
+    </CodeEntry>
+  </CheatCodes>
+  <UserdefinedSymbols/>
+</CheatTable>
