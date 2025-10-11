@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="45">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>50</ID>
+      <Description>"Instant Crafting"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+
+aobscanmodule(craftingg,Factorio.exe,66 0F 2F C2 76 07 32) // should be unique
+
+craftingg:
+db 66 0F 2F C0
+//comisd xmm0,xmm0
+registersymbol(craftingg)
+
+[DISABLE]
+
+craftingg:
+  db 66 0F 2F C2 76 07
+
+unregistersymbol(craftingg)
+
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>
