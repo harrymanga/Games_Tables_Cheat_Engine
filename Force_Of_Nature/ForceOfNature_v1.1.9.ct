@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="42">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>370</ID>
+      <Description>"Inf. Health"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>
+
+[ENABLE]
+
+aobscanmodule(HealthBase,GameAssembly.dll,4C 89 44 24 18 F3 0F 11 4C 24 10 48 89 4C 24 08 57 48 83 EC 40 F3 0F 10 44 24 58 F3 0F 11 44 24 20 48 8B 4C 24 50 E8 45 4F AA FE F3 0F 11 44 24)
+registersymbol(HealthBase)
+
+alloc(bytesHealthBase,48)
+registersymbol(bytesHealthBase)
+
+bytesHealthBase:
+  readmem(HealthBase,48)
+
+HealthBase:
+  db 4C 89 44 24 18 F3 0F 11 4C 24 10 48 89 4C 24 08 C3 48 83 EC 40 F3 0F 10 44 24 58 F3 0F 11 44 24 20 48 8B 4C 24 50 E8 45 4F AA FE F3 0F 11 44 24
+
+[DISABLE]
+
+HealthBase:
+  readmem(bytesHealthBase,48)
+
+unregistersymbol(HealthBase)
+unregistersymbol(bytesHealthBase)
+dealloc(bytesHealthBase)
+
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>369</ID>
+      <Description>"Inf. Stamina"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>
+[ENABLE]
+
+aobscanmodule(StaminaBase,GameAssembly.dll,4C 89 44 24 18 F3 0F 11 4C 24 10 48 89 4C 24 08 57 48 83 EC 40 F3 0F 10 44 24 58 F3 0F 11 44 24 20 48 8B 4C 24 50 E8 75 51 AA FE F3 0F 11 44 24)
+registersymbol(StaminaBase)
+
+alloc(bytesStaminaBase,48)
+registersymbol(bytesStaminaBase)
+
+bytesStaminaBase:
+  readmem(StaminaBase,48)
+
+StaminaBase:
+  db 4C 89 44 24 18 F3 0F 11 4C 24 10 48 89 4C 24 08 C3 48 83 EC 40 F3 0F 10 44 24 58 F3 0F 11 44 24 20 48 8B 4C 24 50 E8 75 51 AA FE F3 0F 11 44 24
+
+[DISABLE]
+
+StaminaBase:
+  readmem(bytesStaminaBase,48)
+
+unregistersymbol(StaminaBase)
+unregistersymbol(bytesStaminaBase)
+dealloc(bytesStaminaBase)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>368</ID>
+      <Description>"Inst. Craft"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>
+
+[ENABLE]
+
+aobscanmodule(InstCraft,GameAssembly.dll,7D 05 E9 F5 FE FF FF F3 0F 10 44 24 30 F3 0F 11 84 24 A0 00 00 00 F3 0F 10 84 24 A0 00 00 00)
+registersymbol(InstCraft)
+
+alloc(bytesItemCraft,31)
+registersymbol(bytesItemCraft)
+
+bytesItemCraft:
+  readmem(InstCraft,31)
+
+InstCraft:
+  db EB 05 E9 F5 FE FF FF F3 0F 10 04 24 90 F3 0F 11 84 24 A0 00 00 00 F3 0F 10 84 24 A0 00 00 00
+
+[DISABLE]
+
+InstCraft:
+  readmem(bytesItemCraft,31)
+
+unregistersymbol(InstCraft)
+unregistersymbol(bytesItemCraft)
+dealloc(bytesItemCraft)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>367</ID>
+      <Description>"Stronger Weapons"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>
+[ENABLE]
+
+aobscanmodule(StrWeapons,GameAssembly.dll,F3 0F 10 05 20 0E 10 01 F3 0F 11 44 24 20 33 C9 E8 EB FD 30 FF 48 89 44)
+registersymbol(StrWeapons)
+
+alloc(bytesStrWeapons,24)
+registersymbol(bytesStrWeapons)
+
+bytesStrWeapons:
+  readmem(StrWeapons,24)
+
+StrWeapons:
+  db F3 0F 10 05 70 0E 10 01 F3 0F 11 44 24 20 33 C9 E8 EB FD 30 FF 48 89 44
+
+[DISABLE]
+
+StrWeapons:
+  readmem(bytesStrWeapons,24)
+
+unregistersymbol(StrWeapons)
+unregistersymbol(bytesStrWeapons)
+dealloc(bytesStrWeapons)
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

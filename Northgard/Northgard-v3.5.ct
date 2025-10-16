@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="45">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>1</ID>
+      <Description>"Food"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : Northgard.exe
+  Version: 
+  Date   : 2020-04-19
+  Author : YOM
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscan(INJECT,F2 49 0F 11 52 48 F2 49) // should be unique
+alloc(newmem,$1000,76CAA0432AD5)
+
+label(code)
+label(return)
+label(myvar)
+
+newmem:
+
+code:
+  movsd xmm2,[myvar]
+  movsd [r10+48],xmm2
+  jmp return
+
+myvar:
+  dq (double)9999
+
+INJECT:
+  jmp newmem
+  nop
+return:
+registersymbol(INJECT)
+
+[DISABLE]
+
+INJECT:
+  db F2 49 0F 11 52 48
+
+unregistersymbol(INJECT)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: 76CA9F7BE245
+
+76CA9F7BE21A: 4C 8B 45 10                    -  mov r8,[rbp+10]
+76CA9F7BE21E: 45 8B 48 28                    -  mov r9d,[r8+28]
+76CA9F7BE222: 44 89 4D FC                    -  mov [rbp-04],r9d
+76CA9F7BE226: 41 BA 01 00 00 00              -  mov r10d,00000001
+76CA9F7BE22C: 44 89 55 F8                    -  mov [rbp-08],r10d
+76CA9F7BE230: 45 0B CA                       -  or r9d,r10d
+76CA9F7BE233: 44 89 4D FC                    -  mov [rbp-04],r9d
+76CA9F7BE237: 45 89 48 28                    -  mov [r8+28],r9d
+76CA9F7BE23B: 4C 8B 5D 10                    -  mov r11,[rbp+10]
+76CA9F7BE23F: F2 48 0F 10 6D 18              -  movsd xmm5,[rbp+18]
+// ---------- INJECTING HERE ----------
+76CA9F7BE245: F2 49 0F 11 6B 48              -  movsd [r11+48],xmm5
+// ---------- DONE INJECTING  ----------
+76CA9F7BE24B: F2 49 0F 10 43 48              -  movsd xmm0,[r11+48]
+76CA9F7BE251: F2 48 0F 11 45 F0              -  movsd [rbp-10],xmm0
+76CA9F7BE257: 48 B8 60 3D 5E 52 FA 7F 00 00  -  mov rax,libhl.dll+23D60
+76CA9F7BE261: 48 83 EC 20                    -  sub rsp,20
+76CA9F7BE265: FF D0                          -  call rax
+76CA9F7BE267: 48 89 6C 24 F8                 -  mov [rsp-08],rbp
+76CA9F7BE26C: 48 83 C4 20                    -  add rsp,20
+76CA9F7BE270: 89 45 FC                       -  mov [rbp-04],eax
+76CA9F7BE273: BA 57 AB E3 0F                 -  mov edx,0FE3AB57
+76CA9F7BE278: 89 55 F8                       -  mov [rbp-08],edx
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>3</ID>
+      <Description>"Wood"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : Northgard.exe
+  Version: 
+  Date   : 2020-04-19
+  Author : YOM
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscan(Wood,F2 49 0F 11 52 58 F2) // should be unique
+alloc(newmem,$1000,76CAA0432F58)
+
+label(code)
+label(return)
+label(myvar)
+
+newmem:
+
+code:
+  movsd xmm2,[myvar]
+  movsd [r10+58],xmm2
+  jmp return
+
+myvar:
+  dq (double)9999
+
+Wood:
+  jmp newmem
+  nop
+return:
+registersymbol(Wood)
+
+[DISABLE]
+
+Wood:
+  db F2 49 0F 11 52 58
+
+unregistersymbol(Wood)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: 76CA9F7BE9A8
+
+76CA9F7BE97D: 4C 8B 45 10                    -  mov r8,[rbp+10]
+76CA9F7BE981: 45 8B 48 28                    -  mov r9d,[r8+28]
+76CA9F7BE985: 44 89 4D FC                    -  mov [rbp-04],r9d
+76CA9F7BE989: 41 BA 04 00 00 00              -  mov r10d,00000004
+76CA9F7BE98F: 44 89 55 F8                    -  mov [rbp-08],r10d
+76CA9F7BE993: 45 0B CA                       -  or r9d,r10d
+76CA9F7BE996: 44 89 4D FC                    -  mov [rbp-04],r9d
+76CA9F7BE99A: 45 89 48 28                    -  mov [r8+28],r9d
+76CA9F7BE99E: 4C 8B 5D 10                    -  mov r11,[rbp+10]
+76CA9F7BE9A2: F2 48 0F 10 6D 18              -  movsd xmm5,[rbp+18]
+// ---------- INJECTING HERE ----------
+76CA9F7BE9A8: F2 49 0F 11 6B 58              -  movsd [r11+58],xmm5
+// ---------- DONE INJECTING  ----------
+76CA9F7BE9AE: F2 49 0F 10 43 58              -  movsd xmm0,[r11+58]
+76CA9F7BE9B4: F2 48 0F 11 45 F0              -  movsd [rbp-10],xmm0
+76CA9F7BE9BA: 48 B8 60 3D 5E 52 FA 7F 00 00  -  mov rax,libhl.dll+23D60
+76CA9F7BE9C4: 48 83 EC 20                    -  sub rsp,20
+76CA9F7BE9C8: FF D0                          -  call rax
+76CA9F7BE9CA: 48 89 6C 24 F8                 -  mov [rsp-08],rbp
+76CA9F7BE9CF: 48 83 C4 20                    -  add rsp,20
+76CA9F7BE9D3: 89 45 FC                       -  mov [rbp-04],eax
+76CA9F7BE9D6: BA 57 AB E3 0F                 -  mov edx,0FE3AB57
+76CA9F7BE9DB: 89 55 F8                       -  mov [rbp-08],edx
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>6</ID>
+      <Description>"Kröwns"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : Northgard.exe
+  Version: 
+  Date   : 2020-04-19
+  Author : YOM
+
+  This script does blah blah blah
+}
+
+define(address,76CAA0432D18)
+define(bytes,F2 49 0F11 52 50)
+
+[ENABLE]
+
+assert(address,bytes)
+alloc(newmem,$1000,76CA9F7BE5F8)
+
+label(code)
+label(return)
+label(myvar)
+
+newmem:
+
+code:
+  movsd xmm2,[myvar]
+  movsd [r10+50],xmm2
+  jmp return
+
+myvar:
+  dq (double)9999
+address:
+  jmp newmem
+  nop
+return:
+
+[DISABLE]
+
+address:
+  db bytes
+  // movsd [r11+50],xmm5
+
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: 76CA9F7BE5F8
+
+76CA9F7BE5CD: 4C 8B 45 10                    -  mov r8,[rbp+10]
+76CA9F7BE5D1: 45 8B 48 28                    -  mov r9d,[r8+28]
+76CA9F7BE5D5: 44 89 4D FC                    -  mov [rbp-04],r9d
+76CA9F7BE5D9: 41 BA 02 00 00 00              -  mov r10d,00000002
+76CA9F7BE5DF: 44 89 55 F8                    -  mov [rbp-08],r10d
+76CA9F7BE5E3: 45 0B CA                       -  or r9d,r10d
+76CA9F7BE5E6: 44 89 4D FC                    -  mov [rbp-04],r9d
+76CA9F7BE5EA: 45 89 48 28                    -  mov [r8+28],r9d
+76CA9F7BE5EE: 4C 8B 5D 10                    -  mov r11,[rbp+10]
+76CA9F7BE5F2: F2 48 0F 10 6D 18              -  movsd xmm5,[rbp+18]
+// ---------- INJECTING HERE ----------
+76CA9F7BE5F8: F2 49 0F 11 6B 50              -  movsd [r11+50],xmm5
+// ---------- DONE INJECTING  ----------
+76CA9F7BE5FE: F2 49 0F 10 43 50              -  movsd xmm0,[r11+50]
+76CA9F7BE604: F2 48 0F 11 45 F0              -  movsd [rbp-10],xmm0
+76CA9F7BE60A: 48 B8 60 3D 5E 52 FA 7F 00 00  -  mov rax,libhl.dll+23D60
+76CA9F7BE614: 48 83 EC 20                    -  sub rsp,20
+76CA9F7BE618: FF D0                          -  call rax
+76CA9F7BE61A: 48 89 6C 24 F8                 -  mov [rsp-08],rbp
+76CA9F7BE61F: 48 83 C4 20                    -  add rsp,20
+76CA9F7BE623: 89 45 FC                       -  mov [rbp-04],eax
+76CA9F7BE626: BA 57 AB E3 0F                 -  mov edx,0FE3AB57
+76CA9F7BE62B: 89 55 F8                       -  mov [rbp-08],edx
+}
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="45">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>0</ID>
+      <Description>"Force of Nature 2։ Ghost Keeper"</Description>
+      <Color>6B6B6B</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+{$lua}
+OpenProcess("ForceOfNature.exe")
+{$asm}
+[DISABLE]
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>32</ID>
+          <Description>"Hero"</Description>
+          <Color>800080</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+aobscanmodule(_o_,GameAssembly.dll,F3 0F 10 80 A4 00 00 00)
+alloc(_oo_,8)
+alloc(_oOo_,8)
+alloc(newmem,$77,_o_)
+registersymbol(_o_ _oo_ _oOo_)
+label(return)
+_oo_:
+  readmem(_o_,8)
+newmem:
+  mov [_oOo_],rcx
+  readmem(_o_,8)
+  jmp return
+_o_:
+  jmp newmem
+  nop 3
+return:
+[DISABLE]
+dealloc(*)
+unregistersymbol(*)
+_o_:
+  readmem(_oo_,8)
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>101</ID>
+              <Description>"Exp"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <Color>408000</Color>
+              <VariableType>Double</VariableType>
+              <Address>_oOo_</Address>
+              <Offsets>
+                <Offset>e0</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>11</ID>
+              <Description>"Health"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <Color>0000FF</Color>
+              <VariableType>Float</VariableType>
+              <Address>_oOo_</Address>
+              <Offsets>
+                <Offset>9c</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>202</ID>
+              <Description>"Health Max"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <Color>8080FF</Color>
+              <VariableType>Float</VariableType>
+              <Address>_oOo_</Address>
+              <Offsets>
+                <Offset>a0</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>223</ID>
+              <Description>"Level"</Description>
+              <ShowAsSigned>1</ShowAsSigned>
+              <Color>C08080</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>_oOo_</Address>
+              <Offsets>
+                <Offset>d0</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>190</ID>
+              <Description>"Stamina"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <Color>800000</Color>
+              <VariableType>Float</VariableType>
+              <Address>_oOo_</Address>
+              <Offsets>
+                <Offset>a4</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>12</ID>
+              <Description>"Stamina Max"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <Color>FF8000</Color>
+              <VariableType>Float</VariableType>
+              <Address>_oOo_</Address>
+              <Offsets>
+                <Offset>a8</Offset>
+              </Offsets>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>
