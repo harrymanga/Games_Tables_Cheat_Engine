@@ -1,0 +1,3157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="46">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>17604</ID>
+      <Description>"Stone Shard Beta 0.9.2.2"</Description>
+      <Options moHideChildren="1" moDeactivateChildrenAsWell="1"/>
+      <Color>808000</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{======================
+Author   : aanpsx
+Date     : 2025-01-15
+Game     : StoneShard.exe
+Version  : 0.9.1.15
+======================}
+  
+[ENABLE]
+{$lua}
+if syntaxcheck then return end
+-----------------------
+memrec.Description='Stone Shard Beta 0.9.2.2'
+memrec.Color=0x000000ff
+-------------- A.B.G.R
+OpenProcess("StoneShard.exe")
+--if (LaunchMonoDataCollector())==0 then error ('Failure To Launch Mono') end
+-----------------------
+--LaunchMonoDataCollector()
+--reinitializeDotNetSymbolhandler()
+-----------------------
+if(getCEVersion() &lt; 7.5) then
+   ShowMessage('Warning. CE version should be 7.5 or above')
+end
+-----------------------
+if(process == nil) then
+   ShowMessage('No process was selected')
+elseif (string.upper(process) ~= string.upper("StoneShard.exe")) then
+   ShowMessage('Warning. Expected Process = StoneShard.exe (v0.9.1.15)')
+end
+-----------------------
+{$asm}
+LuaCall(function PSX_Compact(sender,force) local state = not(compactmenuitem.Caption == 'Compact Mode'); if force~=nil then state = not force end; compactmenuitem.Caption = state and 'Compact Mode' or 'Full Mode'; getMainForm().Splitter1.Visible = state; getMainForm().Panel4.Visible    = state; getMainForm().Panel5.Visible    = state; end; function addCompactMenu() if compactmenualreadyexists then return end; local parent = getMainForm().Menu.Items; compactmenuitem = createMenuItem(parent); parent.add(compactmenuitem); compactmenuitem.Caption = 'Compact Mode'; compactmenuitem.OnClick = PSX_Compact; compactmenualreadyexists = 'yes'; end; addCompactMenu(); PSX_Compact(nil,true))
+
+[DISABLE]
+LuaCall(PSX_Compact(nil,false))
+{$lua}
+if syntaxcheck then return end
+-----------------------
+memrec.Description='Stone Shard Beta 0.9.2.2'
+memrec.Color=0x00808000
+-------------- A.B.G.R 
+{$asm}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>44290</ID>
+          <Description>"Enable [✓]"</Description>
+          <Options moHideChildren="1" moDeactivateChildrenAsWell="1"/>
+          <Color>FF0000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>{======================
+Author   : aanpsx
+Date     : 2025-02-01
+Game     : StoneShard.exe
+Version  : 0.9.1.18
+======================}
+
+//===== [_GetPlayer] ======
+define(inject_GetPlayer,StoneShard.exe+4EBA5D6)
+define(bytes_GetPlayer,db 0F 11 44 24 20)
+define(fmax,(float)999999999)
+define(fmin,(float)0)
+define(imax,#999999999)
+define(psx,align 10 CC)
+define(mov1,mov byte ptr)
+define(mov2,mov word ptr)
+define(mov4,mov dword ptr)
+define(mov8,mov qword ptr)
+define(cmp1,cmp byte ptr)
+define(cmp2,cmp word ptr)
+define(cmp4,cmp dword ptr)
+define(cmp8,cmp qword ptr)
+define(bit,byte ptr)
+define(4bit,dd 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)// 8c
+define(8bit,dq 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)// 118
+//===========================================================================================
+[ENABLE]
+{$lua}
+if syntaxcheck then return end
+-----------------------
+memrec.Description='Enable [✓]'
+memrec.Color=0x00ff0000
+-------------- A.B.G.R
+{$asm}
+//===== [_GetPlayer] ======
+aobscanmodule(PSX_GetPlayer,StoneShard.exe,0F 11 ** ** ** 66 ** ** ** ** 66 ** ** ** ** 48 C1 ** ** 81 ** ** ** ** ** 89 ** ** ** 8B ** ** 83 ** ** BE ** ** ** ** 8B ** D3 ** A8 ** 74 ** 48 8B ** E8 ** ** ** ** 89 ** ** 8B ** ** ** 89 ** ** 83 ** ** 8B ** D3 ** 40 F6 ** ** 74 ** 48 8D ** ** ** 48 8B ** E8 ** ** ** ** C6 ** ** ** EB ** 48 8B ** ** ** 48 89 ** C6 ** ** ** EB ** 33 ** 48 8D ** ** ** ** ** E8 ** ** ** ** 90 48 8B ** ** ** ** ** E8 ** ** ** ** 90 48 8B ** ** ** 48 8B ** ** ** 48 83 ** ** 5F C3 ** ** ** ** ** ** ** ** ** ** ** ** ** ** 48 89)//StoneShard.exe+1B8429
+alloc(Newmem_GetPlayer,$3000,PSX_GetPlayer)
+label(Code_GetPlayer,_GetPlayer)
+registersymbol(PSX_GetPlayer,Code_GetPlayer,_GetPlayer)
+Newmem_GetPlayer:
+  mov [_GetPlayer],rcx // Main pointer
+//==================== Registers
+  mov [_GetPlayer+8], rax
+  mov [_GetPlayer+10],rbx
+  mov [_GetPlayer+18],rcx
+  mov [_GetPlayer+20],rdx
+  mov [_GetPlayer+28],rdi
+  mov [_GetPlayer+30],rsi
+  mov [_GetPlayer+38], r8
+  mov [_GetPlayer+40], r9
+  mov [_GetPlayer+48],r10
+  mov [_GetPlayer+50],r11
+  mov [_GetPlayer+58],r12
+  mov [_GetPlayer+60],r13
+  mov [_GetPlayer+68],r14
+  mov [_GetPlayer+70],r15
+  mov [_GetPlayer+78],rbp
+  mov [_GetPlayer+80],rsp
+//==================== Inject here
+  push rbx
+  push rcx
+  push rdx
+  push rdi
+  push rsi
+//
+  mov rsi,rax
+  cmp4 [rsi+1C],0
+  jne Exit_GetPlayer
+//
+  mov rcx,[rsi]
+  test rcx,rcx
+  je Exit_GetPlayer
+//pengaman
+  mov ebx,xinput1_3.Ordinal93
+  cmp rcx,rbx
+  jb Exit_GetPlayer
+  mov rbx,00007FFFFFFFFFFF//-1
+  cmp rcx,rbx
+  ja Exit_GetPlayer
+  mov rdx,rcx
+  sub rdx,rsi
+  test rdx,rdx
+  jns @f
+  neg rdx
+@@:
+  mov rbx,0000007FFFFFFFFF
+  cmp rdx,rbx
+  ja Exit_GetPlayer
+//cek jumlah string
+  mov rdi,rcx//copi gawe cek jml string
+  //
+  movzx edx,word ptr [rcx+0C]
+  cmp edx,2//batas bawah
+  jl Exit_GetPlayer
+  cmp edx,#22//batas atas
+  jg Exit_GetPlayer
+
+  mov rcx,[rcx]
+  test rcx,rcx
+  je Exit_GetPlayer
+@@://max duration
+  cmp2 [rdi+c],#11
+  jne @f
+  cmp [rcx],'MaxDurat'//ion'
+  jne @f
+  cmp4 [rcx+7],'tion'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  comisd xmm0,[_GetPlayer+6d8]//check if 1
+  jl @f
+  comisd xmm0,[_GetPlayer+6c8]//check if &lt;1000
+  ja @f
+  cmp2 [rdi+c],#11
+  jne @f
+  mov [_GetPlayer+88],rsi
+  cmp1 [_GetPlayer+600],0//flag
+  je @f
+  cmp2 [rdi+c],#11
+  jne @f
+  comisd xmm0,[_GetPlayer+6e8]//set min dur
+  ja @f
+  mov rbx,[_GetPlayer+6e8]
+  mov [rsi+10],rbx
+  jmp Exit_GetPlayer
+  //
+@@:
+  cmp2 [rdi+c],#8
+  jne @f
+  cmp [rcx],'Duration'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  comisd xmm0,[_GetPlayer+6d8]//check if 1
+  jl @f
+  comisd xmm0,[_GetPlayer+6c8]//check if &lt;10000
+  ja @f
+  cmp2 [rdi+c],#8
+  jne @f
+  mov [_GetPlayer+90],rsi
+  cmp1 [_GetPlayer+600],0//flag
+  je @f
+  cmp2 [rdi+c],#8
+  jne @f
+  comisd xmm0,[_GetPlayer+6e8]//set min dur
+  ja @f
+  mov rbx,[_GetPlayer+6e8]
+  mov [rsi+10],rbx
+  jmp Exit_GetPlayer
+  //
+@@://Hunger
+  cmp2 [rdi+c],#6
+  jne @f
+  cmp4 [rcx],'Hung'
+  jne @f
+  cmp2 [rcx+4],'er'
+  jne @f
+  mov [_GetPlayer+98],rsi
+  cmp1 [_GetPlayer+601],0//flag
+  je @f
+  mov rbx,[_GetPlayer+6e0]//set 0
+  mov [rsi+10],rbx
+  jmp Exit_GetPlayer
+  //
+@@://Thirsty
+  cmp2 [rdi+c],#7
+  jne @f
+  cmp4 [rcx],'Thir'
+  jne @f
+  cmp4 [rcx+3],'rsty'
+  jne @f
+  mov [_GetPlayer+a0],rsi
+  cmp1 [_GetPlayer+602],0//flag
+  je @f
+  mov rbx,[_GetPlayer+6e0]//set 0
+  mov [rsi+10],rbx
+  jmp Exit_GetPlayer
+  //
+@@://Intoxication
+  cmp2 [rdi+c],#12
+  jne @f
+  cmp [rcx],'Intoxica'
+  jne @f
+  cmp4 [rcx+8],'tion'
+  jne @f
+  mov [_GetPlayer+a8],rsi
+  cmp1 [_GetPlayer+603],0//flag
+  je @f
+  mov rbx,[_GetPlayer+6e0]//set 0
+  mov [rsi+10],rbx
+  jmp Exit_GetPlayer
+  //
+@@:
+  cmp2 [rdi+c],#4
+  jne @f
+  cmp4 [rcx],'Pain'
+  jne @f
+  mov [_GetPlayer+b0],rsi
+  cmp1 [_GetPlayer+604],0//flag
+  je @f
+  mov rbx,[_GetPlayer+6e0]//set 0
+  mov [rsi+10],rbx
+  jmp Exit_GetPlayer
+  //
+@@://morale
+  cmp2 [rdi+c],#6
+  jne @f
+  cmp4 [rcx],'Mora'
+  jne @f
+  cmp2 [rcx+4],'le'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+b8],rsi
+  cmp1 [_GetPlayer+606],0//flag
+  je @f
+  comisd xmm0,[_GetPlayer+6d0]//set 100
+  ja @f
+  mov rbx,[_GetPlayer+6d0]
+  mov [rsi+10],rbx
+  jmp Exit_GetPlayer
+  //
+@@://sanity
+  cmp2 [rdi+c],#6
+  jne @f
+  cmp4 [rcx],'Sani'
+  jne @f
+  cmp2 [rcx+4],'ty'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+c0],rsi
+  cmp1 [_GetPlayer+607],0//flag
+  je @f
+  comisd xmm0,[_GetPlayer+6d0]//set 100
+  ja @f
+  mov rbx,[_GetPlayer+6d0]
+  mov [rsi+10],rbx
+  jmp Exit_GetPlayer
+  //
+@@://Immunity
+  cmp2 [rdi+c],#8
+  jne @f
+  cmp4 [rcx],'Immu'
+  jne @f
+  cmp [rcx+4],'nity'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+c8],rsi
+  cmp1 [_GetPlayer+608],0//flag
+  je @f
+  comisd xmm0,[_GetPlayer+6d0]//set 100
+  ja @f
+  mov rbx,[_GetPlayer+6d0]
+  mov [rsi+10],rbx
+  jmp Exit_GetPlayer
+  //
+@@:
+  cmp2 [rdi+c],#4
+  jne @f
+  cmp4 [rcx],'head'
+  jne @f
+  mov [_GetPlayer+d0],rsi
+  cmp1 [_GetPlayer+609],0//flag
+  je @f
+  comisd xmm0,[_GetPlayer+6d0]//set 100
+  ja @f
+  mov rbx,[_GetPlayer+6d0]
+  mov [rsi+10],rbx
+  jmp Exit_GetPlayer
+  //
+@@:
+  cmp2 [rdi+c],#4
+  jne @f
+  cmp4 [rcx],'tors'
+  jne @f
+  mov [_GetPlayer+d8],rsi
+  cmp1 [_GetPlayer+609],0//flag
+  je @f
+  comisd xmm0,[_GetPlayer+6d0]//set 100
+  ja @f
+  mov rbx,[_GetPlayer+6d0]
+  mov [rsi+10],rbx
+  jmp Exit_GetPlayer
+  //
+@@://lhand
+  cmp2 [rdi+c],#5
+  jne @f
+  cmp4 [rcx],'lhan'
+  jne @f
+  cmp1 [rcx+4],'d'
+  jne @f
+  mov [_GetPlayer+e0],rsi
+  cmp1 [_GetPlayer+609],0//flag
+  je @f
+  comisd xmm0,[_GetPlayer+6d0]//set 100
+  ja @f
+  mov rbx,[_GetPlayer+6d0]
+  mov [rsi+10],rbx
+  jmp Exit_GetPlayer
+  //
+@@://rhand
+  cmp2 [rdi+c],#5
+  jne @f
+  cmp4 [rcx],'rhan'
+  jne @f
+  cmp1 [rcx+4],'d'
+  jne @f
+  mov [_GetPlayer+e8],rsi
+  cmp1 [_GetPlayer+609],0//flag
+  je @f
+  comisd xmm0,[_GetPlayer+6d0]//set 100
+  ja @f
+  mov rbx,[_GetPlayer+6d0]
+  mov [rsi+10],rbx
+  jmp Exit_GetPlayer
+  //
+@@:
+  cmp2 [rdi+c],#4
+  jne @f
+  cmp4 [rcx],'legs'
+  jne @f
+  mov [_GetPlayer+f0],rsi
+  cmp1 [_GetPlayer+609],0//flag
+  je @f
+  comisd xmm0,[_GetPlayer+6d0]//set 100
+  ja @f
+  mov rbx,[_GetPlayer+6d0]
+  mov [rsi+10],rbx
+  jmp Exit_GetPlayer
+  //
+@@://rlegs
+  cmp2 [rdi+c],#5
+  jne @f
+  cmp4 [rcx],'rleg'
+  jne @f
+  cmp1 [rcx+4],'s'
+  jne @f
+  mov [_GetPlayer+f8],rsi
+  cmp1 [_GetPlayer+609],0//flag
+  je @f
+  comisd xmm0,[_GetPlayer+6d0]//set 100
+  ja @f
+  mov rbx,[_GetPlayer+6d0]
+  mov [rsi+10],rbx
+  jmp Exit_GetPlayer
+  //
+@@://STR
+  cmp2 [rdi+c],#3
+  jne @f
+  cmp2 [rcx],'ST'
+  jne @f
+  cmp1 [rcx+2],'R'
+  jne @f
+  mov [_GetPlayer+100],rsi
+  jmp Exit_GetPlayer
+  //
+@@://AGL
+  cmp2 [rdi+c],#3
+  jne @f
+  cmp2 [rcx],'AG'
+  jne @f
+  cmp1 [rcx+2],'L'
+  jne @f
+  mov [_GetPlayer+108],rsi
+  jmp Exit_GetPlayer
+  //
+@@://PRC
+  cmp2 [rdi+c],#3
+  jne @f
+  cmp2 [rcx],'PR'
+  jne @f
+  cmp1 [rcx+2],'C'
+  jne @f
+  mov [_GetPlayer+110],rsi
+  jmp Exit_GetPlayer
+  //
+@@:
+  cmp2 [rdi+c],#8
+  jne @f
+  cmp [rcx],'Vitality'
+  jne @f
+  mov [_GetPlayer+118],rsi
+  jmp Exit_GetPlayer
+  //
+@@://WIL
+  cmp2 [rdi+c],#3
+  jne @f
+  cmp2 [rcx],'WI'
+  jne @f
+  cmp1 [rcx+2],'L'
+  jne @f
+  mov [_GetPlayer+120],rsi
+  jmp Exit_GetPlayer
+  //
+@@://LVL
+  cmp2 [rdi+c],#3
+  jne @f
+  cmp2 [rcx],'LV'
+  jne @f
+  cmp1 [rcx+2],'L'
+  jne @f
+  mov [_GetPlayer+128],rsi
+  jmp Exit_GetPlayer
+  //
+@@:
+  cmp2 [rdi+c],#2
+  jne @f
+  cmp2 [rcx],5058//'XP'
+  jne @f
+  cmp1 [rcx+2],00
+  jne @f
+  mov [_GetPlayer+130],rsi
+  jmp Exit_GetPlayer
+  //
+@@:
+  cmp2 [rdi+c],#2
+  jne @f
+  cmp2 [rcx],5041//'AP'
+  jne @f
+  cmp1 [rcx+2],00
+  jne @f
+  mov [_GetPlayer+138],rsi
+  jmp Exit_GetPlayer
+  //
+@@:
+  cmp2 [rdi+c],#2
+  jne @f
+  cmp2 [rcx],5053//'SP'
+  jne @f
+  cmp1 [rcx+2],00
+  jne @f
+  mov [_GetPlayer+140],rsi
+  jmp Exit_GetPlayer
+  //
+@@://seconds
+  cmp2 [rdi+c],#7
+  jne @f
+  cmp4 [rcx],'seco'
+  jne @f
+  cmp4 [rcx+3],'onds'
+  jne @f
+  mov [_GetPlayer+148],rsi
+  jmp Exit_GetPlayer
+  //
+@@://minutes
+  cmp2 [rdi+c],#7
+  jne @f
+  cmp4 [rcx],'minu'
+  jne @f
+  cmp4 [rcx+3],'utes'
+  jne @f
+  mov [_GetPlayer+150],rsi
+  jmp Exit_GetPlayer
+  //
+@@:
+  cmp2 [rdi+c],#5
+  jne @f
+  cmp4 [rcx],'hour'
+  jne @f
+  cmp1 [rcx+4],'s'
+  jne @f
+  mov [_GetPlayer+158],rsi
+  jmp Exit_GetPlayer
+  //
+@@:
+  cmp2 [rdi+c],#4
+  jne @f
+  cmp4 [rcx],'days'
+  jne @f
+  mov [_GetPlayer+160],rsi
+  jmp Exit_GetPlayer
+  //
+@@://months
+  cmp2 [rdi+c],#6
+  jne @f
+  cmp4 [rcx],'mont'
+  jne @f
+  cmp2 [rcx+4],'hs'
+  jne @f
+  mov [_GetPlayer+168],rsi
+  jmp Exit_GetPlayer
+  //
+@@://max_KD no cooldown
+  cmp2 [rdi+c],#6
+  jne @f
+  cmp4 [rcx],'max_'
+  jne @f
+  cmp2 [rcx+4],'KD'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+170],rsi
+  jmp Exit_GetPlayer
+  //
+@@://Bonus_Range
+  cmp2 [rdi+c],#11
+  jne @f
+  cmp [rcx],'Bonus_Ra'//nge'
+  jne @f
+  cmp4 [rcx+7],'ange'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+178],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Rng
+  cmp2 [rdi+c],#3
+  jne @f
+  cmp2 [rcx],6E52//'Rng'
+  jne @f
+  cmp1 [rcx+2],67
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+180],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get range 2
+  cmp2 [rdi+c],#5
+  jne @f
+  cmp4 [rcx],'Rang'//6152//'Range'
+  jne @f
+  cmp1 [rcx+4],'e'//6E
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+188],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get MP
+  cmp2 [rdi+c],#2
+  jne @f
+  cmp2 [rcx],504D//'MP'
+  jne @f
+  cmp1 [rcx+2],00
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+190],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Hit_Chance
+  cmp2 [rdi+c],#10
+  jne @f
+  cmp [rcx],'Hit_Chan'
+  jne @f
+  cmp2 [rcx+8],'ce'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+198],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Skills_Energy_Cost
+  cmp2 [rdi+c],#18
+  jne @f
+  cmp4 [rcx],6C696B53//'Skills_E'
+  jne @f
+  cmp4 [rcx+4],455F736C//
+  jne @f
+  cmp4 [rcx+8],6772656E//
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+1a0],rsi
+  jmp Exit_GetPlayer
+  //
+@@://identified
+  cmp2 [rdi+c],#10
+  jne @f
+  cmp [rcx],'identifi'//ed'
+  jne @f
+  cmp2 [rcx+8],'ed'
+  jne @f
+  mov [_GetPlayer+1a8],rsi
+  cmp1 [_GetPlayer+60a],0//flag
+  je @f
+  comisd xmm0,[_GetPlayer+6e0]//0
+  jne @f
+  mov rbx,[_GetPlayer+6d8]//set 1
+  mov [rsi+10],rbx
+  jmp Exit_GetPlayer
+  //
+@@:
+  cmp2 [rdi+c],#9
+  jne @f
+  cmp [rcx],'is_curse'//d'
+  jne @f
+  cmp1 [rcx+8],'d'
+  jne @f
+  mov [_GetPlayer+1b0],rsi
+  cmp1 [_GetPlayer+60b],0//flag
+  je @f
+  comisd xmm0,[_GetPlayer+6d8]//set 1
+  jne @f
+  mov rbx,[_GetPlayer+6e0]//set 0
+  mov [rsi+10],rbx
+  jmp Exit_GetPlayer
+  //
+//3 string
+@@://get FMB
+  cmp2 [rdi+c],#3
+  jne @f
+  cmp2 [rcx],'FM'//00424D46
+  jne @f
+  cmp1 [rcx+2],'B'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+1b8],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get DMG
+  cmp2 [rdi+c],#3
+  jne @f
+  cmp2 [rcx],'DM'//00474D44
+  jne @f
+  cmp1 [rcx+2],'G'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+1c0],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get DEF
+  cmp2 [rdi+c],#3
+  jne @f
+  cmp2 [rcx],'DE'//00464544
+  jne @f
+  cmp1 [rcx+2],'F'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+1c8],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get EVS
+  cmp2 [rdi+c],#3
+  jne @f
+  cmp2 [rcx],'EV'//00535645
+  jne @f
+  cmp1 [rcx+2],'S'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+1d0],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get CRT
+  cmp2 [rdi+c],#3
+  jne @f
+  cmp2 [rcx],'CR'//00545243
+  jne @f
+  cmp1 [rcx+2],'T'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+1d8],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get PRR - block chance
+  cmp2 [rdi+c],#3
+  jne @f
+  cmp2 [rcx],'PR'//00525250
+  jne @f
+  cmp1 [rcx+2],'R'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+1e0],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get CRTD - crit damage
+  cmp2 [rdi+c],#4
+  jne @f
+  cmp4 [rcx],'CRTD'//44545243
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+1e8],rsi
+  jmp Exit_GetPlayer
+  //5
+@@://get Fresh - spoil
+  cmp2 [rdi+c],#5
+  jne @f
+  cmp4 [rcx],'Fres'
+  jne @f
+  cmp1 [rcx+4],'h'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+1f0],rsi
+  cmp1 [_GetPlayer+60c],0//flag
+  je @f
+  comisd xmm0,[_GetPlayer+6f8]//set 250
+  ja @f
+  mov rbx,[_GetPlayer+6f8]
+  mov [rsi+10],rbx
+  jmp Exit_GetPlayer
+  //
+@@://get max_hp
+  cmp2 [rdi+c],#6
+  jne @f
+  cmp4 [rcx],'max_'
+  jne @f
+  cmp2 [rcx+4],'hp'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+200],rsi
+  jmp Exit_GetPlayer
+  //
+//weapon
+@@://get Armor_Piercing
+  cmp2 [rdi+c],#14
+  jne @f
+  cmp [rcx],'Armor_Pi'
+  jne @f
+  cmp [rcx+6],'Piercing'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+208],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Immob_Chance
+  cmp2 [rdi+c],#12
+  jne @f
+  cmp [rcx],'Immob_Ch'
+  jne @f
+  cmp4 [rcx+8],'ance'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+210],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Stagger_Chance
+  cmp2 [rdi+c],#14
+  jne @f
+  cmp [rcx],'Stagger_'
+  jne @f
+  cmp [rcx+8],'Chance'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+218],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Piercing_Damage
+  cmp2 [rdi+c],#15
+  jne @f
+  cmp [rcx],'Piercing'
+  jne @f
+  cmp [rcx+8],'_Damage'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+220],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Slashing_Damage
+  cmp2 [rdi+c],#15
+  jne @f
+  cmp [rcx],'Slashing'
+  jne @f
+  cmp [rcx+8],'_Damage'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+228],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Bodypart_Damage
+  cmp2 [rdi+c],#15
+  jne @f
+  cmp [rcx],'Bodypart'
+  jne @f
+  cmp [rcx+8],'_Damage'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+230],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Bleeding_Chance
+  cmp2 [rdi+c],#15
+  jne @f
+  cmp [rcx],'Bleeding'
+  jne @f
+  cmp [rcx+8],'_Chance'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+238],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Block_Power
+  cmp2 [rdi+c],#11
+  jne @f
+  cmp [rcx],'Block_Po'
+  jne @f
+  cmp4 [rcx+7],'ower'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+240],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Block_Power
+  cmp2 [rdi+c],#14
+  jne @f
+  cmp [rcx],'Block_Re'
+  jne @f
+  cmp [rcx+8],'covery'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+248],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get max_charge
+  cmp2 [rdi+c],#10
+  jne @f
+  cmp4 [rcx],5F78616D//'max_char'
+  jne @f
+  cmp4 [rcx+4],72616863//'max_char'
+  jne @f
+  cmp2 [rcx+8],6567//'ge'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+250],rsi
+  {///////////////
+  cmp1 [_GetPlayer+60e],0//flag
+  je @f
+  comisd xmm0,[_GetPlayer+750]//set min 10
+  ja @f
+  mov rbx,[_GetPlayer+750]}
+  //////////////
+  jmp Exit_GetPlayer
+  //
+@@://get charge
+  cmp2 [rdi+c],#6
+  jne @f
+  cmp4 [rcx],72616863//'char'
+  jne @f
+  cmp2 [rcx+4],6567//'ge'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+258],rsi
+  {///////////////
+  cmp1 [_GetPlayer+60e],0//flag
+  je @f
+  comisd xmm0,[_GetPlayer+750]//set min 10
+  ja @f
+  mov rbx,[_GetPlayer+750]
+  //////////////}
+  jmp Exit_GetPlayer
+  //
+@@://get Effects_Duration
+  cmp2 [rdi+c],#16
+  jne @f
+  cmp [rcx],'Effects_'
+  jne @f
+  cmp [rcx+8],'Duration'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+260],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Physical_Resistance
+  cmp2 [rdi+c],#19
+  jne @f
+  cmp [rcx],'Physical'
+  jne @f
+  cmp [rcx+8],'_Resista'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+268],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Bleeding_Resistance
+  cmp2 [rdi+c],#19
+  jne @f
+  cmp [rcx],'Bleeding'
+  jne @f
+  cmp [rcx+8],'_Resista'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+270],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Nature_Resistance
+  cmp2 [rdi+c],#17
+  jne @f
+  cmp [rcx],'Nature_R'
+  jne @f
+  cmp [rcx+8],'esistanc'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+278],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Rending_Resistance
+  cmp2 [rdi+c],#18
+  jne @f
+  cmp [rcx],'Rending_'
+  jne @f
+  cmp [rcx+8],'Resistan'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+280],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Knockback_Resistance
+  cmp2 [rdi+c],#20
+  jne @f
+  cmp [rcx],'Knockbac'
+  jne @f
+  cmp [rcx+8],'k_Resist'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+288],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Stun_Resistance
+  cmp2 [rdi+c],#15
+  jne @f
+  cmp [rcx],'Stun_Res'
+  jne @f
+  cmp [rcx+8],'istance'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+290],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Fire_Resistance
+  cmp2 [rdi+c],#15
+  jne @f
+  cmp [rcx],'Fire_Res'
+  jne @f
+  cmp [rcx+8],'istance'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+298],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Health_Restoration
+  cmp2 [rdi+c],#18
+  jne @f
+  cmp [rcx],'Health_R'
+  jne @f
+  cmp [rcx+8],'estorati'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+2a0],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get MP_Restoration
+  cmp2 [rdi+c],#14
+  jne @f
+  cmp [rcx],'MP_Resto'
+  jne @f
+  cmp [rcx+6],'toration'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+2a8],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Fatigue_Gain
+  cmp2 [rdi+c],#12
+  jne @f
+  cmp [rcx],'Fatigue_'
+  jne @f
+  cmp4 [rcx+8],'Gain'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+2b0],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Healing_Received
+  cmp2 [rdi+c],#16
+  jne @f
+  cmp [rcx],'Healing_'
+  jne @f
+  cmp [rcx+8],'Received'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+2b8],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Magic_Power
+  cmp2 [rdi+c],#11
+  jne @f
+  cmp [rcx],'Magic_Po'
+  jne @f
+  cmp4 [rcx+7],'ower'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+2c0],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Miscast_Chance
+  cmp2 [rdi+c],#14
+  jne @f
+  cmp [rcx],'Miscast_'
+  jne @f
+  cmp [rcx+6],'t_Chance'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+2c8],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get CTA
+  cmp2 [rdi+c],#3
+  jne @f
+  cmp2 [rcx],'CT'//00415443//'CTA'
+  jne @f
+  cmp1 [rcx+2],'A'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+2d0],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Stack
+  cmp2 [rdi+c],#5
+  jne Exit_Stack
+  cmp4 [rcx],'Stac'
+  jne Exit_Stack
+  cmp1 [rcx+4],'k'
+  jne Exit_Stack
+  mov [_GetPlayer+1f8],rsi
+  //check coin player
+  comisd xmm0,[_GetPlayer+6f0]//check coin
+  je @f
+  mov [_GetPlayer+2d8],rsi
+  @@://check 2
+  comisd xmm0,[_GetPlayer+700]//check coin
+  je @f
+  comisd xmm0,[_GetPlayer+6f0]//check coin
+  je @f
+  mov [_GetPlayer+360],rsi
+  @@://
+  jmp Exit_GetPlayer
+  Exit_Stack:
+@@://get Blunt_Damage
+  cmp2 [rdi+c],#12
+  jne @f
+  cmp [rcx],'Blunt_Da'
+  jne @f
+  cmp4 [rcx+8],'mage'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+2e0],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Crit_Avoid
+  cmp2 [rdi+c],#10
+  jne @f
+  cmp [rcx],'Crit_Avo'//74697243//'Crit_Avo'
+  jne @f
+  cmp2 [rcx+8],'id'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+2e8],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Spells_Energy_Cost
+  cmp2 [rdi+c],#18
+  jne @f
+  cmp [rcx],'Spells_E'
+  jne @f
+  cmp [rcx+8],'nergy_Co'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+2f0],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Miracle_Power
+  cmp2 [rdi+c],#13
+  jne @f
+  cmp [rcx],'Miracle_'
+  jne @f
+  cmp [rcx+8],'Power'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+2f8],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Miracle_Chance
+  cmp2 [rdi+c],#14
+  jne @f
+  cmp [rcx],'Miracle_'
+  jne @f
+  cmp [rcx+8],'Chance'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+300],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get HasOwner - free item
+  cmp2 [rdi+c],#8
+  jne @f
+  cmp [rcx],'HasOwner'
+  jne @f
+  mov [_GetPlayer+308],rsi
+  //comisd xmm0,[_GetPlayer+6e0]//check if 0
+  //je @f
+  cmp1 [_GetPlayer+60d],0//flag
+  je @f
+  mov rbx,[_GetPlayer+6e0]//set 0
+  mov [rsi+10],rbx
+  jmp Exit_GetPlayer
+  //
+@@://get Slashing_Resistance
+  cmp2 [rdi+c],#19
+  jne @f
+  cmp [rcx],'Slashing'
+  jne @f
+  cmp [rcx+8],'_Resista'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+310],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Cooldown_Reduction
+  cmp2 [rdi+c],#18
+  jne @f
+  cmp [rcx],'Cooldown'
+  jne @f
+  cmp [rcx+8],'_Reducti'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+318],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Fortitude
+  cmp2 [rdi+c],#9
+  jne @f
+  cmp [rcx],'Fortitud'
+  jne @f
+  cmp1 [rcx+8],'e'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+320],rsi
+  jmp Exit_GetPlayer
+  //
+@@://vision
+  cmp2 [rdi+c],#3
+  jne @f
+  cmp2 [rcx],'VS'
+  jne @f
+  cmp1 [rcx+2],'N'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+328],rsi
+  jmp Exit_GetPlayer
+  //
+@@://fatigue
+  cmp2 [rdi+c],#7
+  jne @f
+  cmp4 [rcx],'Fati'
+  jne @f
+  cmp4 [rcx+3],'igue'
+  jne @f
+  mov [_GetPlayer+330],rsi
+  cmp1 [_GetPlayer+605],0//flag
+  je @f
+  mov rbx,[_GetPlayer+6e0]//set 0
+  mov [rsi+10],rbx
+  jmp Exit_GetPlayer
+  //
+@@://get Magic_Resistance
+  cmp2 [rdi+c],#16
+  jne @f
+  cmp [rcx],'Magic_Re'
+  jne @f
+  cmp [rcx+8],'sistance'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+338],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Unholy_Resistance
+  cmp2 [rdi+c],#17
+  jne @f
+  cmp [rcx],'Unholy_R'
+  jne @f
+  cmp [rcx+8],'esistanc'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+340],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get HP
+  cmp2 [rdi+c],#2
+  jne @f
+  cmp2 [rcx],5048//'HP'
+  jne @f
+  cmp1 [rcx+2],00
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+348],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Weapon_Damage
+  cmp2 [rdi+c],#13
+  jne @f
+  cmp [rcx],'Weapon_D'
+  jne @f
+  cmp [rcx+8],'amage'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+350],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Frost_Resistance
+  cmp2 [rdi+c],#16
+  jne @f
+  cmp [rcx],'Frost_Re'
+  jne @f
+  cmp [rcx+8],'sistance'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+358],rsi
+  jmp Exit_GetPlayer
+  //==============================
+@@://get Health_Threshold
+  cmp2 [rdi+c],#16
+  jne @f
+  cmp [rcx],'Health_T'
+  jne @f
+  cmp [rcx+8],'hreshold'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+400],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Astromantic_Power
+  cmp2 [rdi+c],#17
+  jne @f
+  cmp [rcx],'Astroman'
+  jne @f
+  cmp [rcx+8],'tic_Powe'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+408],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Geomantic_Power
+  cmp2 [rdi+c],#15
+  jne @f
+  cmp [rcx],'Geomanti'
+  jne @f
+  cmp [rcx+8],'c_Power'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+410],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Stun_Chance
+  cmp2 [rdi+c],#11
+  jne @f
+  cmp [rcx],'Stun_Cha'
+  jne @f
+  cmp4 [rcx+7],'ance'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+418],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Daze_Chance
+  cmp2 [rdi+c],#11
+  jne @f
+  cmp [rcx],'Daze_Cha'
+  jne @f
+  cmp4 [rcx+7],'ance'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+420],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Arcanistic_Power
+  cmp2 [rdi+c],#16
+  jne @f
+  cmp [rcx],'Arcanist'
+  jne @f
+  cmp [rcx+8],'ic_Power'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+428],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Block_Recovery
+  cmp2 [rdi+c],#14
+  jne @f
+  cmp [rcx],'Block_Re'
+  jne @f
+  cmp [rcx+8],'covery'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+430],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Psionic_Resistance
+  cmp2 [rdi+c],#18
+  jne @f
+  cmp [rcx],'Psionic_'
+  jne @f
+  cmp [rcx+8],'Resistan'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+438],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Damage_Reflected
+  cmp2 [rdi+c],#16
+  jne @f
+  cmp [rcx],'Damage_R'
+  jne @f
+  cmp [rcx+8],'eflected'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+440],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Mainhand_Efficiency
+  cmp2 [rdi+c],#16
+  jne @f
+  cmp [rcx],'Mainhand'
+  jne @f
+  cmp [rcx+8],'_Efficie'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+448],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Noise_Produced
+  cmp2 [rdi+c],#14
+  jne @f
+  cmp [rcx],'Noise_Pr'
+  jne @f
+  cmp [rcx+8],'oduced'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+450],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Lifesteal
+  cmp2 [rdi+c],#9
+  jne @f
+  cmp [rcx],'Lifestea'
+  jne @f
+  cmp1 [rcx+8],'l'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+458],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Offhand_Efficiency
+  cmp2 [rdi+c],#18
+  jne @f
+  cmp [rcx],'Offhand_'
+  jne @f
+  cmp [rcx+8],'Efficien'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+460],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Pain_Resistance
+  cmp2 [rdi+c],#15
+  jne @f
+  cmp [rcx],'Pain_Res'
+  jne @f
+  cmp [rcx+8],'istance'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+468],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Psimantic_Power
+  cmp2 [rdi+c],#15
+  jne @f
+  cmp [rcx],'Psimanti'
+  jne @f
+  cmp [rcx+8],'c_Power'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+470],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Cryomantic_Power
+  cmp2 [rdi+c],#16
+  jne @f
+  cmp [rcx],'Cryomant'
+  jne @f
+  cmp [rcx+8],'ic_Power'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+478],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Caustic_Resistance
+  cmp2 [rdi+c],#18
+  jne @f
+  cmp [rcx],'Caustic_'
+  jne @f
+  cmp [rcx+8],'Resistan'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+480],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Chronomantic_Power
+  cmp2 [rdi+c],#18
+  jne @f
+  cmp [rcx],'Chronoma'
+  jne @f
+  cmp [rcx+8],'ntic_Pow'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+488],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Electromantic_Power
+  cmp2 [rdi+c],#19
+  jne @f
+  cmp [rcx],'Electrom'
+  jne @f
+  cmp [rcx+8],'antic_Po'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+490],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Shock_Resistance
+  cmp2 [rdi+c],#16
+  jne @f
+  cmp [rcx],'Shock_Re'
+  jne @f
+  cmp [rcx+8],'sistance'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+498],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Sacred_Resistance
+  cmp2 [rdi+c],#17
+  jne @f
+  cmp [rcx],'Sacred_R'
+  jne @f
+  cmp [rcx+8],'esistanc'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+4a0],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get BP_Mod
+  cmp2 [rdi+c],#6
+  jne @f
+  cmp4 [rcx],'BP_M'
+  jne @f
+  cmp2 [rcx+4],'od'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+4a8],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Poison_Resistance
+  cmp2 [rdi+c],#17
+  jne @f
+  cmp [rcx],'Poison_R'
+  jne @f
+  cmp [rcx+8],'esistanc'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+4b0],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Armor_Damage
+  cmp2 [rdi+c],#12
+  jne @f
+  cmp [rcx],'Armor_Da'
+  jne @f
+  cmp4 [rcx+8],'mage'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+4b8],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get ReputationGainGlobal
+  cmp2 [rdi+c],#20
+  jne @f
+  cmp [rcx],'Reputati'
+  jne @f
+  cmp [rcx+8],'onGainGl'
+  jne @f
+  cmp4 [rcx+10],'obal'
+  jne @f
+  //comisd xmm0,[_GetPlayer+6e0]//check if 0
+  //je @f
+  mov [_GetPlayer+4c0],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Piercing_Resistance
+  cmp2 [rdi+c],#19
+  jne @f
+  cmp [rcx],'Piercing'
+  jne @f
+  cmp [rcx+8],'_Resista'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+4c8],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Damage_Received
+  cmp2 [rdi+c],#15
+  jne @f
+  cmp [rcx],'Damage_R'
+  jne @f
+  cmp [rcx+8],'eceived'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+4d0],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Hunger_Resistance
+  cmp2 [rdi+c],#17
+  jne @f
+  cmp [rcx],'Hunger_R'
+  jne @f
+  cmp [rcx+8],'esistanc'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+4d8],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Received_XP
+  cmp2 [rdi+c],#11
+  jne @f
+  cmp [rcx],'Received'
+  jne @f
+  cmp4 [rcx+7],'d_XP'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+4e0],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Knockback_Chance
+  cmp2 [rdi+c],#16
+  jne @f
+  cmp [rcx],'Knockbac'
+  jne @f
+  cmp [rcx+8],'k_Chance'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+4e8],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Manasteal
+  cmp2 [rdi+c],#9
+  jne @f
+  cmp [rcx],'Manastea'
+  jne @f
+  cmp1 [rcx+8],'l'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+4f0],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get ReputationGainContract
+  cmp2 [rdi+c],#22
+  jne @f
+  cmp [rcx],'Reputati'
+  jne @f
+  cmp [rcx+8],'onGainCo'
+  jne @f
+  cmp4 [rcx+10],'ntra'
+  jne @f
+  //comisd xmm0,[_GetPlayer+6e0]//check if 0
+  //je @f
+  mov [_GetPlayer+4f8],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get STL
+  cmp2 [rdi+c],#3
+  jne @f
+  cmp2 [rcx],'ST'004C5453//'STL'
+  jne @f
+  cmp1 [rcx+2],'L'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+500],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Venomantic_Power
+  cmp2 [rdi+c],#16
+  jne @f
+  cmp [rcx],'Venomant'
+  jne @f
+  cmp [rcx+8],'ic_Power'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+508],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Pyromantic_Power
+  cmp2 [rdi+c],#16
+  jne @f
+  cmp [rcx],'Pyromant'
+  jne @f
+  cmp [rcx+8],'ic_Power'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+510],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Toxicity_Resistance
+  cmp2 [rdi+c],#19
+  jne @f
+  cmp [rcx],'Toxicity'
+  jne @f
+  cmp [rcx+8],'_Resista'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+518],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Blunt_Resistance
+  cmp2 [rdi+c],#16
+  jne @f
+  cmp [rcx],'Blunt_Re'
+  jne @f
+  cmp [rcx+8],'sistance'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+520],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get Settlement_Restock
+  cmp2 [rdi+c],#18
+  jne @f
+  cmp [rcx],'Settleme'
+  jne @f
+  cmp [rcx+8],'nt_Resto'
+  jne @f
+  //comisd xmm0,[_GetPlayer+6e0]//check if 0
+  //je @f
+  mov [_GetPlayer+528],rsi
+  jmp Exit_GetPlayer
+  //
+@@://get loyalty
+  cmp2 [rdi+c],#7
+  jne Exit_loyalty
+  cmp4 [rcx],'loya'
+  jne Exit_loyalty
+  cmp4 [rcx+3],'alty'
+  jne Exit_loyalty
+  mov [_GetPlayer+530],rsi//save loyalty 1
+  //check 1
+  comisd xmm0,[_GetPlayer+768]//check loyal 1
+  je @f
+  mov [_GetPlayer+538],rsi//save loyalty 2
+  @@://check 2
+  comisd xmm0,[_GetPlayer+770]//check loyal 2
+  je @f
+  comisd xmm0,[_GetPlayer+768]//check loyal 3
+  je @f
+  mov [_GetPlayer+540],rsi//save loyalty 3
+  @@://
+  jmp Exit_GetPlayer
+  Exit_loyalty:
+@@://get Arcane_Resistance
+  cmp2 [rdi+c],#17
+  jne @f
+  cmp [rcx],'Arcane_R'
+  jne @f
+  cmp [rcx+8],'esistanc'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+548],rsi
+  jmp Exit_GetPlayer
+@@://get Poison_Damage
+  cmp2 [rdi+c],#13
+  jne @f
+  cmp [rcx],'Poison_D'
+  jne @f
+  cmp [rcx+5],'n_Damage'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+550],rsi
+  jmp Exit_GetPlayer
+@@://get Unholy_Damage
+  cmp2 [rdi+c],#13
+  jne @f
+  cmp [rcx],'Unholy_D'
+  jne @f
+  cmp [rcx+5],'y_Damage'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+558],rsi
+  jmp Exit_GetPlayer
+@@://get Caustic_Damage
+  cmp2 [rdi+c],#14
+  jne @f
+  cmp [rcx],'Caustic_'
+  jne @f
+  cmp [rcx+6],'c_Damage'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+560],rsi
+  jmp Exit_GetPlayer
+@@://get Frost_Damage
+  cmp2 [rdi+c],#12
+  jne @f
+  cmp [rcx],'Frost_Da'
+  jne @f
+  cmp [rcx+4],'t_Damage'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+568],rsi
+  jmp Exit_GetPlayer
+@@://get Fire_Damage
+  cmp2 [rdi+c],#11
+  jne @f
+  cmp [rcx],'Fire_Dam'
+  jne @f
+  cmp [rcx+3],'e_Damage'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+570],rsi
+  jmp Exit_GetPlayer
+@@://get Sacred_Damage
+  cmp2 [rdi+c],#13
+  jne @f
+  cmp [rcx],'Sacred_D'
+  jne @f
+  cmp [rcx+5],'d_Damage'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+578],rsi
+  jmp Exit_GetPlayer
+@@://get Shock_Damage
+  cmp2 [rdi+c],#12
+  jne @f
+  cmp [rcx],'Shock_Da'
+  jne @f
+  cmp [rcx+4],'k_Damage'
+  jne @f
+  comisd xmm0,[_GetPlayer+6e0]//check if 0
+  je @f
+  mov [_GetPlayer+580],rsi
+  jmp Exit_GetPlayer
+  //kosong 368-3f8
+  //lanjut 558
+Exit_GetPlayer:
+  pop rsi
+  pop rdi
+  pop rdx
+  pop rcx
+  pop rbx
+//readmem(PSX_GetPlayer,5)
+//movups [rsp+20],xmm0
+//jmp Ret_GetPlayer
+Code_GetPlayer:
+  readmem(PSX_GetPlayer,5)
+//movups [rsp+20],xmm0
+Ret_GetPlayer:
+  jmp Return_GetPlayer
+  psx
+_GetPlayer:
+  8bit//118
+  8bit//238
+  8bit//358
+  8bit//400
+  8bit//520
+  8bit//640
+  dq (double)777//6c0
+  dq (double)1000//6c8
+  dq (double)100 //6d0
+  dq (double)1   //6d8
+  dq (double)0   //6e0
+  dq (double)500 //6e8 - set min durability
+  dq (double)200 //6f0 - isi gawe cek coin
+  dq (double)2380 //6f8 - 100 days min spoil
+  dq (double)75//700 - isi gawe cek coin2
+  dq (double)1//708
+  dq (double)2//710
+  dq (double)3//718
+  dq (double)4//720
+  dq (double)5//728
+  dq (double)6//730
+  dq (double)7//738
+  dq (double)8//740
+  dq (double)9//748
+  dq (double)10//750
+  dq (double)11//758
+  dq (double)12//760
+  dq (double)1//768 loyal 1
+  dq (double)1//770 loyal 2
+  dq (double)1//778 loyal 3
+  psx
+PSX_GetPlayer:
+  jmp Newmem_GetPlayer
+Return_GetPlayer:
+//
+[DISABLE]
+unregistersymbol(*)//unreg all
+dealloc(*)//dealoc all
+//unregistersymbol(PSX_GetPlayer,Code_GetPlayer,_GetPlayer)
+//dealloc(Newmem_GetPlayer)
+//===== [_GetPlayer] ======
+PSX_GetPlayer:
+  readmem(Code_GetPlayer,5)
+//movups [rsp+20],xmm0
+//
+{$lua}
+if syntaxcheck then return end
+-----------------------
+memrec.Description='Enable'
+memrec.Color=0x00808000
+-------------- A.B.G.R
+{$asm}
+//===== [_GetPlayer] ======
+{
+// ORIGINAL CODE - INJECTION POINT: StoneShard.exe+1B8429
+
+StoneShard.exe+1B83D0: 48 8B 5C 24 70        - mov rbx,[rsp+70]
+StoneShard.exe+1B83D5: 48 8B CB              - mov rcx,rbx
+StoneShard.exe+1B83D8: E8 B3 B5 0B 00        - call StoneShard.exe+273990
+StoneShard.exe+1B83DD: 85 C0                 - test eax,eax
+StoneShard.exe+1B83DF: 0F 88 B4 00 00 00     - js StoneShard.exe+1B8499
+StoneShard.exe+1B83E5: 3B 05 ED A2 87 00     - cmp eax,[StoneShard.exe+A326D8]
+StoneShard.exe+1B83EB: 0F 8D A8 00 00 00     - jnl StoneShard.exe+1B8499
+StoneShard.exe+1B83F1: 48 63 C8              - movsxd  rcx,eax
+StoneShard.exe+1B83F4: 48 8B 05 DD B1 87 00  - mov rax,[StoneShard.exe+A335D8]
+StoneShard.exe+1B83FB: 48 8B 0C C8           - mov rcx,[rax+rcx*8]
+StoneShard.exe+1B83FF: 48 85 C9              - test rcx,rcx
+StoneShard.exe+1B8402: 0F 84 91 00 00 00     - je StoneShard.exe+1B8499
+StoneShard.exe+1B8408: 48 8D 53 10           - lea rdx,[rbx+10]
+StoneShard.exe+1B840C: E8 6F 8A F7 FF        - call StoneShard.exe+130E80
+StoneShard.exe+1B8411: 48 85 C0              - test rax,rax
+StoneShard.exe+1B8414: 75 0F                 - jne StoneShard.exe+1B8425
+StoneShard.exe+1B8416: C7 47 0C 05 00 00 00  - mov [rdi+0C],00000005
+StoneShard.exe+1B841D: 48 89 07              - mov [rdi],rax
+StoneShard.exe+1B8420: E9 83 00 00 00        - jmp StoneShard.exe+1B84A8
+StoneShard.exe+1B8425: 0F 10 40 10           - movups xmm0,[rax+10]
+// ---------- INJECTING HERE ----------
+StoneShard.exe+1B8429: 0F 11 44 24 20        - movups [rsp+20],xmm0
+// ---------- DONE INJECTING  ----------
+StoneShard.exe+1B842E: 66 0F 73 D8 08        - psrldq xmm0,08
+StoneShard.exe+1B8433: 66 48 0F 7E C3        - movq rbx,xmm0
+StoneShard.exe+1B8438: 48 C1 EB 20           - shr rbx,20
+StoneShard.exe+1B843C: 81 E3 FF FF FF 00     - and ebx,00FFFFFF
+StoneShard.exe+1B8442: 89 5C 24 2C           - mov [rsp+2C],ebx
+StoneShard.exe+1B8446: 8B 4F 0C              - mov ecx,[rdi+0C]
+StoneShard.exe+1B8449: 83 E1 1F              - and ecx,1F
+StoneShard.exe+1B844C: BE 01 00 00 00        - mov esi,00000001
+StoneShard.exe+1B8451: 8B C6                 - mov eax,esi
+StoneShard.exe+1B8453: D3 E0                 - shl eax,cl
+StoneShard.exe+1B8455: A8 46                 - test al,46
+StoneShard.exe+1B8457: 74 08                 - je StoneShard.exe+1B8461
+StoneShard.exe+1B8459: 48 8B CF              - mov rcx,rdi
+StoneShard.exe+1B845C: E8 AF A8 E4 FF        - call StoneShard.exe+2D10
+StoneShard.exe+1B8461: 89 5F 0C              - mov [rdi+0C],ebx
+StoneShard.exe+1B8464: 8B 44 24 28           - mov eax,[rsp+28]
+StoneShard.exe+1B8468: 89 47 08              - mov [rdi+08],eax
+StoneShard.exe+1B846B: 83 E3 1F              - and ebx,1F
+StoneShard.exe+1B846E: 8B CB                 - mov ecx,ebx
+StoneShard.exe+1B8470: D3 E6                 - shl esi,cl
+}
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>44291</ID>
+              <Description>"Freeze Time [✓]"</Description>
+              <Color>008000</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{======================
+Author   : aanpsx
+Date     : 2025-02-02
+Game     : StoneShard.exe
+Version  : 0.9.1.18
+======================}
+
+//===== [_GetValue] ======
+define(inject_GetValue,StoneShard.exe+132959)
+define(bytes_GetValue,db 49 8B 06 48 89 47 10)
+define(fmax,(float)999999999)
+define(fmin,(float)0)
+define(imax,#999999999)
+define(psx,align 10 CC)
+define(mov1,mov byte ptr)
+define(mov2,mov word ptr)
+define(mov4,mov dword ptr)
+define(mov8,mov qword ptr)
+define(cmp1,cmp byte ptr)
+define(cmp2,cmp word ptr)
+define(cmp4,cmp dword ptr)
+define(cmp8,cmp qword ptr)
+define(bit,byte ptr)
+define(4bit,dd 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)// 8c
+define(8bit,dq 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)// 118
+//===========================================================================================
+[ENABLE]
+{$lua}
+if syntaxcheck then return end
+-----------------------
+memrec.Description='Freeze Time [✓]'
+memrec.Color=0x000080ff
+-------------- A.B.G.R
+{$asm}
+//===== [_GetValue] ======           old  49 8B ** 48 89 ** ** 45 84 ** 0F 84
+aobscanmodule(PSX_GetValue,StoneShard.exe,48 8B ** 48 89 ** ** E9 ** ** ** ** 48 8B ** E8 ** ** ** ** 8B)//StoneShard.exe+132959
+alloc(Newmem_GetValue,$1000,PSX_GetValue)
+label(Code_GetValue,_GetValue)
+registersymbol(PSX_GetValue,Code_GetValue,_GetValue)
+Newmem_GetValue:
+  mov [_GetValue],rcx // Main pointer
+//==================== Registers
+  mov [_GetValue+8], rax
+  mov [_GetValue+10],rbx
+  mov [_GetValue+18],rcx
+  mov [_GetValue+20],rdx
+  mov [_GetValue+28],rdi
+  mov [_GetValue+30],rsi
+  mov [_GetValue+38], r8
+  mov [_GetValue+40], r9
+  mov [_GetValue+48],r10
+  mov [_GetValue+50],r11
+  mov [_GetValue+58],r12
+  mov [_GetValue+60],r13
+  mov [_GetValue+68],r14
+  mov [_GetValue+70],r15
+  mov [_GetValue+78],rbp
+  mov [_GetValue+80],rsp
+//==================== Inject here
+  readmem(PSX_GetValue,3)
+//mov rax,[rsi]
+  cmp4 [rdi+1C],0
+  jne Exit_GetValue
+  //
+  push rcx
+  push rdx
+  //
+  mov rcx,[rdi]
+  test rcx,rcx
+  je Pre_Exit
+//
+  cmp1 [rcx+0C],#7//batas atas
+  jne Pre_Exit
+  //
+  mov rcx,[rcx]
+  test rcx,rcx
+  je Pre_Exit
+//
+  cmp [rcx],'minutes'
+  jne @f
+  mov [_GetValue+88],rdi
+  //freeze time
+  pop rdx
+  pop rcx
+  jmp Ret_GetValue
+  //
+Pre_Exit:
+  pop rdx
+  pop rcx
+Exit_GetValue:
+  readmem(PSX_GetValue+3,4)
+//mov [rdi+10],rax
+  jmp Ret_GetValue
+Code_GetValue:
+  readmem(PSX_GetValue,7)
+//mov rax,[rsi]
+//mov [rdi+10],rax
+Ret_GetValue:
+  jmp Return_GetValue
+  psx
+_GetValue:
+  8bit//118
+  dq 0//120
+  dd fmin//128
+  psx
+PSX_GetValue:
+  jmp Newmem_GetValue
+  nop 2
+Return_GetValue:
+//
+[DISABLE]
+unregistersymbol(*)//unreg all
+dealloc(*)//dealoc all
+//unregistersymbol(PSX_GetValue,Code_GetValue,_GetValue)
+//dealloc(Newmem_GetValue)
+//===== [_GetValue] ======
+PSX_GetValue:
+  readmem(Code_GetValue,7)
+//mov rax,[r14]
+//mov [rdi+10],rax
+//
+{$lua}
+if syntaxcheck then return end
+-----------------------
+memrec.Description='Freeze Time'
+memrec.Color=0x00008000
+-------------- A.B.G.R 
+{$asm}
+//===== [_GetValue] ======
+{
+// ORIGINAL CODE - INJECTION POINT: StoneShard.exe+132959
+
+StoneShard.exe+13291A: 8B 4F 1C              - mov ecx,[rdi+1C]
+StoneShard.exe+13291D: 83 E1 1F              - and ecx,1F
+StoneShard.exe+132920: 8B D6                 - mov edx,esi
+StoneShard.exe+132922: D3 E2                 - shl edx,cl
+StoneShard.exe+132924: F6 C2 46              - test dl,46
+StoneShard.exe+132927: 74 09                 - je StoneShard.exe+132932
+StoneShard.exe+132929: 48 8D 4F 10           - lea rcx,[rdi+10]
+StoneShard.exe+13292D: E8 DE 03 ED FF        - call StoneShard.exe+2D10
+StoneShard.exe+132932: 41 8B 4E 0C           - mov ecx,[r14+0C]
+StoneShard.exe+132936: 89 4F 1C              - mov [rdi+1C],ecx
+StoneShard.exe+132939: 41 8B 46 08           - mov eax,[r14+08]
+StoneShard.exe+13293D: 89 47 18              - mov [rdi+18],eax
+StoneShard.exe+132940: 83 E1 1F              - and ecx,1F
+StoneShard.exe+132943: D3 E6                 - shl esi,cl
+StoneShard.exe+132945: 40 F6 C6 46           - test sil,46
+StoneShard.exe+132949: 74 0E                 - je StoneShard.exe+132959
+StoneShard.exe+13294B: 49 8B D6              - mov rdx,r14
+StoneShard.exe+13294E: 48 8D 4F 10           - lea rcx,[rdi+10]
+StoneShard.exe+132952: E8 79 02 ED FF        - call StoneShard.exe+2BD0
+StoneShard.exe+132957: EB 07                 - jmp StoneShard.exe+132960
+// ---------- INJECTING HERE ----------
+StoneShard.exe+132959: 49 8B 06              - mov rax,[r14]
+// ---------- DONE INJECTING  ----------
+StoneShard.exe+13295C: 48 89 47 10           - mov [rdi+10],rax
+StoneShard.exe+132960: 45 84 E4              - test r12b,r12b
+StoneShard.exe+132963: 0F 84 DB 00 00 00     - je StoneShard.exe+132A44
+StoneShard.exe+132969: 83 2D E4 1B 90 00 01  - sub dword ptr [StoneShard.exe+A34554],01
+StoneShard.exe+132970: 0F 89 CE 00 00 00     - jns StoneShard.exe+132A44
+StoneShard.exe+132976: 89 2D D8 1B 90 00     - mov [StoneShard.exe+A34554],ebp
+StoneShard.exe+13297C: E9 C3 00 00 00        - jmp StoneShard.exe+132A44
+StoneShard.exe+132981: 49 8B CD              - mov rcx,r13
+StoneShard.exe+132984: E8 87 E2 FF FF        - call StoneShard.exe+130C10
+StoneShard.exe+132989: 8B F8                 - mov edi,eax
+StoneShard.exe+13298B: 48 85 DB              - test rbx,rbx
+StoneShard.exe+13298E: 74 43                 - je StoneShard.exe+1329D3
+StoneShard.exe+132990: 8B 4B 0C              - mov ecx,[rbx+0C]
+StoneShard.exe+132993: 83 E1 1F              - and ecx,1F
+StoneShard.exe+132996: 8B D6                 - mov edx,esi
+StoneShard.exe+132998: D3 E2                 - shl edx,cl
+StoneShard.exe+13299A: F6 C2 46              - test dl,46
+StoneShard.exe+13299D: 74 08                 - je StoneShard.exe+1329A7
+StoneShard.exe+13299F: 48 8B CB              - mov rcx,rbx
+StoneShard.exe+1329A2: E8 69 03 ED FF        - call StoneShard.exe+2D10
+}
+</AssemblerScript>
+              <Hotkeys>
+                <Hotkey>
+                  <Action>Toggle Activation</Action>
+                  <Keys>
+                    <Key>192</Key>
+                  </Keys>
+                  <ID>0</ID>
+                  <ActivateSound TTS="EN">{MRDescription} Activated</ActivateSound>
+                  <DeactivateSound TTS="EN">{MRDescription} Deactivated</DeactivateSound>
+                </Hotkey>
+              </Hotkeys>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>42624</ID>
+              <Description>"========================================"</Description>
+              <Options moHideChildren="1"/>
+              <Color>808000</Color>
+              <GroupHeader>1</GroupHeader>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>18857</ID>
+              <Description>"Un-Curse All Item [✓]"</Description>
+              <Color>008000</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{======================
+Author   : aanpsx
+Date     : 2025-01-17
+Game     : StoneShard.exe
+Version  : 0.9.1.15
+======================}
+
+define(PSX,_GetPlayer+60b)
+define(On,db 1)
+define(Off,db 0)
+[ENABLE]
+{$lua}
+if syntaxcheck then return end
+-----------------------
+memrec.Description='Un-Curse All Item [✓]'
+memrec.Color=0x000080ff
+-------------- A.B.G.R
+{$asm}
+PSX:
+  On
+//
+[DISABLE]
+PSX:
+  Off
+{$lua}
+if syntaxcheck then return end
+-----------------------
+memrec.Description='Un-Curse All Item'
+memrec.Color=0x00008000
+-------------- A.B.G.R 
+{$asm}
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>18856</ID>
+              <Description>"Identified All Item [✓]"</Description>
+              <Color>008000</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{======================
+Author   : aanpsx
+Date     : 2025-01-17
+Game     : StoneShard.exe
+Version  : 0.9.1.15
+======================}
+
+define(PSX,_GetPlayer+60a)
+define(On,db 1)
+define(Off,db 0)
+[ENABLE]
+{$lua}
+if syntaxcheck then return end
+-----------------------
+memrec.Description='Identified All Item [✓]'
+memrec.Color=0x000080ff
+-------------- A.B.G.R
+{$asm}
+PSX:
+  On
+//
+[DISABLE]
+PSX:
+  Off
+{$lua}
+if syntaxcheck then return end
+-----------------------
+memrec.Description='Identified All Item'
+memrec.Color=0x00008000
+-------------- A.B.G.R 
+{$asm}
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>18859</ID>
+              <Description>"No Hunger [✓]"</Description>
+              <Color>008000</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{======================
+Author   : aanpsx
+Date     : 2025-01-17
+Game     : StoneShard.exe
+Version  : 0.9.1.15
+======================}
+
+define(PSX,_GetPlayer+601)
+define(On,db 1)
+define(Off,db 0)
+[ENABLE]
+{$lua}
+if syntaxcheck then return end
+-----------------------
+memrec.Description='No Hunger [✓]'
+memrec.Color=0x000080ff
+-------------- A.B.G.R
+{$asm}
+PSX:
+  On
+//
+[DISABLE]
+PSX:
+  Off
+{$lua}
+if syntaxcheck then return end
+-----------------------
+memrec.Description='No Hunger'
+memrec.Color=0x00008000
+-------------- A.B.G.R 
+{$asm}
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>18860</ID>
+              <Description>"No Thirsty [✓]"</Description>
+              <Color>008000</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{======================
+Author   : aanpsx
+Date     : 2025-01-17
+Game     : StoneShard.exe
+Version  : 0.9.1.15
+======================}
+
+define(PSX,_GetPlayer+602)
+define(On,db 1)
+define(Off,db 0)
+[ENABLE]
+{$lua}
+if syntaxcheck then return end
+-----------------------
+memrec.Description='No Thirsty [✓]'
+memrec.Color=0x000080ff
+-------------- A.B.G.R
+{$asm}
+PSX:
+  On
+//
+[DISABLE]
+PSX:
+  Off
+{$lua}
+if syntaxcheck then return end
+-----------------------
+memrec.Description='No Thirsty'
+memrec.Color=0x00008000
+-------------- A.B.G.R 
+{$asm}
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>18861</ID>
+              <Description>"No Intoxication [✓]"</Description>
+              <Color>008000</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{======================
+Author   : aanpsx
+Date     : 2025-01-17
+Game     : StoneShard.exe
+Version  : 0.9.1.15
+======================}
+
+define(PSX,_GetPlayer+603)
+define(On,db 1)
+define(Off,db 0)
+[ENABLE]
+{$lua}
+if syntaxcheck then return end
+-----------------------
+memrec.Description='No Intoxication [✓]'
+memrec.Color=0x000080ff
+-------------- A.B.G.R
+{$asm}
+PSX:
+  On
+//
+[DISABLE]
+PSX:
+  Off
+{$lua}
+if syntaxcheck then return end
+-----------------------
+memrec.Description='No Intoxication'
+memrec.Color=0x00008000
+-------------- A.B.G.R 
+{$asm}
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>18862</ID>
+              <Description>"No Pain [✓]"</Description>
+              <Color>008000</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{======================
+Author   : aanpsx
+Date     : 2025-01-17
+Game     : StoneShard.exe
+Version  : 0.9.1.15
+======================}
+
+define(PSX,_GetPlayer+604)
+define(On,db 1)
+define(Off,db 0)
+[ENABLE]
+{$lua}
+if syntaxcheck then return end
+-----------------------
+memrec.Description='No Pain [✓]'
+memrec.Color=0x000080ff
+-------------- A.B.G.R
+{$asm}
+PSX:
+  On
+//
+[DISABLE]
+PSX:
+  Off
+{$lua}
+if syntaxcheck then return end
+-----------------------
+memrec.Description='No Pain'
+memrec.Color=0x00008000
+-------------- A.B.G.R 
+{$asm}
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>33846</ID>
+              <Description>"No Fatigue [✓]"</Description>
+              <Color>008000</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{======================
+Author   : aanpsx
+Date     : 2025-01-17
+Game     : StoneShard.exe
+Version  : 0.9.1.15
+======================}
+
+define(PSX,_GetPlayer+605)
+define(On,db 1)
+define(Off,db 0)
+[ENABLE]
+{$lua}
+if syntaxcheck then return end
+-----------------------
+memrec.Description='No Fatigue [✓]'
+memrec.Color=0x000080ff
+-------------- A.B.G.R
+{$asm}
+PSX:
+  On
+//
+[DISABLE]
+PSX:
+  Off
+{$lua}
+if syntaxcheck then return end
+-----------------------
+memrec.Description='No Fatigue'
+memrec.Color=0x00008000
+-------------- A.B.G.R 
+{$asm}
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>42607</ID>
+              <Description>"Full Morale [✓]"</Description>
+              <Color>008000</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{======================
+Author   : aanpsx
+Date     : 2025-01-17
+Game     : StoneShard.exe
+Version  : 0.9.1.15
+======================}
+
+define(PSX,_GetPlayer+606)
+define(On,db 1)
+define(Off,db 0)
+[ENABLE]
+{$lua}
+if syntaxcheck then return end
+-----------------------
+memrec.Description='Full Morale [✓]'
+memrec.Color=0x000080ff
+-------------- A.B.G.R
+{$asm}
+PSX:
+  On
+//
+[DISABLE]
+PSX:
+  Off
+{$lua}
+if syntaxcheck then return end
+-----------------------
+memrec.Description='Full Morale'
+memrec.Color=0x00008000
+-------------- A.B.G.R 
+{$asm}
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>18863</ID>
+              <Description>"Full Sanity [✓]"</Description>
+              <Color>008000</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{======================
+Author   : aanpsx
+Date     : 2025-01-17
+Game     : StoneShard.exe
+Version  : 0.9.1.15
+======================}
+
+define(PSX,_GetPlayer+607)
+define(On,db 1)
+define(Off,db 0)
+[ENABLE]
+{$lua}
+if syntaxcheck then return end
+-----------------------
+memrec.Description='Full Sanity [✓]'
+memrec.Color=0x000080ff
+-------------- A.B.G.R
+{$asm}
+PSX:
+  On
+//
+[DISABLE]
+PSX:
+  Off
+{$lua}
+if syntaxcheck then return end
+-----------------------
+memrec.Description='Full Sanity'
+memrec.Color=0x00008000
+-------------- A.B.G.R 
+{$asm}
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>18864</ID>
+              <Description>"Max Immunity [✓]"</Description>
+              <Color>008000</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{======================
+Author   : aanpsx
+Date     : 2025-01-17
+Game     : StoneShard.exe
+Version  : 0.9.1.15
+======================}
+
+define(PSX,_GetPlayer+608)
+define(On,db 1)
+define(Off,db 0)
+[ENABLE]
+{$lua}
+if syntaxcheck then return end
+-----------------------
+memrec.Description='Max Immunity [✓]'
+memrec.Color=0x000080ff
+-------------- A.B.G.R
+{$asm}
+PSX:
+  On
+//
+[DISABLE]
+PSX:
+  Off
+{$lua}
+if syntaxcheck then return end
+-----------------------
+memrec.Description='Max Immunity'
+memrec.Color=0x00008000
+-------------- A.B.G.R 
+{$asm}
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>18865</ID>
+              <Description>"100% Condition [✓]"</Description>
+              <Color>008000</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{======================
+Author   : aanpsx
+Date     : 2025-01-17
+Game     : StoneShard.exe
+Version  : 0.9.1.15
+======================}
+
+define(PSX,_GetPlayer+609)
+define(On,db 1)
+define(Off,db 0)
+[ENABLE]
+{$lua}
+if syntaxcheck then return end
+-----------------------
+memrec.Description='100% Condition [✓]'
+memrec.Color=0x000080ff
+-------------- A.B.G.R
+{$asm}
+PSX:
+  On
+//
+[DISABLE]
+PSX:
+  Off
+{$lua}
+if syntaxcheck then return end
+-----------------------
+memrec.Description='100% Condition'
+memrec.Color=0x00008000
+-------------- A.B.G.R 
+{$asm}
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>28164</ID>
+              <Description>"Remove Item's Owner [Need to reopen box first]"</Description>
+              <Color>008000</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{======================
+Author   : aanpsx
+Date     : 2025-01-17
+Game     : StoneShard.exe
+Version  : 0.9.1.15
+======================}
+
+define(PSX,_GetPlayer+60d)
+define(On,db 1)
+define(Off,db 0)
+[ENABLE]
+{$lua}
+if syntaxcheck then return end
+-----------------------
+memrec.Description="Remove Item's Owner [Need to reopen box first]"
+memrec.Color=0x000080ff
+-------------- A.B.G.R
+{$asm}
+PSX:
+  On
+//
+[DISABLE]
+PSX:
+  Off
+{$lua}
+if syntaxcheck then return end
+-----------------------
+memrec.Description="Remove Item's Owner"
+memrec.Color=0x00008000
+-------------- A.B.G.R 
+{$asm}
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>18858</ID>
+              <Description>"Set Min-Inf Durability [✓]"</Description>
+              <Options moHideChildren="1"/>
+              <Color>008000</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{======================
+Author   : aanpsx
+Date     : 2025-01-17
+Game     : StoneShard.exe
+Version  : 0.9.1.15
+======================}
+
+define(PSX,_GetPlayer+600)
+define(On,db 1)
+define(Off,db 0)
+[ENABLE]
+{$lua}
+if syntaxcheck then return end
+-----------------------
+memrec.Description='Set Min-Inf Durability [✓]'
+memrec.Color=0x000080ff
+-------------- A.B.G.R
+{$asm}
+PSX:
+  On
+//
+[DISABLE]
+PSX:
+  Off
+{$lua}
+if syntaxcheck then return end
+-----------------------
+memrec.Description='Set Min-Inf Durability'
+memrec.Color=0x00008000
+-------------- A.B.G.R 
+{$asm}
+</AssemblerScript>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>18867</ID>
+                  <Description>"Set min Durability"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>808000</Color>
+                  <VariableType>Double</VariableType>
+                  <Address>_GetPlayer+6e8</Address>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>18866</ID>
+              <Description>"Consumables Never Spoil [✓]"</Description>
+              <Options moHideChildren="1"/>
+              <Color>008000</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{======================
+Author   : aanpsx
+Date     : 2025-01-17
+Game     : StoneShard.exe
+Version  : 0.9.1.15
+======================}
+
+define(PSX,_GetPlayer+60c)
+define(On,db 1)
+define(Off,db 0)
+[ENABLE]
+{$lua}
+if syntaxcheck then return end
+-----------------------
+memrec.Description='Consumables Never Spoil [✓]'
+memrec.Color=0x000080ff
+-------------- A.B.G.R
+{$asm}
+PSX:
+  On
+//
+[DISABLE]
+PSX:
+  Off
+{$lua}
+if syntaxcheck then return end
+-----------------------
+memrec.Description='Consumables Never Spoil'
+memrec.Color=0x00008000
+-------------- A.B.G.R 
+{$asm}
+</AssemblerScript>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>29365</ID>
+                  <Description>"Set min Spoil"</Description>
+                  <DropDownList DescriptionOnly="1" DisplayValueAsItem="1">2380:100 days
+2500:~105 days
+</DropDownList>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>808000</Color>
+                  <VariableType>Double</VariableType>
+                  <Address>_GetPlayer+6f8</Address>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>28169</ID>
+              <Description>"Pointer"</Description>
+              <Options moHideChildren="1" moDeactivateChildrenAsWell="1"/>
+              <Color>FF0000</Color>
+              <GroupHeader>1</GroupHeader>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>15404</ID>
+                  <Description>"Lv"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>800080</Color>
+                  <VariableType>Double</VariableType>
+                  <Address>_GetPlayer+128</Address>
+                  <Offsets>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>15405</ID>
+                  <Description>"XP"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>800080</Color>
+                  <VariableType>Double</VariableType>
+                  <Address>_GetPlayer+130</Address>
+                  <Offsets>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>15380</ID>
+                  <Description>"AP"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>800080</Color>
+                  <VariableType>Double</VariableType>
+                  <Address>_GetPlayer+138</Address>
+                  <Offsets>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>15381</ID>
+                  <Description>"SP"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>800080</Color>
+                  <VariableType>Double</VariableType>
+                  <Address>_GetPlayer+140</Address>
+                  <Offsets>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>15382</ID>
+                  <Description>"========================================"</Description>
+                  <Color>808000</Color>
+                  <GroupHeader>1</GroupHeader>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>15383</ID>
+                  <Description>"Strength"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>008000</Color>
+                  <VariableType>Double</VariableType>
+                  <Address>_GetPlayer+100</Address>
+                  <Offsets>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>15384</ID>
+                  <Description>"Agility"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>008000</Color>
+                  <VariableType>Double</VariableType>
+                  <Address>_GetPlayer+108</Address>
+                  <Offsets>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>15385</ID>
+                  <Description>"Perception"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>008000</Color>
+                  <VariableType>Double</VariableType>
+                  <Address>_GetPlayer+110</Address>
+                  <Offsets>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>15386</ID>
+                  <Description>"Vitality"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>008000</Color>
+                  <VariableType>Double</VariableType>
+                  <Address>_GetPlayer+118</Address>
+                  <Offsets>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>15387</ID>
+                  <Description>"Willpower"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>008000</Color>
+                  <VariableType>Double</VariableType>
+                  <Address>_GetPlayer+120</Address>
+                  <Offsets>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>15388</ID>
+                  <Description>"========================================"</Description>
+                  <Color>808000</Color>
+                  <GroupHeader>1</GroupHeader>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>15389</ID>
+                  <Description>"Sanity"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>808000</Color>
+                  <VariableType>Double</VariableType>
+                  <Address>_GetPlayer+c0</Address>
+                  <Offsets>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>15390</ID>
+                  <Description>"Morale"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>808000</Color>
+                  <VariableType>Double</VariableType>
+                  <Address>_GetPlayer+b8</Address>
+                  <Offsets>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>15391</ID>
+                  <Description>"Hunger"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>808000</Color>
+                  <VariableType>Double</VariableType>
+                  <Address>_GetPlayer+98</Address>
+                  <Offsets>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>15392</ID>
+                  <Description>"Thirsty"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>808000</Color>
+                  <VariableType>Double</VariableType>
+                  <Address>_GetPlayer+a0</Address>
+                  <Offsets>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>15393</ID>
+                  <Description>"Intoxication"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>808000</Color>
+                  <VariableType>Double</VariableType>
+                  <Address>_GetPlayer+a8</Address>
+                  <Offsets>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>15394</ID>
+                  <Description>"Pain"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>808000</Color>
+                  <VariableType>Double</VariableType>
+                  <Address>_GetPlayer+b0</Address>
+                  <Offsets>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>33845</ID>
+                  <Description>"Fatigue"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>808000</Color>
+                  <VariableType>Double</VariableType>
+                  <Address>_GetPlayer+330</Address>
+                  <Offsets>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>16442</ID>
+                  <Description>"Immunity"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>808000</Color>
+                  <VariableType>Double</VariableType>
+                  <Address>_GetPlayer+c8</Address>
+                  <Offsets>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>15395</ID>
+                  <Description>"========================================"</Description>
+                  <Color>808000</Color>
+                  <GroupHeader>1</GroupHeader>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>15396</ID>
+                  <Description>"Head"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>0080FF</Color>
+                  <VariableType>Double</VariableType>
+                  <Address>_GetPlayer+d0</Address>
+                  <Offsets>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>15397</ID>
+                  <Description>"Torso"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>0080FF</Color>
+                  <VariableType>Double</VariableType>
+                  <Address>_GetPlayer+d8</Address>
+                  <Offsets>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>15398</ID>
+                  <Description>"L Hand"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>0080FF</Color>
+                  <VariableType>Double</VariableType>
+                  <Address>_GetPlayer+e0</Address>
+                  <Offsets>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>15399</ID>
+                  <Description>"R Hand"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>0080FF</Color>
+                  <VariableType>Double</VariableType>
+                  <Address>_GetPlayer+e8</Address>
+                  <Offsets>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>15400</ID>
+                  <Description>"L Leg"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>0080FF</Color>
+                  <VariableType>Double</VariableType>
+                  <Address>_GetPlayer+f0</Address>
+                  <Offsets>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>15401</ID>
+                  <Description>"R Leg"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>0080FF</Color>
+                  <VariableType>Double</VariableType>
+                  <Address>_GetPlayer+f8</Address>
+                  <Offsets>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>15402</ID>
+                  <Description>"========================================"</Description>
+                  <Color>808000</Color>
+                  <GroupHeader>1</GroupHeader>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>42621</ID>
+                  <Description>"ReputationGainGlobal"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <VariableType>Double</VariableType>
+                  <Address>_GetPlayer+4c0</Address>
+                  <Offsets>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>42622</ID>
+                  <Description>"ReputationGainContract"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <VariableType>Double</VariableType>
+                  <Address>_GetPlayer+4f8</Address>
+                  <Offsets>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>42623</ID>
+                  <Description>"========================================"</Description>
+                  <Color>808000</Color>
+                  <GroupHeader>1</GroupHeader>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>17607</ID>
+                  <Description>"seconds"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>008000</Color>
+                  <VariableType>Double</VariableType>
+                  <Address>_GetPlayer+148</Address>
+                  <Offsets>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>17608</ID>
+                  <Description>"minutes"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>008000</Color>
+                  <VariableType>Double</VariableType>
+                  <Address>_GetPlayer+150</Address>
+                  <Offsets>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>17609</ID>
+                  <Description>"hours"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>008000</Color>
+                  <VariableType>Double</VariableType>
+                  <Address>_GetPlayer+158</Address>
+                  <Offsets>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>17610</ID>
+                  <Description>"days"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>008000</Color>
+                  <VariableType>Double</VariableType>
+                  <Address>_GetPlayer+160</Address>
+                  <Offsets>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>17611</ID>
+                  <Description>"months"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>008000</Color>
+                  <VariableType>Double</VariableType>
+                  <Address>_GetPlayer+168</Address>
+                  <Offsets>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>17628</ID>
+              <Description>"========================================"</Description>
+              <Options moHideChildren="1"/>
+              <Color>808000</Color>
+              <GroupHeader>1</GroupHeader>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols>
+    <SymbolEntry>
+      <Name>speedhack_wantedspeed</Name>
+      <Address>1A400000</Address>
+    </SymbolEntry>
+  </UserdefinedSymbols>
+  <Signature>
+    <SignedHash HashSize="132">0nofac5[x-YneH0rxw)3-w+Y2.bvwp-5rSQT2+spa_HoMuKC)+w]CqZD=u9%h%7Nrgw0y,ot{#m7N!P6^XYOjF.{2rQpXKn#F)yh)_;m;-N6dnN/L;fHXd4!g50bo+r,RdvggAiCjxJi;j9o]do9,r0=,TMXt@0FGmsXU</SignedHash>
+    <PublicKey Size="8074">00000i}s?vMMG0HLI3}(02Ny5QX*2qJJ#M6N[Z!Kqa/pMziN+x)wuqWn8-ctUlkw/c7K@(2XA!TlHO#-Vd]U4?4x9Rz;%x@;aE5uV)/Zb^{jxNx[VYG]aM)CUu;l^ex!iP*(ElN=Y!SymfN)(2j$H7bm*r/[TZ.E,%.Nc.;;0DJzvr0xM/G}zzhw[25BAu0EtjeM-2*Z3IG5A4M_8uQUCw_K;z;%C/q1s005y3m*8IQ010qNS#tmYE,YT^E,YYWr9XB600r?BR9JLaO-wptZ+4ANWN%[,E[iKl0000006af/aA9L;Wpp57WoKz[JtFVBzak*MWIZBRHBB(0a6?HiX-Il/Wm9?iRAYK.V;x6ZKRzHlcsh7)aBXFDVIX+IY.JQpcs)LvWN%[,I(O11ZDn+{FCrj#I)ThxbZb2#L1b?YWgu8hP#^BZa%CVkE-*:*FfcM8H#sgbHZ)IfFf1T4FfuSNFfuPOGc7PNIxsgnGBO_[ARr)hARr/;AUtwpW.#,tMj(]=Y.JQpa%5(bB4}7Ua5@t9cXxL#cQY/.a%V3wIXO8mFfuPPGA)jsW-W7hZggRIEpBroB0eBIa%5(YL{hbha%pgMX;V;Ia%5(YVPbD{bUh+;Ab4$TZgV/#ZE!szXmoUNIxjD7b1q=IZ)=OGV^dIQcwulaF*lDKA_QBeY.JQpWMe%dXmoUNIxjD9b#iPjZ+pfZWMeO7Y-Md[Zgg]mF*lGLA_QBeY.JQpaA/FIZ+ypGa6KYubaZe!FE4I$E?5PEVr4F4Z+4DdXm50Hb7+gHFEK7KFCrj#ZES9HI)ThxO-)%[XmoUNIxjD7b1q=IZ)=OGV^dIQcwulaF*lDKZEY[iAb4$TZgV/wbVYV[JtAmybZ_N@FK%-#VPtP(WiDfHZ7,CXa4#[}FfVgdd2nSfQe_@+b#h}6MRsLwbR!{lcx]YxLvm$dbZ;H0Z+OcpB0+$tVr3vuXm50Hb7+gHATlv7F)4;cX;Me1cXKHsAb4$XIzw]0VRU6gVRU6ZA}G.CF*c7REi+AxF+Q0dGdeRfD:.?YFfbw?cx]YxO;bmrW[d)mbY)pvGB7eREigANGci.#H99dkIx.XTFgH3dFd]s$ZE!kGWprU:VRT[cVRU6ZA}G.CF*c7REi+AxF+Q0dI65+gD:.?YFfbw?WMevJZ+py6bUh,zZDD6,FK{+WA_P.RZ++@SXm4.jLvL)va!qe!Wj!J?A_P.RZ++@SXm4.jNkc/Wa(Km7Y-K$nb5ch[AW20-HZeIiHZ3wPF)M#%ZE#IZI!SJGbYX5_Wl2OmB6w_ZE?@3GI%YOAIb:3wF*cPUG-fSiGc-6YVlXy2EjeRkV:y!_H92HAI3gf.ZE#IZIz)=^b!{yCbV*:#B4K22Vr4pHZ*0g;I(f%jbZ;KLZ+V#[W-)zkWn=ogGcqzcEoEdhVJ%]dGche:IAUTrF:H{0H!*?,Ab4$XO-)vaa%pF2ZeeUhZ*0[BWo}pyL[H#SZE!ARX:FMvVKilBVq_75VK@{^EoEdhV:Xx]GGi?cVq^{8I5uH9WH)[VJ_H{JZE#IZI!I{AbZ;HbJ_H{DWM);3WpO=rJaS{aI(5hmb96.@bUI.UbZKvHJtAXrWnpw;WFjDQbVYV[I%#fmbYX5_Wl2OmB6w_ZE?@3GIx%51Wo2SyW-VbjF*:M:WHe)fIWaP0En^M2V;385VL4/sVIm-NbVYV[I)KMgZapG0FfuVMFgGnTF.p:%Ix#akGczkNH##sdA_P^gMRs(Lb8lvJcVTj6L1$%dbUh,LWN%[,AW(#.bZ;KLZ+U,oF*lG6C_7B2WN(wKDIzaEAUtwpW.$$XAais?c62(nV^}b6ZapG%VRmI=A_P^gMRs(LX;N0LVQyn)Nkly(cx]YlX:!9SW.Qc9WHx3oEjBbXW-VkhG(n6^Fg7[YIb(pFFf:taIb:6DA_P^gMRs(LcW7m9Jt8tNGBGVMH!U,UR53L:F+rIhFe?-OIxsLIAais?c62()Z*S9NVRB[bXJu{5Jt9G5Z)=O2P-t(-Z+ypGa3C?/E-?e_S7}l!Z,CMkA_P^gMRs(LV]yP,XJuqPA{:B?J_H_Va%5(YQ*O^JAUrR4ZE#IZI!I{AbZ;HbJ_H_Va%5(YL{hbha%pgMX;V;mAUrQ{WM);2L]FU!JTG]Ucx]ZPWprUaAUr;KaA9L;Wpp5AZe%=oaw0!I1aGsY000.sNkl/ZXo1C:cUaU^[W$2gnHgZ^BB0W%1T]W=Y{jjrfST,E6H%iQ3zozrb}ozU)F6-dqlvvl)G+,6l7fn0TNE?X0()czbf($)f9S9:ZZ?0Wv-$0Lp7}=$:RWtI@ZJ}7(b^Y.1SH_-:Lfl5j:.b],]oSxGMNm1etsZ^.NW0fym%3vJ9kEObTl=;+Z]GE1pp8T1o+X)gp-pKLPJ9#m(.,XSP(Hz1-*JmrBaFd]g$BYb[[C@40@r)nK4Mh,1VKafdD3x3B!gB!=0n*kdl%juBoZv-o1ORF*:X,3JSvY;)^Y.]+u8d?BltOJ]f6pXlQ6amo8oK[19lRC:^Ycj}+y0Dne.#DSUi/AeYP0+w[e-Mgy?{3.-_}3:ltO#s6m@]OJU2f{1vN!dq^;6$(5}Kv$)wsa=2mVF7?j0SIDZVwy(d99eMj.;F5Mn;L{Kpa5dA7$TAA59^zhhwy80bace(*29)1AODJ8r)2i3B_D(_rUt]=4{)M@O^pj@NB5pR.N#/CQz#U72M-;6Wboj?Sy?=Gs@!a/qpGS3B9Z7hxc@Rsf1+9VDK=u8E-o(R%jJ.CWN;nFf/mDH0IXiU8u9V+Ddpwm,m/X_5{.7Xap:$=q]v,-wr$.t%+.(mOX!2NH@(OqkJS,X/@uR};eQ*2zWw%FI5.=/zP_nsdBpz(0surrM4*%=-Y@:CXl]zXUav/*L/G^**59AZ8/,3dz1ux7Fc5];g[t+g9(+p0$NTf/.*lE,aXJ4Adi3mpZe6:#*ryq;(;6tKsHmun^rmTe6A{[oTU!ggUJs%0[f7ntL6FPk:-/CTTD58gv*K#*P%4!G.Bzb_C-7QfAwJu:69EAMNE/f{]{XWbNJt1yeDe+Ql{faaj;h_Q:VEJiHvaPJYdC*Fm/xdQ3WegcbLY.rTDEK%ii)P$R.zy)#QzL{$z)!vb2CCiLlF]Z0sx4Pjs@hJ+t9ggTCG84WhD{mUI73M8ZsDfPnwJ#J$hivrp?TqtsC0.x5JT}9CYp46)[zqfsAR;VK5l{3gGbExpO/NTel8,y(g83=ceJ1r$ew/ENEzGKxt[ys.a75-nz_ZgHETzojZ5X+w}27%uH/GzTFW),UZlLT!MmvkeHN,@74lOfX/yeW8.=1a8?cYVd7i3aPB.M@ymStRs*$[hRxYq.2?QvPp^r6fB3K]fCI0,[FA]HyLLe:7Nfqt^$Hl[KMjIVD1@mgK{{5!EEWsm/Kyw{yYFK7?Zs=E@h7^F0NmZ)Args?nwpBdygba9F^7Vat@P7(,O!Gl*}v/K*vM4uApsQ=6#xKNXC.E#]J/[,2^{1AxOV+-L=RKqy{eQObl/XS=HVjvvKX)8eib:KbHV]ZPE1T3mXnhM0KW/1Pf3wltrl9X7NbUu!kjsC6doQP2;]kPD495M.w@zd.HJ}+*Bu[t9UVIWNI7]m!0?%JS1VpgPQiwcKL!9KCMDtT%a-F;VIgMCo]v%A3b=wuV*Ld:$US!sLx(E9Mx%jL;d-RxkfB2n5*y)+Z%sr,MS0M*;C@WO8#Zjx#fumB4Ie%nb#--,N}O:jAPHYzUjzpSqksSY2nq@9R8$lO3;bj@^rh9mq*CX3j6]Z]Dpssm0bgI:--RHNNO1P-S(*n,nNwI$V69SBk*)!X8OeH+/s:[!wOaGA!9zHx^^U90R3yoDYu0k^!bK#;n;TK7,LWm+EiI+88X6jS?9te+zjlpDFOOjHonn%t(1R#]W@3t{lJp9vzCFc0?7Ubj,!h[BQYj:72{u5NPp{6WCnu-pp4o%Y^^8#Ww^PF%it[T0*}.FWXE5ktG#b(]$H%EkrE;E34=tX8oO=xO1?]RPjf6f4Sh^=9%Q(H7p;T6@2LQYf6NBk9GBA7QEWG(Qi-;9.1z%r3s8o.e/=$}ucHB6GM{$AKIU*(xK!C$XkKiw[zKRbQFL7G1c,vVkefp;l9z1wz@ytwrnM@JH_8PvOPZk}=jt)6/ATlx%k(%(zh:[ofmlrl}-i,kr/Po:S-rP2O/{AOMm;9(wbbws0K(MWfFl,W}czSu[!iDp(m?W8p:MF4gz8q81*3ImQZUDgWmtRKr9@G5!d^_b77dv(r#+G]XYSk*ewHic4wa4b^%{7j2^Fl2!d*vMP2XOoLZ7luUhb^m%jv6)p@W?2s0X+5O0RIm$!Jc!}YBj;c!:ce:003626%Gy#7%+Uf1i/+M+/0NbUrEBxl_RGL$q_W3i3kV]#I2h+.p5_jfPet[]uZX*JRH{qT_,{dBl]61@Na!Zb@F/low#!43I,{wh(RWMh0SI_L{bM8;T36hJ@S{#/SVb;o3FnP9y*B.,N]Xsl$x5F]nz{UKC$VKLa-{VQBi?$#zvS-CKwC]SS%K3G#Z%AX0uMKZM:2s77iaejP5/UBP1jQDwPVC@77E9Z)ocWJsJZB4n$emL%jdqdk6}*!?dLi.p@x3%p7)Yb3S,/.o.$!@Zt8}N,r.0H7*wo*z,b:rskPI[v?3XP$/B^#fz_K[ig}[EfR?dOG!yVb93[[gJ88/VKSLoVuI0VL{6he;g)(F*9Iko;7dnWaq!=lI666/baioopPwK6^QU6q(p+S_Y^Izl/8kinli.+y!2)1?MWJ86e#rXhNj5ln.v{-SY)ZgRAp].e1Ofp[B04%6;p%VojSUT]sHlLyzkiEfhYuaX=V[S+bgfdUV6_GG8KYyTPH5N8AK6;B06?}/!GoREYW43!5DJAb7z{7:Xn?INg4t_[!C-iXvY)$H,{zwyTU!gEP;824cKo%!^@h!;iwo{EyN3}piExlPKm-9=TwSna)PFG#yB6cejl,O{13=g)YuDkOnKQ95D,[O=jzM8T!85u91[r^%+B4EVO;lB^1@@WOqX/T$5xsi%2JplK?};RMH)!5@vIk_jTXOfAy{[WtgOPtF9^^=zySu,Mb=Q[AzY]NwDiu6DJTPn4EF;o/O9KM}U35BK*4Fx+%mRS]a:9G![4TN$t3!BrINp2jJ#@^P#RGtw)P%7IRaJEqi9}R6azfg.afpnJLU2eh3/d+seEKO8]aFpNGMNm81%;F^Cjs}F-h+1B!MwTiuxrn5czSw+BtG4}9gmxuFzcOnP,3]t)J3RLR.yvN,0ZS%8?j(q5(*pIv:mmW6/4q3L#?]JU.lpa?bCZtL]FqIBosoY*44c0I:/-T/#pycPY=)M5Q#*,Y.1%_r9#i1J,XVwZp?i8XJAN3$QL4!C@I7=!xeavB5gJss.jH9Y{qm#KYrY:d-v__OQq890W64)=UG-mQlY7-3HM7(F?Eeg%$zX.r%#/i!PNq_ySpPGAOKdY6:t(.iAjmD+:+=3w:Z[?-Glb,,v8e6Apl[8*:v-]8j4x)yo2rAwqfYN!HDhBrQ,n7)^nO6tUtVW(mJuMa4GVB%!8L#E4(aB0_5kxh:?S5)TMLZUIYMCR#u^,u?R1rjsVcc=jgco0/hU@C?)LEqoX4ZA3ltY8#i[];J2$V1]awk={HD919,65pI-_A3WWk4J9fmGGiQ+Tocx!oSFc[O3kv?GC*wE%0KScWAv(^HuU/cXx?_k@;,A99XFEWf4Zgm9ShZ;.5_ffpP.eFZ?85@Fw;RSA.!s@xgMh$5oH{s:adB}I*3y!%wqyy$j!Q#8Kmdjh8H!ssZ^ml]d7sRA_Gh2%[P39Ymihbpqqw+j+.[UvbKP3pzkeU=^M+4_F^7-ktff{5?#8F/K6MH_^qz$6h,1k6[H]W.6ok.wP@6]$L8sHnNG_@J+fFh0AfR08z;4znuSv!qK73dN01Fl?07)}.TQ[aoL.#G7jipYfTWI$XlIdMu=96kyxvZ[NVM$2_NpkkgS$uc*Y=9;irOQ{w@)sm7QeGZE,p(].zWIjr[4O/%DWUrDV:kOOpF.*;:GFZC5_Xcw1j(wNWo1PPJ$n%VSFc/{l8=SP^6,4[SCSu37(nd!:P%%AJ9qNn^^2i(Orn!q!PcIwSX@98k^O#eZF-V^NW$OWA3}uJ@XJb8NgtBO#+a-S07gYbP[NV9BYB48nYy}V.C:h^fn,$zvy(%IA@:XFIFTg3Ao)82+@P}jAlYH{uHBlpK7K5JSk7O_g1Pg!dE:)%,U.VsS})$Y92YNIWN%8fSS%np:H]u=O%joqu1XiS[G-mVSsO]m6G;b,cm5-pSi+=VFm]^b8@c3F;C=*aPBH}Iew...mm3:!efsw8]%ee{kdl%DlJ3pT#?v@O4kG{+7{Jr;(CM2[R?;On([I%3H8)edWTeSty75Np7y^rMsi]EXd-Uj0abshnh2,MkZ*=H*x%24i/jl3J+KkATdT#q/8,U*ciz];G.HTR@Z86xs?3-($*sNNe*x8G,aQn7x[HLh)TzmP[CA}x;:BuMd@VN{}:(W$$nbW69awJLAR9Bx03l3pKXc#-ibYN[!7pagsaArmZNg7FxH5d$tkB_Q,gs7,{kW_#w*g6nDj3NN]=VUiQ)a8P#[E8A%=6,r0axKX+H8s?[=Fvpwf14!v)S^9[3Prq;mq)H-Nd9fc@y#+sfB=;#Ig@,2@7y!@iQj$q9j^%xMx9RgobkUr^3ItPQ7RJC-;*s?5-CreJV{x}ed.s.aLww}B+[uOhBG]kgc]M4Lvo2$qdA.DX%hSNPGEFIBzwkpr/:2qV[r_S4[$7v,4hoLrc$YVTOicb*S$k.ewR-xZ#pX,nb5Nr?7:x2ci)x30O.xJ(U5F@+,_x2IDg)45+S1Pd}=hgHZ)MFWO51t)BH2OZ^50OA:#8MZJHGT@=JQ,[Kcafv2VQboV**TfE_KLrD9{QIA4fr(sRr_qFf@7o2g@=+@ZqQL%;4@54McaJ_dE7Z?fv8rW-eI7$U;Mxjr,KBsu2w+C]Q+IOpAWTlznE?PH2/Jh1/Ly#/0,t939M45vHAbYN(.5I?[oll{YlV]O+*r%jnkXN4oTZT+A=[aC66gN#A#0,]UV7x)Vo!-%jjcI*}Q$ES@;mzxKVA3Mf+AIzl}Le_(Umy-NGG$?#HFLtKMWcp3xe,j^4GBG=jgl^}3d,+GeO#qZjr2O^u84F2sad9!Tw]@fMzcxI5;J*F=yh+vl.g=H=Lk13d8Z:juBpd1+:p/KgOlpf*jB0[9mzM^UJNxzN![FN$)Z5Yw[UYZ5ByaECv!?CG0kA^,XwIHFld(B.?uj$}luM,1dvba]$z6+UEL7S1#YDAdZB5NZlA#yQpZ}B.YhQ^W.Frh0^Er{zWUuZ$c:X6ol00X#+;,#PbXi_rU0pzO63J6/q;iBgV5gW4=A?a$yT8/pg$0Egl4ndNQ^^}58C/exF-Hs@PKiLs(K+0@*mh27(au3H=V6e7s@a2e#{*[^i$)t7hacVsKvyRv7tEV*BDsX5x7lp_.CRlls._HNs)_EoZ%/A*0idsUYaadLND._6lBlk#UbSHEJnr4Ir/(x[,S+zfNvvA2?.Cr=d=Ci3LH.cWyQEK:#C!Mdk;u;B8KGNsb,xZbr2?$vEC2p=0-(q2k^Q#cQKQk@B^_Mwv8=:P^RZyex6efK;Wv#W8sj=0vPXP)9y@,2CV7[Ri0bNUdop,e.paz;/c$ptU#=ibocHeDJw]JA=Af!JFku3(/mXFBdg}1aF-ecyv$-diELzmqY(6axDVa8XI$}pEp.D:oBzuw!IB=)q)$mvHQoe7]-jeB4r.[A{VS_ULzWVB]^_Lg2:@4Ct[by4kv2@KD06/Jk3}t{PEh72Vsue5g:Ip^BzW/(i[mFH*a]OHA[l+x8Jjf=GM5oia,HAI$Np2yzisTTDMk8OgY#AaVBG9j2zkfn[s(FXD7;!0FUbAKmf]fzc!V51vQ$d/Kbt+]DkaWFt]7+l3#lh9p6:Ja%2=,]K;Z]9^FIXfcCE?Yo$4Zj)Nlqn,510Jy/Mc[B_04+}rcCACk]g1yq.ccM0RY}7@G(GLYA:%ixLtIcKi#]$Ai0!J)s5go7f5C_H#fUyXJ:!_lqp!ecrh,rx]gA$k7N7x=MO}eMqpqdI)F:cQKLrvv%GfTzyZ_O+532-@1^W77hy7*5E2psi9}](j},p+*dB#rva%qP$=7XADv,0#2RAo2]1_^#yu2Jboeuf:]Os*IXx,Lsa(mGoV88)N*}#EYo/Dyc*z#IQH,Sx=w6SSZt5hnq[VH.cdhl13A,yO0v*K%#i.EUOLwtNZq+5uYRx2bDi7No-$f)E%0H(NiefmUZW,p!W^Bwbqm*ASFxw)bw+RQvhl$0PLApx10nOL%938Ydfh71]37Z)=JdwaudHn,=x1@]b[Pu#e112UNm3WWknrLyHx@Opq+nM=,qP6va+0C#tHC:=24G#Xf}R;*+BczSx])W6JOSS$d5t5;gL.;3xN%jLLm.Q_(eTzI8;kM5[_tz9;0*tc212n6]/.zhW*xFDuOhZd#E%OApGvB2BgyUt;/*MRI8qokw,j+gC*FkwPtTwL62i@X#NlTSYRY2)I=C?LyKw^G3a^rvpOA3l7D.NW1iYu646g#ymb(d[SLaBy(F?!F?J)[*v^etz*s?]6I4fL5#h%@O_(?!7$[.a?*gwMeB;h^a-b=b.OpaP.U:OwY+J5flBwpy?L+pj0aH!w*_qIVBldt,r,9/;uzvi#HF.%E{)*:jTJIR6=iIVf@@/b,NIrht,B_ii)P0GMV7w.*2S]N?z41v{w{?YPA^x0Rb=Z(9GQ35Q#*@aBzTBDuvzNU(@0*10?!VVYOQE!w*}8tgH.PXU}S-U@uX1#fsyjQ%2)O!9#d=#LM^c]yX))xTK_OwIOpo]u6Jw0OyY!Iid!Du(@*.9Xb=lZf?AQb0@Bm%HZniiU$uKz_GAK0_pF0:gyrG5D/WyH+Z3zR6=Opz^_?ER.v}D[4P2BOfBBw.NZ{5y8KhWPjGg2hDxPEd3kwD,sKp?oH%jf*!egZbF.T;:[Zv+VK$plTvCiHSFRu?:P0[q@b%fAeZ2[44rga*eEjjpXxp_e/Z=M$w^DHf%1Y=/deqj_!q=Xq-rnBu?$o?zZ7u5R;R;XNP+G6/fj_JW+$k.v3WLFbBS))F*z!7-(Y]-x]p/zN5C}d6g)2Be%)TnNlPA%(Yggmt%a=oZ-MxF(!2/]UxqEm;@g129TYF;5*M/Em#LEC,05C8.JzWf-H2?[5M+yOjm;4qvJ%GpQ;FJFCYVE)r;c?3yX:)LFqmjkM#kg=cLQ6=dtyaTcR_J4NckcXmA:qp-h^a,@BoZ[/G)aE[psA=_03Z@HTC#xEYK4:N6YA;ftba^SU6nj=Wc%Xc.z1@p32pq@z^ORGydQr:RaI52)b*W%+/]_#%bR9ctQH6$fJ7;R%s}bR2M0JhDxh=6g]1nJ)Zj:_)Ytl*x]6],-Uo1N#E22!CnY6a8a.aS/BEzWS9o??;,*ZPAQTFr*oM^*U5(uNK*AZPwqyx:M6Rf*Kyq=2va,(+0n7$4NG6lD@Y!)]fqnb2J{)dVOG^B#R_maL2cyvllgR_D%=5!$0HHt#p-;2sSOoFYU=,dN#?#+KWq!VXKK:m#K3)FvL:GG?sGWm?gCs00taAA9.g2(jGwo%y:j6Wz!QI@++REYdPEHOyJw5UG?#E,ER8;^s(Ye3jnM]]ARC*zK0^{@?R.^GdGNwCE%b2bJ.9#^[BpQuYWU-iq7K.?UiNq!ri!6;#PG,%KY$9o{TCF./SgbJ]jT*(],9VVTn,yg,gUMuSG8(CdckbNL$YiqS;)^UA*}s2B:H[PHx@=T%g(-D-q1WqSu}/-BTl/@,a(vPrcI.SHY.5dKUteETRaL;y(kq*;6(}+HXxp{{K%r2GluD(QB9,2HE]naCqu!vm^#07ZhK2=Rg,d4f0u(Y(qF3*.DEdbcZr^0$n3x!pmfnX?Ai$wRhY%1D0EtBMTwMCK^2yFSUX*1?-zNY7002ovPDHLkV1k4I0001=v+t8njNre:LI%vZsCZ4Yf76y]tYdnUw!Ir.]$Fi}A0@%D8Km[$3D!].uco1JmNGY$3AUElk}evvWaGFN0nt]gG4;Acz(3cdvTVKS;_e^T3J.Y)eWWVUhs%,,r1G!hVdh0;+=D^s(S3l$c2cuxe+vpfNzJ=k4xL=LrB=</PublicKey>
+  </Signature>
+</CheatTable>

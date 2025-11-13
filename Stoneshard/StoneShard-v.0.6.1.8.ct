@@ -1,0 +1,2150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="34">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>0</ID>
+      <Description>"StoneShard v.0.6.1.8"</Description>
+      <Options moHideChildren="1" moDeactivateChildrenAsWell="1"/>
+      <LastState/>
+      <Color>808000</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{======================
+Author   : aanpsx
+Date     : 2021-02-13
+Game     : StoneShard.exe
+Version  : 0.6.1.8
+======================}
+
+[ENABLE]
+{$lua}
+if syntaxcheck then return end
+-----------------------
+memrec.Color=0x000000ff
+-------------- A.B.G.R
+LaunchMonoDataCollector()
+--reinitializeDotNetSymbolhandler()
+if(getCEVersion() &lt; 7.2) then
+   ShowMessage('Warning. CE version should be 7.2 or above')
+end
+if(process == nil) then
+   ShowMessage('No process was selected')
+elseif (string.upper(process) ~= string.upper("StoneShard.exe")) then
+   ShowMessage('Warning. Expected Process = StoneShard.exe')
+end
+{$asm}
+LuaCall(function cycleFullCompact(sender,force) local state = not(compactmenuitem.Caption == 'Compact View Mode'); if force~=nil then state = not force end; compactmenuitem.Caption = state and 'Compact View Mode' or 'Full View Mode'; getMainForm().Splitter1.Visible = state; getMainForm().Panel4.Visible    = state; getMainForm().Panel5.Visible    = state; end; function addCompactMenu() if compactmenualreadyexists then return end; local parent = getMainForm().Menu.Items; compactmenuitem = createMenuItem(parent); parent.add(compactmenuitem); compactmenuitem.Caption = 'Compact View Mode'; compactmenuitem.OnClick = cycleFullCompact; compactmenualreadyexists = 'yes'; end; addCompactMenu(); cycleFullCompact(nil,true))
+
+[DISABLE]
+LuaCall(cycleFullCompact(nil,false))
+{$lua}
+if syntaxcheck then return end
+-----------------------
+memrec.Color=0x00808000
+-------------- A.B.G.R 
+{$asm}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>4559</ID>
+          <Description>"Enable"</Description>
+          <Options moHideChildren="1" moDeactivateChildrenAsWell="1"/>
+          <LastState/>
+          <Color>808000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>{======================
+Author   : aanpsx
+Date     : 2021-02-13
+Game     : StoneShard.exe
+Version  : 0.6.1.8
+======================}
+
+define(bytes_GetStats,db 8B 46 0C 5F 5E)
+define(bytes_GetDurability,db 0F 10 40 10 8B 7D 08)
+define(fmax,(float)999999999)
+define(imax,#999999999)
+define(fmin,(float)0)
+define(mov1,mov byte ptr)
+define(cmp1,cmp byte ptr)
+define(cmp2,cmp word ptr)
+define(bit,byte ptr)
+define(4b,dd 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)
+//           0 4 8 c1014181c2024282c3034383c404448
+[ENABLE]
+{$lua}
+if syntaxcheck then return end
+-----------------------
+memrec.Color=0x00ff0000
+-------------- A.B.G.R
+{$asm}
+aobscanmodule(PSX_GetStats,StoneShard.exe,8B 46 0C 5F 5E 5B ** ** ** cc cc cc)
+alloc(newmem_GetStats,$1000,PSX_GetStats)
+label(_GetStats)
+label(code_GetStats)
+registersymbol(_GetStats)
+registersymbol(PSX_GetStats)
+registersymbol(code_GetStats)
+//============
+alloc(Hunger,4)
+registersymbol(Hunger)
+Hunger:
+  dd 0
+alloc(Thirsty,4)
+registersymbol(Thirsty)
+Thirsty:
+  dd 0
+alloc(Intoxication,4)
+registersymbol(Intoxication)
+Intoxication:
+  dd 0
+alloc(Pain,4)
+registersymbol(Pain)
+Pain:
+  dd 0
+alloc(Morale,4)
+registersymbol(Morale)
+Morale:
+  dd 0
+alloc(Sanity,4)
+registersymbol(Sanity)
+Sanity:
+  dd 0
+alloc(Head,4)
+registersymbol(Head)
+Head:
+  dd 0
+alloc(Torso,4)
+registersymbol(Torso)
+Torso:
+  dd 0
+alloc(LHand,4)
+registersymbol(LHand)
+LHand:
+  dd 0
+alloc(RHand,4)
+registersymbol(RHand)
+RHand:
+  dd 0
+alloc(LLeg,4)
+registersymbol(LLeg)
+LLeg:
+  dd 0
+alloc(RLeg,4)
+registersymbol(RLeg)
+RLeg:
+  dd 0
+alloc(CoinOnBag,4)
+registersymbol(CoinOnBag)
+CoinOnBag:
+  dd 0
+//=============
+newmem_GetStats:
+//=============
+code_GetStats:
+  readmem(PSX_GetStats,6)
+newCode:
+  push ebx
+  mov ebx,eax
+  test ebx,ebx
+  je exit_GetStats
+  mov ebx,[ebx]
+  test ebx,ebx
+  je exit_GetStats
+  mov ebx,[ebx]
+  test ebx,ebx
+  je exit_GetStats
+@@:
+  cmp [ebx],00525453  //str
+  jne @f
+  cmp [eax+8],0
+  jne @f
+  cmp [eax+1c],0
+  jne @f
+  mov [_GetStats],eax
+@@:
+  cmp [ebx],004C4741 //AGL
+  jne @f
+  cmp [eax+8],0
+  jne @f
+  cmp [eax+1c],0
+  jne @f
+  mov [_GetStats+4],eax
+@@:
+  cmp [ebx],00435250 //PRC
+  jne @f
+  cmp [eax+8],0
+  jne @f
+  cmp [eax+1c],0
+  jne @f
+  mov [_GetStats+8],eax
+@@:
+  cmp [ebx],61746956 //VIT
+  jne @f
+  cmp [eax+8],0
+  jne @f
+  cmp [eax+1c],0
+  jne @f
+  mov [_GetStats+c],eax
+@@:
+  cmp [ebx],004C4957 //WIL
+  jne @f
+  cmp [eax+8],0
+  jne @f
+  cmp [eax+1c],0
+  jne @f
+  mov [_GetStats+10],eax
+//===================
+@@:
+  cmp2 [ebx],5041//ap
+  jne @f
+  cmp [eax+8],0
+  jne @f
+  cmp [eax+1c],0
+  jne @f
+  mov [_GetStats+20],eax
+@@:
+  cmp2 [ebx],5053//sp
+  jne @f
+  cmp [eax+8],0
+  jne @f
+  cmp [eax+1c],0
+  jne @f
+  mov [_GetStats+24],eax
+@@://Hunger
+  cmp [ebx],676E7548  //Hunger
+  jne @f
+  cmp [eax+8],0
+  jne @f
+  cmp [eax+1c],0
+  jne @f
+  mov [_GetStats+28],eax
+  mov [Hunger],eax
+@@://Thirsty
+  cmp [ebx],72696854  //Thirsty
+  jne @f
+  cmp [eax+8],0
+  jne @f
+  cmp [eax+1c],0
+  jne @f
+  mov [_GetStats+2c],eax
+  mov [Thirsty],eax
+@@://Intoxication
+  cmp [ebx],6F746E49  //Intoxication
+  jne @f
+  cmp [eax+8],0
+  jne @f
+  cmp [eax+1c],0
+  jne @f
+  mov [_GetStats+30],eax
+  mov [Intoxication],eax
+@@://Pain
+  cmp [ebx],6E696150  //Pain
+  jne @f
+  cmp [eax+8],0
+  jne @f
+  cmp [eax+1c],0
+  jne @f
+  mov [_GetStats+34],eax
+  mov [Pain],eax
+@@://Morale
+  cmp [ebx],61726F4D  //Morale
+  jne @f
+  cmp [eax+8],0
+  jne @f
+  cmp [eax+1c],0
+  jne @f
+  mov [_GetStats+38],eax
+  mov [Morale],eax
+@@://Sanity
+  cmp [ebx],696E6153  //Sanity
+  jne @f
+  cmp [eax+8],0
+  jne @f
+  cmp [eax+1c],0
+  jne @f
+  mov [_GetStats+3c],eax
+  mov [Sanity],eax
+//=====================
+@@://head
+  cmp2 [ebx],6568  //head
+  jne @f
+  cmp [eax+8],0
+  jne @f
+  cmp [eax+1c],0
+  jne @f
+  mov [_GetStats+40],eax
+  mov [Head],eax
+@@://tors
+  cmp2 [ebx],6F74  //tors
+  jne @f
+  cmp [eax+8],0
+  jne @f
+  cmp [eax+1c],0
+  jne @f
+  mov [_GetStats+44],eax
+  mov [Torso],eax
+@@://lhand
+  cmp2 [ebx],686C  //lhand
+  jne @f
+  cmp [eax+8],0
+  jne @f
+  cmp [eax+1c],0
+  jne @f
+  mov [_GetStats+48],eax
+  mov [LHand],eax
+@@://rhand
+  cmp2 [ebx],6872  //rhand
+  jne @f
+  cmp [eax+8],0
+  jne @f
+  cmp [eax+1c],0
+  jne @f
+  mov [_GetStats+4c],eax
+  mov [RHand],eax
+@@://legs
+  cmp2 [ebx],656C  //legs
+  jne @f
+  cmp [eax+8],0
+  jne @f
+  cmp [eax+1c],0
+  jne @f
+  mov [_GetStats+50],eax
+  mov [LLeg],eax
+@@://rlegs
+  cmp2 [ebx],6C72  //rlegs
+  jne @f
+  cmp [eax+8],0
+  jne @f
+  cmp [eax+1c],0
+  jne @f
+  mov [_GetStats+54],eax
+  mov [RLeg],eax
+//=============
+@@://Stack gold
+  cmp [ebx],63617453  //Stack
+  jne @f
+  cmp [eax+8],0
+  jne @f
+  cmp [eax+1c],0
+  jne @f
+  mov [_GetStats+58],eax
+  mov [CoinOnBag],eax
+exit_GetStats:
+  pop ebx
+  jmp return_GetStats
+_GetStats:
+  4b
+PSX_GetStats:
+  jmp newmem_GetStats
+  nop
+return_GetStats:
+
+aobscanmodule(PSX_GetDurability,StoneShard.exe,0F 10 40 10 8B 7D 08)
+alloc(newmem_GetDurability,$1000,PSX_GetDurability)
+label(_GetDurability)
+label(code_GetDurability)
+registersymbol(_GetDurability)
+registersymbol(PSX_GetDurability)
+registersymbol(code_GetDurability)
+label(Cooldown)
+registersymbol(Cooldown)
+label(Cheat)
+registersymbol(Cheat)
+newmem_GetDurability:
+  push edx
+  mov edx,eax
+  test edx,edx
+  je exit_GetDurability
+  mov edx,[edx]
+  test edx,edx
+  je exit_GetDurability
+  mov edx,[edx]
+  test edx,edx
+  je exit_GetDurability
+//================== code here
+@@://inf durability
+  cmp1 [Cheat],0
+  je @f
+  cmp [eax+1c],0
+  jne exit_GetDurability
+  cmp [edx],61727544 //Duration
+  jne @f
+  movsd xmm0,[_GetDurability]
+  movsd [eax+10],xmm0
+@@://no cooldown
+  cmp1 [Cheat+1],0
+  je @f
+  cmp2 [edx],444B //KD
+  jne @f
+  movsd xmm0,[Cooldown]
+  movsd [eax+10],xmm0
+exit_GetDurability:
+  pop edx
+code_GetDurability:
+  readmem(PSX_GetDurability,7)
+  jmp return_GetDurability
+_GetDurability:
+  dq (double)999
+Cooldown:
+  dq (double)0
+Cheat:
+  4b
+PSX_GetDurability:
+  jmp newmem_GetDurability
+  nop 2
+return_GetDurability:
+
+[DISABLE]
+unregistersymbol(*)//unreg all
+dealloc(*)//dealoc all
+//unregistersymbol(_GetStats)
+//unregistersymbol(PSX_GetStats)
+//unregistersymbol(code_GetStats)
+//dealloc(newmem_GetStats)
+PSX_GetStats:
+  readmem(code_GetStats,6)
+//Alt: mov eax,[esi+0C]
+//Alt: pop edi
+//Alt: pop esi
+
+//unregistersymbol(_GetDurability)
+//unregistersymbol(PSX_GetDurability)
+//unregistersymbol(code_GetDurability)
+//dealloc(newmem_GetDurability)
+PSX_GetDurability:
+  readmem(code_GetDurability,7)
+//Alt: movups xmm0,[eax+10]
+//Alt: mov edi,[ebp+08]
+
+{$lua}
+if syntaxcheck then return end
+-----------------------
+memrec.Color=0x00808000
+-------------- A.B.G.R
+{$asm}
+{
+// ORIGINAL CODE - INJECTION POINT: StoneShard.exe+138F64A
+
+StoneShard.exe+138F614: 39 7E 08                 - cmp [esi+08],edi
+StoneShard.exe+138F617: 75 22                    - jne StoneShard.exe+138F63B
+StoneShard.exe+138F619: F2 0F 10 05 E0 FE 60 02  - movsd xmm0,[StoneShard.exe+23DFEE0]
+StoneShard.exe+138F621: 6A 00                    - push 00
+StoneShard.exe+138F623: 83 EC 08                 - sub esp,08
+StoneShard.exe+138F626: F2 0F 11 04 24           - movsd [esp],xmm0
+StoneShard.exe+138F62B: 53                       - push ebx
+StoneShard.exe+138F62C: FF 76 0C                 - push [esi+0C]
+StoneShard.exe+138F62F: E8 9C 6E 00 00           - call StoneShard.exe+13964D0
+StoneShard.exe+138F634: 83 C4 14                 - add esp,14
+StoneShard.exe+138F637: 85 C0                    - test eax,eax
+StoneShard.exe+138F639: 74 0F                    - je StoneShard.exe+138F64A
+StoneShard.exe+138F63B: 8B 76 04                 - mov esi,[esi+04]
+StoneShard.exe+138F63E: 85 F6                    - test esi,esi
+StoneShard.exe+138F640: 75 D2                    - jne StoneShard.exe+138F614
+StoneShard.exe+138F642: 5F                       - pop edi
+StoneShard.exe+138F643: 5E                       - pop esi
+StoneShard.exe+138F644: 33 C0                    - xor eax,eax
+StoneShard.exe+138F646: 5B                       - pop ebx
+StoneShard.exe+138F647: C2 04 00                 - ret 0004
+// ---------- INJECTING HERE ----------
+StoneShard.exe+138F64A: 8B 46 0C                 - mov eax,[esi+0C]
+// ---------- DONE INJECTING  ----------
+StoneShard.exe+138F64D: 5F                       - pop edi
+StoneShard.exe+138F64E: 5E                       - pop esi
+StoneShard.exe+138F64F: 5B                       - pop ebx
+StoneShard.exe+138F650: C2 04 00                 - ret 0004
+StoneShard.exe+138F653: CC                       - int 3
+StoneShard.exe+138F654: CC                       - int 3
+StoneShard.exe+138F655: CC                       - int 3
+StoneShard.exe+138F656: CC                       - int 3
+StoneShard.exe+138F657: CC                       - int 3
+StoneShard.exe+138F658: CC                       - int 3
+StoneShard.exe+138F659: CC                       - int 3
+StoneShard.exe+138F65A: CC                       - int 3
+StoneShard.exe+138F65B: CC                       - int 3
+StoneShard.exe+138F65C: CC                       - int 3
+StoneShard.exe+138F65D: CC                       - int 3
+StoneShard.exe+138F65E: CC                       - int 3
+StoneShard.exe+138F65F: CC                       - int 3
+StoneShard.exe+138F660: 53                       - push ebx
+StoneShard.exe+138F661: 8B D9                    - mov ebx,ecx
+StoneShard.exe+138F663: 56                       - push esi
+}
+{
+// ORIGINAL CODE - INJECTION POINT: StoneShard.exe+13C9205
+
+StoneShard.exe+13C91B5: E8 B6 0F FD FF        - call StoneShard.exe+139A170
+StoneShard.exe+13C91BA: 83 C4 08              - add esp,08
+StoneShard.exe+13C91BD: 85 C0                 - test eax,eax
+StoneShard.exe+13C91BF: 0F 88 19 02 00 00     - js StoneShard.exe+13C93DE
+StoneShard.exe+13C91C5: 3B 05 2C 02 43 03     - cmp eax,[StoneShard.exe+248022C]
+StoneShard.exe+13C91CB: 0F 8D 0D 02 00 00     - jnl StoneShard.exe+13C93DE
+StoneShard.exe+13C91D1: 8B 0D 28 02 43 03     - mov ecx,[StoneShard.exe+2480228]
+StoneShard.exe+13C91D7: 8B 0C 81              - mov ecx,[ecx+eax*4]
+StoneShard.exe+13C91DA: 85 C9                 - test ecx,ecx
+StoneShard.exe+13C91DC: 0F 84 FC 01 00 00     - je StoneShard.exe+13C93DE
+StoneShard.exe+13C91E2: 8D 46 10              - lea eax,[esi+10]
+StoneShard.exe+13C91E5: 50                    - push eax
+StoneShard.exe+13C91E6: E8 05 64 FC FF        - call StoneShard.exe+138F5F0
+StoneShard.exe+13C91EB: 85 C0                 - test eax,eax
+StoneShard.exe+13C91ED: 75 16                 - jne StoneShard.exe+13C9205
+StoneShard.exe+13C91EF: 8B 45 08              - mov eax,[ebp+08]
+StoneShard.exe+13C91F2: 0F 57 C0              - xorps xmm0,xmm0
+StoneShard.exe+13C91F5: C7 40 0C 05 00 00 00  - mov [eax+0C],00000005
+StoneShard.exe+13C91FC: F2 0F 11 00           - movsd [eax],xmm0
+StoneShard.exe+13C9200: E9 E8 01 00 00        - jmp StoneShard.exe+13C93ED
+// ---------- INJECTING HERE ----------
+StoneShard.exe+13C9205: 0F 10 40 10           - movups xmm0,[eax+10]
+// ---------- DONE INJECTING  ----------
+StoneShard.exe+13C9209: 8B 7D 08              - mov edi,[ebp+08]
+StoneShard.exe+13C920C: 0F 11 45 DC           - movups [ebp-24],xmm0
+StoneShard.exe+13C9210: 8B 57 0C              - mov edx,[edi+0C]
+StoneShard.exe+13C9213: 8B C2                 - mov eax,edx
+StoneShard.exe+13C9215: 66 0F 73 D8 0C        - psrldq xmm0,0C
+StoneShard.exe+13C921A: 25 FF FF FF 00        - and eax,StoneShard.exe+4FFFF
+StoneShard.exe+13C921F: 66 0F 7E C1           - movd ecx,xmm0
+StoneShard.exe+13C9223: 81 E1 FF FF FF 00     - and ecx,StoneShard.exe+4FFFF
+StoneShard.exe+13C9229: 89 4D E8              - mov [ebp-18],ecx
+StoneShard.exe+13C922C: 83 E8 01              - sub eax,01
+StoneShard.exe+13C922F: 0F 84 F2 00 00 00     - je StoneShard.exe+13C9327
+StoneShard.exe+13C9235: 83 E8 01              - sub eax,01
+StoneShard.exe+13C9238: 0F 85 F8 00 00 00     - jne StoneShard.exe+13C9336
+StoneShard.exe+13C923E: 8D 42 FF              - lea eax,[edx-01]
+StoneShard.exe+13C9241: A9 FC FF FF 00        - test eax,StoneShard.exe+4FFFC
+StoneShard.exe+13C9246: 0F 85 C5 00 00 00     - jne StoneShard.exe+13C9311
+StoneShard.exe+13C924C: 8B 1F                 - mov ebx,[edi]
+StoneShard.exe+13C924E: 89 5D EC              - mov [ebp-14],ebx
+StoneShard.exe+13C9251: 85 DB                 - test ebx,ebx
+StoneShard.exe+13C9253: 0F 84 B8 00 00 00     - je StoneShard.exe+13C9311
+}
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>2</ID>
+              <Description>"Inf HP"</Description>
+              <LastState/>
+              <Color>008000</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{======================
+Author   : aanpsx
+Date     : 2021-02-13
+Game     : StoneShard.exe
+Version  : 0.6.1.8
+======================}
+
+define(bytes_GetHP,db 8B 44 24 24 89 44 24 04)
+define(fmax,(float)999999999)
+define(imax,#999999999)
+define(fmin,(float)0)
+define(mov1,mov byte ptr)
+define(cmp1,cmp byte ptr)
+define(bit,byte ptr)
+define(4b,dd 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)
+//           0 4 8 c1014181c2024282c3034383c404448
+[ENABLE]
+{$lua}
+if syntaxcheck then return end
+-----------------------
+memrec.Color=0x000080ff
+-------------- A.B.G.R
+{$asm}
+aobscanmodule(PSX_GetHP,StoneShard.exe,8B 44 24 24 89 44 24 04 89 34)
+alloc(newmem_GetHP,$1000,PSX_GetHP)
+//label(_GetHP)
+label(code_GetHP)
+//registersymbol(_GetHP)
+registersymbol(PSX_GetHP)
+registersymbol(code_GetHP)
+newmem_GetHP:
+//  mov [_GetHP+4],eax
+//  mov [_GetHP+8],ebx
+//  mov [_GetHP+c],ecx
+//  mov [_GetHP+10],edx
+//================== code here
+  mov eax,[esp+24]
+  test eax,eax
+  je exit_GetHP
+  mov [esp+04],(float)9999999//4B18967F
+  fld dword ptr [esp+04]
+  fstp qword ptr [eax]
+exit_GetHP:
+  mov [esp+04],eax
+  jmp return_GetHP
+code_GetHP:
+  readmem(PSX_GetHP,8)
+  jmp return_GetHP
+//_GetHP:
+//  4b
+PSX_GetHP:
+  jmp newmem_GetHP
+  nop 3
+return_GetHP:
+
+[DISABLE]
+unregistersymbol(*)//unreg all
+dealloc(*)//dealoc all
+//unregistersymbol(_GetHP)
+//unregistersymbol(PSX_GetHP)
+//unregistersymbol(code_GetHP)
+//dealloc(newmem_GetHP)
+PSX_GetHP:
+  readmem(code_GetHP,8)
+//Alt: mov eax,[esp+24]
+//Alt: mov [esp+04],eax
+{$lua}
+if syntaxcheck then return end
+-----------------------
+memrec.Color=0x00008000
+-------------- A.B.G.R 
+{$asm}
+{
+// ORIGINAL CODE - INJECTION POINT: StoneShard.exe+F7B200
+
+StoneShard.exe+F7B197: 01 D8                             - add eax,ebx
+StoneShard.exe+F7B199: A9 FC FF FF 00                    - test eax,StoneShard.exe+DCFFFC
+StoneShard.exe+F7B19E: 8D B4 24 88 00 00 00              - lea esi,[esp+00000088]
+StoneShard.exe+F7B1A5: 75 0F                             - jne StoneShard.exe+F7B1B6
+StoneShard.exe+F7B1A7: 8D 84 24 A0 00 00 00              - lea eax,[esp+000000A0]
+StoneShard.exe+F7B1AE: 89 04 24                          - mov [esp],eax
+StoneShard.exe+F7B1B1: E8 7A 9B 09 FF                    - call StoneShard.exe+14D30
+StoneShard.exe+F7B1B6: 8D 84 24 B0 00 00 00              - lea eax,[esp+000000B0]
+StoneShard.exe+F7B1BD: 89 84 24 9C 00 00 00              - mov [esp+0000009C],eax
+StoneShard.exe+F7B1C4: 8B 84 24 30 01 00 00              - mov eax,[esp+00000130]
+StoneShard.exe+F7B1CB: 8B 8C 24 2C 01 00 00              - mov ecx,[esp+0000012C]
+StoneShard.exe+F7B1D2: 8D 94 24 9C 00 00 00              - lea edx,[esp+0000009C]
+StoneShard.exe+F7B1D9: 89 54 24 10                       - mov [esp+10],edx
+StoneShard.exe+F7B1DD: 8D 94 24 00 01 00 00              - lea edx,[esp+00000100]
+StoneShard.exe+F7B1E4: 89 54 24 08                       - mov [esp+08],edx
+StoneShard.exe+F7B1E8: 89 44 24 04                       - mov [esp+04],eax
+StoneShard.exe+F7B1EC: 89 0C 24                          - mov [esp],ecx
+StoneShard.exe+F7B1EF: C7 44 24 0C 01 00 00 00           - mov [esp+0C],00000001
+StoneShard.exe+F7B1F7: E8 A4 2A 5E FF                    - call StoneShard.exe+55DCA0
+StoneShard.exe+F7B1FC: 89 44 24 08                       - mov [esp+08],eax
+// ---------- INJECTING HERE ----------
+StoneShard.exe+F7B200: 8B 44 24 24                       - mov eax,[esp+24]
+// ---------- DONE INJECTING  ----------
+StoneShard.exe+F7B204: 89 44 24 04                       - mov [esp+04],eax
+StoneShard.exe+F7B208: 89 34 24                          - mov [esp],esi
+StoneShard.exe+F7B20B: E8 F0 9C 09 FF                    - call StoneShard.exe+14F00
+StoneShard.exe+F7B210: C7 84 24 80 00 00 00 38 F2 69 02  - mov [esp+00000080],StoneShard.exe+246F238
+StoneShard.exe+F7B21B: 89 B4 24 84 00 00 00              - mov [esp+00000084],esi
+StoneShard.exe+F7B222: 8D 84 24 80 00 00 00              - lea eax,[esp+00000080]
+StoneShard.exe+F7B229: 89 44 24 08                       - mov [esp+08],eax
+StoneShard.exe+F7B22D: 8D 84 24 10 01 00 00              - lea eax,[esp+00000110]
+StoneShard.exe+F7B234: 89 04 24                          - mov [esp],eax
+StoneShard.exe+F7B237: C7 44 24 04 02 00 00 00           - mov [esp+04],00000002
+StoneShard.exe+F7B23F: E8 1C 4C 42 00                    - call StoneShard.exe+139FE60
+StoneShard.exe+F7B244: 89 04 24                          - mov [esp],eax
+StoneShard.exe+F7B247: 89 F9                             - mov ecx,edi
+StoneShard.exe+F7B249: E8 92 99 09 FF                    - call StoneShard.exe+14BE0
+StoneShard.exe+F7B24E: 83 EC 04                          - sub esp,04
+StoneShard.exe+F7B251: C7 84 24 28 01 00 00 10 00 00 00  - mov [esp+00000128],00000010
+StoneShard.exe+F7B25C: 8B 8C 24 30 01 00 00              - mov ecx,[esp+00000130]
+StoneShard.exe+F7B263: 8B 71 04                          - mov esi,[ecx+04]
+StoneShard.exe+F7B266: 85 F6                             - test esi,esi
+StoneShard.exe+F7B268: 74 16                             - je StoneShard.exe+F7B280
+}
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>1</ID>
+              <Description>"Inf Energy"</Description>
+              <LastState/>
+              <Color>008000</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{======================
+Author   : aanpsx
+Date     : 2021-02-13
+Game     : StoneShard.exe
+Version  : 0.6.1.8
+======================}
+
+define(bytes_GetEnergy,db 8B 44 24 48 89 44 24 08)
+define(fmax,(float)999999999)
+define(imax,#999999999)
+define(fmin,(float)0)
+define(mov1,mov byte ptr)
+define(cmp1,cmp byte ptr)
+define(bit,byte ptr)
+define(4b,dd 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)
+//           0 4 8 c1014181c2024282c3034383c404448
+[ENABLE]
+{$lua}
+if syntaxcheck then return end
+-----------------------
+memrec.Color=0x000080ff
+-------------- A.B.G.R
+{$asm}
+aobscanmodule(PSX_GetEnergy,StoneShard.exe,8B 44 24 48 89 44 24 08 89 7C 24 04 8D B4 24 C0)
+alloc(newmem_GetEnergy,$1000,PSX_GetEnergy)
+label(_GetEnergy)
+label(code_GetEnergy)
+registersymbol(_GetEnergy)
+registersymbol(PSX_GetEnergy)
+registersymbol(code_GetEnergy)
+newmem_GetEnergy:
+  mov [_GetEnergy+4],eax
+  mov [_GetEnergy+8],ebx
+  mov [_GetEnergy+c],ecx
+  mov [_GetEnergy+10],edx
+//================== code here
+  test edi,edi
+  je exit_GetEnergy
+  mov [esp+08],4B18967F
+  fld dword ptr [esp+08]
+  fstp qword ptr [edi]
+exit_GetEnergy:
+  mov eax,[esp+48]
+  mov [esp+08],eax
+  jmp return_GetEnergy
+code_GetEnergy:
+  readmem(PSX_GetEnergy,8)
+  jmp return_GetEnergy
+_GetEnergy:
+  4b
+PSX_GetEnergy:
+  jmp newmem_GetEnergy
+  nop 3
+return_GetEnergy:
+
+[DISABLE]
+unregistersymbol(*)//unreg all
+dealloc(*)//dealoc all
+//unregistersymbol(_GetEnergy)
+//unregistersymbol(PSX_GetEnergy)
+//unregistersymbol(code_GetEnergy)
+//dealloc(newmem_GetEnergy)
+PSX_GetEnergy:
+  readmem(code_GetEnergy,8)
+//Alt: mov eax,[esp+48]
+//Alt: mov [esp+08],eax
+{$lua}
+if syntaxcheck then return end
+-----------------------
+memrec.Color=0x00008000
+-------------- A.B.G.R 
+{$asm}
+{
+// ORIGINAL CODE - INJECTION POINT: StoneShard.exe+1323CC
+
+StoneShard.exe+132369: 89 44 24 04              - mov [esp+04],eax
+StoneShard.exe+13236D: 8D B4 24 D0 01 00 00     - lea esi,[esp+000001D0]
+StoneShard.exe+132374: 89 34 24                 - mov [esp],esi
+StoneShard.exe+132377: C7 44 24 0C 00 00 00 40  - mov [esp+0C],40000000
+StoneShard.exe+13237F: C7 44 24 08 00 00 00 00  - mov [esp+08],00000000
+StoneShard.exe+132387: E8 94 2D EE FF           - call StoneShard.exe+15120
+StoneShard.exe+13238C: 8B 5D 0C                 - mov ebx,[ebp+0C]
+StoneShard.exe+13238F: 8B 7C 24 40              - mov edi,[esp+40]
+StoneShard.exe+132393: 89 74 24 08              - mov [esp+08],esi
+StoneShard.exe+132397: 8D 84 24 78 05 00 00     - lea eax,[esp+00000578]
+StoneShard.exe+13239E: 89 44 24 04              - mov [esp+04],eax
+StoneShard.exe+1323A2: 8D 84 24 E0 01 00 00     - lea eax,[esp+000001E0]
+StoneShard.exe+1323A9: 89 04 24                 - mov [esp],eax
+StoneShard.exe+1323AC: E8 DF 2A EE FF           - call StoneShard.exe+14E90
+StoneShard.exe+1323B1: B8 FF FF FF 00           - mov eax,StoneShard.exe+DCFFFF
+StoneShard.exe+1323B6: 03 84 24 DC 01 00 00     - add eax,[esp+000001DC]
+StoneShard.exe+1323BD: A9 FC FF FF 00           - test eax,StoneShard.exe+DCFFFC
+StoneShard.exe+1323C2: 75 08                    - jne StoneShard.exe+1323CC
+StoneShard.exe+1323C4: 89 34 24                 - mov [esp],esi
+StoneShard.exe+1323C7: E8 64 29 EE FF           - call StoneShard.exe+14D30
+// ---------- INJECTING HERE ----------
+StoneShard.exe+1323CC: 8B 44 24 48              - mov eax,[esp+48]
+// ---------- DONE INJECTING  ----------
+StoneShard.exe+1323D0: 89 44 24 08              - mov [esp+08],eax
+StoneShard.exe+1323D4: 89 7C 24 04              - mov [esp+04],edi
+StoneShard.exe+1323D8: 8D B4 24 C0 01 00 00     - lea esi,[esp+000001C0]
+StoneShard.exe+1323DF: 89 34 24                 - mov [esp],esi
+StoneShard.exe+1323E2: E8 A9 2A EE FF           - call StoneShard.exe+14E90
+StoneShard.exe+1323E7: 89 B4 24 BC 01 00 00     - mov [esp+000001BC],esi
+StoneShard.exe+1323EE: 8D 84 24 BC 01 00 00     - lea eax,[esp+000001BC]
+StoneShard.exe+1323F5: 89 44 24 10              - mov [esp+10],eax
+StoneShard.exe+1323F9: 8D 84 24 A8 04 00 00     - lea eax,[esp+000004A8]
+StoneShard.exe+132400: 89 44 24 08              - mov [esp+08],eax
+StoneShard.exe+132404: 89 5C 24 04              - mov [esp+04],ebx
+StoneShard.exe+132408: 8B 75 08                 - mov esi,[ebp+08]
+StoneShard.exe+13240B: 89 34 24                 - mov [esp],esi
+StoneShard.exe+13240E: C7 44 24 0C 01 00 00 00  - mov [esp+0C],00000001
+StoneShard.exe+132416: E8 85 B8 42 00           - call StoneShard.exe+55DCA0
+StoneShard.exe+13241B: 89 84 24 B8 01 00 00     - mov [esp+000001B8],eax
+StoneShard.exe+132422: 8B 44 24 48              - mov eax,[esp+48]
+StoneShard.exe+132426: 89 44 24 08              - mov [esp+08],eax
+StoneShard.exe+13242A: 8B 44 24 44              - mov eax,[esp+44]
+StoneShard.exe+13242E: 89 44 24 04              - mov [esp+04],eax
+}
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>144</ID>
+              <Description>"No Hunger"</Description>
+              <LastState/>
+              <Color>008000</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{======================
+Author   : aanpsx
+Date     : 2021-02-13
+Game     : StoneShard.exe
+Version  : 0.6.1.8
+======================}
+{$lua}
+if syntaxcheck then return end
+[ENABLE]
+-----------------------
+memrec.Color=0x000080ff
+-------------- A.B.G.R
+_Hunger = createTimer()
+_Hunger.setInterval(10)
+_Hunger.onTimer = function()
+--------------------------------------------
+    writeDouble('["Hunger"]+10',0)
+--------------------------------------------
+end
+
+[DISABLE]
+if syntaxcheck then return end
+-----------------------
+memrec.Color=0x00008000
+-------------- A.B.G.R
+_Hunger.destroy()
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>153</ID>
+              <Description>"No Thirsty"</Description>
+              <LastState/>
+              <Color>008000</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{======================
+Author   : aanpsx
+Date     : 2021-02-13
+Game     : StoneShard.exe
+Version  : 0.6.1.8
+======================}
+{$lua}
+if syntaxcheck then return end
+[ENABLE]
+-----------------------
+memrec.Color=0x000080ff
+-------------- A.B.G.R
+_Thirsty = createTimer()
+_Thirsty.setInterval(10)
+_Thirsty.onTimer = function()
+--------------------------------------------
+    writeDouble('["Thirsty"]+10',0)
+--------------------------------------------
+end
+
+[DISABLE]
+if syntaxcheck then return end
+-----------------------
+memrec.Color=0x00008000
+-------------- A.B.G.R
+_Thirsty.destroy()
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>154</ID>
+              <Description>"No Intoxication"</Description>
+              <LastState/>
+              <Color>008000</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{======================
+Author   : aanpsx
+Date     : 2021-02-13
+Game     : StoneShard.exe
+Version  : 0.6.1.8
+======================}
+{$lua}
+if syntaxcheck then return end
+[ENABLE]
+-----------------------
+memrec.Color=0x000080ff
+-------------- A.B.G.R
+_Intoxication = createTimer()
+_Intoxication.setInterval(10)
+_Intoxication.onTimer = function()
+--------------------------------------------
+    writeDouble('["Intoxication"]+10',0)
+--------------------------------------------
+end
+
+[DISABLE]
+if syntaxcheck then return end
+-----------------------
+memrec.Color=0x00008000
+-------------- A.B.G.R
+_Intoxication.destroy()
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>155</ID>
+              <Description>"No Pain"</Description>
+              <LastState/>
+              <Color>008000</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{======================
+Author   : aanpsx
+Date     : 2021-02-13
+Game     : StoneShard.exe
+Version  : 0.6.1.8
+======================}
+{$lua}
+if syntaxcheck then return end
+[ENABLE]
+-----------------------
+memrec.Color=0x000080ff
+-------------- A.B.G.R
+_Pain = createTimer()
+_Pain.setInterval(10)
+_Pain.onTimer = function()
+--------------------------------------------
+    writeDouble('["Pain"]+10',0)
+--------------------------------------------
+end
+
+[DISABLE]
+if syntaxcheck then return end
+-----------------------
+memrec.Color=0x00008000
+-------------- A.B.G.R
+_Pain.destroy()
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>156</ID>
+              <Description>"Max Morale"</Description>
+              <LastState/>
+              <Color>008000</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{======================
+Author   : aanpsx
+Date     : 2021-02-13
+Game     : StoneShard.exe
+Version  : 0.6.1.8
+======================}
+{$lua}
+if syntaxcheck then return end
+[ENABLE]
+-----------------------
+memrec.Color=0x000080ff
+-------------- A.B.G.R
+_Morale = createTimer()
+_Morale.setInterval(10)
+_Morale.onTimer = function()
+--------------------------------------------
+    writeDouble('["Morale"]+10',100)
+--------------------------------------------
+end
+
+[DISABLE]
+if syntaxcheck then return end
+-----------------------
+memrec.Color=0x00008000
+-------------- A.B.G.R
+_Morale.destroy()
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>157</ID>
+              <Description>"Max Sanity"</Description>
+              <LastState/>
+              <Color>008000</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{======================
+Author   : aanpsx
+Date     : 2021-02-13
+Game     : StoneShard.exe
+Version  : 0.6.1.8
+======================}
+{$lua}
+if syntaxcheck then return end
+[ENABLE]
+-----------------------
+memrec.Color=0x000080ff
+-------------- A.B.G.R
+_Sanity = createTimer()
+_Sanity.setInterval(10)
+_Sanity.onTimer = function()
+--------------------------------------------
+    writeDouble('["Sanity"]+10',100)
+--------------------------------------------
+end
+
+[DISABLE]
+if syntaxcheck then return end
+-----------------------
+memrec.Color=0x00008000
+-------------- A.B.G.R
+_Sanity.destroy()
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>158</ID>
+              <Description>"Max Body Conditions"</Description>
+              <LastState/>
+              <Color>008000</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{======================
+Author   : aanpsx
+Date     : 2021-02-13
+Game     : StoneShard.exe
+Version  : 0.6.1.8
+======================}
+{$lua}
+if syntaxcheck then return end
+[ENABLE]
+-----------------------
+memrec.Color=0x000080ff
+-------------- A.B.G.R
+_Badan = createTimer()
+_Badan.setInterval(10)
+_Badan.onTimer = function()
+--------------------------------------------
+    writeDouble('["Head"]+10',100)
+    writeDouble('["Torso"]+10',100)
+    writeDouble('["LHand"]+10',100)
+    writeDouble('["RHand"]+10',100)
+    writeDouble('["LLeg"]+10',100)
+    writeDouble('["RLeg"]+10',100)
+--------------------------------------------
+end
+
+[DISABLE]
+if syntaxcheck then return end
+-----------------------
+memrec.Color=0x00008000
+-------------- A.B.G.R
+_Badan.destroy()
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>4557</ID>
+              <Description>"Inf Durability"</Description>
+              <LastState/>
+              <Color>008000</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{======================
+Author   : aanpsx
+Date     : 2021-01-30
+Game     : P4G.exe
+Version  : 
+======================}
+
+define(PSX,Cheat)
+[ENABLE]
+{$lua}
+if syntaxcheck then return end
+-----------------------
+memrec.Color=0x000080ff
+-------------- A.B.G.R
+{$asm}
+PSX:
+  db 1
+
+[DISABLE]
+PSX:
+  db 0
+{$lua}
+if syntaxcheck then return end
+-----------------------
+memrec.Color=0x00008000
+-------------- A.B.G.R 
+{$asm}
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>4558</ID>
+              <Description>"Skill No Coodown"</Description>
+              <LastState/>
+              <Color>008000</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{======================
+Author   : aanpsx
+Date     : 2021-01-30
+Game     : P4G.exe
+Version  : 
+======================}
+
+define(PSX,Cheat+1)
+[ENABLE]
+{$lua}
+if syntaxcheck then return end
+-----------------------
+memrec.Color=0x000080ff
+-------------- A.B.G.R
+{$asm}
+PSX:
+  db 1
+
+[DISABLE]
+PSX:
+  db 0
+{$lua}
+if syntaxcheck then return end
+-----------------------
+memrec.Color=0x00008000
+-------------- A.B.G.R 
+{$asm}
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>171</ID>
+              <Description>"=========================================="</Description>
+              <Options moHideChildren="1"/>
+              <LastState Value="" RealAddress="00000000"/>
+              <Color>808000</Color>
+              <GroupHeader>1</GroupHeader>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>168</ID>
+                  <Description>"Enable"</Description>
+                  <Options moDeactivateChildrenAsWell="1"/>
+                  <LastState/>
+                  <Color>808000</Color>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>{======================
+Author   : aanpsx
+Date     : 2021-02-13
+Game     : StoneShard.exe
+Version  : 0.6.1.8
+======================}
+
+define(bytes_GetStats,db 8B 46 0C 5F 5E)
+define(fmax,(float)999999999)
+define(imax,#999999999)
+define(fmin,(float)0)
+define(mov1,mov byte ptr)
+define(cmp1,cmp byte ptr)
+define(cmp2,cmp word ptr)
+define(bit,byte ptr)
+define(4b,dd 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)
+//           0 4 8 c1014181c2024282c3034383c404448
+[ENABLE]
+{$lua}
+if syntaxcheck then return end
+-----------------------
+memrec.Color=0x00ff0000
+-------------- A.B.G.R
+{$asm}
+aobscanmodule(PSX_GetStats,StoneShard.exe,8B 46 0C 5F 5E 5B ** ** ** cc cc cc)
+alloc(newmem_GetStats,$1000,PSX_GetStats)
+label(_GetStats)
+label(code_GetStats)
+registersymbol(_GetStats)
+registersymbol(PSX_GetStats)
+registersymbol(code_GetStats)
+//============
+alloc(Hunger,4)
+registersymbol(Hunger)
+Hunger:
+  dd 0
+alloc(Thirsty,4)
+registersymbol(Thirsty)
+Thirsty:
+  dd 0
+alloc(Intoxication,4)
+registersymbol(Intoxication)
+Intoxication:
+  dd 0
+alloc(Pain,4)
+registersymbol(Pain)
+Pain:
+  dd 0
+alloc(Morale,4)
+registersymbol(Morale)
+Morale:
+  dd 0
+alloc(Sanity,4)
+registersymbol(Sanity)
+Sanity:
+  dd 0
+alloc(Head,4)
+registersymbol(Head)
+Head:
+  dd 0
+alloc(Torso,4)
+registersymbol(Torso)
+Torso:
+  dd 0
+alloc(LHand,4)
+registersymbol(LHand)
+LHand:
+  dd 0
+alloc(RHand,4)
+registersymbol(RHand)
+RHand:
+  dd 0
+alloc(LLeg,4)
+registersymbol(LLeg)
+LLeg:
+  dd 0
+alloc(RLeg,4)
+registersymbol(RLeg)
+RLeg:
+  dd 0
+alloc(CoinOnBag,4)
+registersymbol(CoinOnBag)
+CoinOnBag:
+  dd 0
+//=============
+newmem_GetStats:
+//=============
+code_GetStats:
+  readmem(PSX_GetStats,6)
+newCode:
+  push ebx
+  mov ebx,eax
+  test ebx,ebx
+  je exit_GetStats
+  mov ebx,[ebx]
+  test ebx,ebx
+  je exit_GetStats
+  mov ebx,[ebx]
+  test ebx,ebx
+  je exit_GetStats
+@@:
+  cmp [ebx],00525453  //str
+  jne @f
+  cmp [eax+8],0
+  jne @f
+  cmp [eax+1c],0
+  jne @f
+  mov [_GetStats],eax
+@@:
+  cmp [ebx],004C4741 //AGL
+  jne @f
+  cmp [eax+8],0
+  jne @f
+  cmp [eax+1c],0
+  jne @f
+  mov [_GetStats+4],eax
+@@:
+  cmp [ebx],00435250 //PRC
+  jne @f
+  cmp [eax+8],0
+  jne @f
+  cmp [eax+1c],0
+  jne @f
+  mov [_GetStats+8],eax
+@@:
+  cmp [ebx],61746956 //VIT
+  jne @f
+  cmp [eax+8],0
+  jne @f
+  cmp [eax+1c],0
+  jne @f
+  mov [_GetStats+c],eax
+@@:
+  cmp [ebx],004C4957 //WIL
+  jne @f
+  cmp [eax+8],0
+  jne @f
+  cmp [eax+1c],0
+  jne @f
+  mov [_GetStats+10],eax
+//===================
+@@:
+  cmp2 [ebx],5041//ap
+  jne @f
+  cmp [eax+8],0
+  jne @f
+  cmp [eax+1c],0
+  jne @f
+  mov [_GetStats+20],eax
+@@:
+  cmp2 [ebx],5053//sp
+  jne @f
+  cmp [eax+8],0
+  jne @f
+  cmp [eax+1c],0
+  jne @f
+  mov [_GetStats+24],eax
+@@://Hunger
+  cmp [ebx],676E7548  //Hunger
+  jne @f
+  cmp [eax+8],0
+  jne @f
+  cmp [eax+1c],0
+  jne @f
+  mov [_GetStats+28],eax
+  mov [Hunger],eax
+@@://Thirsty
+  cmp [ebx],72696854  //Thirsty
+  jne @f
+  cmp [eax+8],0
+  jne @f
+  cmp [eax+1c],0
+  jne @f
+  mov [_GetStats+2c],eax
+  mov [Thirsty],eax
+@@://Intoxication
+  cmp [ebx],6F746E49  //Intoxication
+  jne @f
+  cmp [eax+8],0
+  jne @f
+  cmp [eax+1c],0
+  jne @f
+  mov [_GetStats+30],eax
+  mov [Intoxication],eax
+@@://Pain
+  cmp [ebx],6E696150  //Pain
+  jne @f
+  cmp [eax+8],0
+  jne @f
+  cmp [eax+1c],0
+  jne @f
+  mov [_GetStats+34],eax
+  mov [Pain],eax
+@@://Morale
+  cmp [ebx],61726F4D  //Morale
+  jne @f
+  cmp [eax+8],0
+  jne @f
+  cmp [eax+1c],0
+  jne @f
+  mov [_GetStats+38],eax
+  mov [Morale],eax
+@@://Sanity
+  cmp [ebx],696E6153  //Sanity
+  jne @f
+  cmp [eax+8],0
+  jne @f
+  cmp [eax+1c],0
+  jne @f
+  mov [_GetStats+3c],eax
+  mov [Sanity],eax
+//=====================
+@@://head
+  cmp2 [ebx],6568  //head
+  jne @f
+  cmp [eax+8],0
+  jne @f
+  cmp [eax+1c],0
+  jne @f
+  mov [_GetStats+40],eax
+  mov [Head],eax
+@@://tors
+  cmp2 [ebx],6F74  //tors
+  jne @f
+  cmp [eax+8],0
+  jne @f
+  cmp [eax+1c],0
+  jne @f
+  mov [_GetStats+44],eax
+  mov [Torso],eax
+@@://lhand
+  cmp2 [ebx],686C  //lhand
+  jne @f
+  cmp [eax+8],0
+  jne @f
+  cmp [eax+1c],0
+  jne @f
+  mov [_GetStats+48],eax
+  mov [LHand],eax
+@@://rhand
+  cmp2 [ebx],6872  //rhand
+  jne @f
+  cmp [eax+8],0
+  jne @f
+  cmp [eax+1c],0
+  jne @f
+  mov [_GetStats+4c],eax
+  mov [RHand],eax
+@@://legs
+  cmp2 [ebx],656C  //legs
+  jne @f
+  cmp [eax+8],0
+  jne @f
+  cmp [eax+1c],0
+  jne @f
+  mov [_GetStats+50],eax
+  mov [LLeg],eax
+@@://rlegs
+  cmp2 [ebx],6C72  //rlegs
+  jne @f
+  cmp [eax+8],0
+  jne @f
+  cmp [eax+1c],0
+  jne @f
+  mov [_GetStats+54],eax
+  mov [RLeg],eax
+//=============
+@@://Stack gold
+  cmp [ebx],63617453  //Stack
+  jne @f
+  cmp [eax+8],0
+  jne @f
+  cmp [eax+1c],0
+  jne @f
+  mov [_GetStats+58],eax
+  mov [CoinOnBag],eax
+exit_GetStats:
+  pop ebx
+  jmp return_GetStats
+_GetStats:
+  4b
+PSX_GetStats:
+  jmp newmem_GetStats
+  nop
+return_GetStats:
+
+[DISABLE]
+unregistersymbol(*)//unreg all
+dealloc(*)//dealoc all
+//unregistersymbol(_GetStats)
+//unregistersymbol(PSX_GetStats)
+//unregistersymbol(code_GetStats)
+//dealloc(newmem_GetStats)
+PSX_GetStats:
+  readmem(code_GetStats,6)
+//Alt: mov eax,[esi+0C]
+//Alt: pop edi
+//Alt: pop esi
+{$lua}
+if syntaxcheck then return end
+-----------------------
+memrec.Color=0x00808000
+-------------- A.B.G.R
+{$asm}
+{
+// ORIGINAL CODE - INJECTION POINT: StoneShard.exe+138F64A
+
+StoneShard.exe+138F614: 39 7E 08                 - cmp [esi+08],edi
+StoneShard.exe+138F617: 75 22                    - jne StoneShard.exe+138F63B
+StoneShard.exe+138F619: F2 0F 10 05 E0 FE 60 02  - movsd xmm0,[StoneShard.exe+23DFEE0]
+StoneShard.exe+138F621: 6A 00                    - push 00
+StoneShard.exe+138F623: 83 EC 08                 - sub esp,08
+StoneShard.exe+138F626: F2 0F 11 04 24           - movsd [esp],xmm0
+StoneShard.exe+138F62B: 53                       - push ebx
+StoneShard.exe+138F62C: FF 76 0C                 - push [esi+0C]
+StoneShard.exe+138F62F: E8 9C 6E 00 00           - call StoneShard.exe+13964D0
+StoneShard.exe+138F634: 83 C4 14                 - add esp,14
+StoneShard.exe+138F637: 85 C0                    - test eax,eax
+StoneShard.exe+138F639: 74 0F                    - je StoneShard.exe+138F64A
+StoneShard.exe+138F63B: 8B 76 04                 - mov esi,[esi+04]
+StoneShard.exe+138F63E: 85 F6                    - test esi,esi
+StoneShard.exe+138F640: 75 D2                    - jne StoneShard.exe+138F614
+StoneShard.exe+138F642: 5F                       - pop edi
+StoneShard.exe+138F643: 5E                       - pop esi
+StoneShard.exe+138F644: 33 C0                    - xor eax,eax
+StoneShard.exe+138F646: 5B                       - pop ebx
+StoneShard.exe+138F647: C2 04 00                 - ret 0004
+// ---------- INJECTING HERE ----------
+StoneShard.exe+138F64A: 8B 46 0C                 - mov eax,[esi+0C]
+// ---------- DONE INJECTING  ----------
+StoneShard.exe+138F64D: 5F                       - pop edi
+StoneShard.exe+138F64E: 5E                       - pop esi
+StoneShard.exe+138F64F: 5B                       - pop ebx
+StoneShard.exe+138F650: C2 04 00                 - ret 0004
+StoneShard.exe+138F653: CC                       - int 3
+StoneShard.exe+138F654: CC                       - int 3
+StoneShard.exe+138F655: CC                       - int 3
+StoneShard.exe+138F656: CC                       - int 3
+StoneShard.exe+138F657: CC                       - int 3
+StoneShard.exe+138F658: CC                       - int 3
+StoneShard.exe+138F659: CC                       - int 3
+StoneShard.exe+138F65A: CC                       - int 3
+StoneShard.exe+138F65B: CC                       - int 3
+StoneShard.exe+138F65C: CC                       - int 3
+StoneShard.exe+138F65D: CC                       - int 3
+StoneShard.exe+138F65E: CC                       - int 3
+StoneShard.exe+138F65F: CC                       - int 3
+StoneShard.exe+138F660: 53                       - push ebx
+StoneShard.exe+138F661: 8B D9                    - mov ebx,ecx
+StoneShard.exe+138F663: 56                       - push esi
+}
+</AssemblerScript>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>181</ID>
+                  <Description>"Max Durability old"</Description>
+                  <LastState/>
+                  <Color>008000</Color>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>{======================
+Author   : aanpsx
+Date     : 2021-02-14
+Game     : StoneShard.exe
+Version  : 0.6.1.8
+======================}
+
+define(bytes_GetDurability,db 0F 10 40 10 8B 7D 08)
+define(fmax,(float)999999999)
+define(imax,#999999999)
+define(fmin,(float)0)
+define(mov1,mov byte ptr)
+define(cmp1,cmp byte ptr)
+define(cmp2,cmp word ptr)
+define(bit,byte ptr)
+define(4b,dd 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)
+//           0 4 8 c1014181c2024282c3034383c404448
+[ENABLE]
+{$lua}
+if syntaxcheck then return end
+-----------------------
+memrec.Color=0x000080ff
+-------------- A.B.G.R
+{$asm}
+aobscanmodule(PSX_GetDurability,StoneShard.exe,0F 10 40 10 8B 7D 08)
+alloc(newmem_GetDurability,$1000,PSX_GetDurability)
+label(_GetDurability)
+label(code_GetDurability)
+registersymbol(_GetDurability)
+registersymbol(PSX_GetDurability)
+registersymbol(code_GetDurability)
+label(asnnn)
+registersymbol(asnnn)
+label(Cooldown)
+registersymbol(Cooldown)
+newmem_GetDurability:
+  push edx
+  mov edx,eax
+  test edx,edx
+  mov [asnnn],edx
+  je exit_GetDurability
+  mov edx,[edx]
+  test edx,edx
+  mov [asnnn+4],edx
+  je exit_GetDurability
+  mov edx,[edx]
+  test edx,edx
+  mov [asnnn+8],edx
+  je exit_GetDurability
+//================== code here
+  cmp [eax+1c],0
+  jne exit_GetDurability
+  cmp [edx],61727544 //Duration
+  jne @f
+//  mov edx,[_GetDurability]
+//  mov [eax+10],edx
+   movsd xmm0,[_GetDurability]
+   movsd [eax+10],xmm0
+//   mov [eax+10],(double)999
+@@://cooldown
+  cmp2 [edx],444B //KD
+  jne @f
+  mov [Cooldown],eax
+exit_GetDurability:
+  pop edx
+code_GetDurability:
+  readmem(PSX_GetDurability,7)
+  jmp return_GetDurability
+_GetDurability:
+  dq (double)999
+asnnn:
+  4b
+Cooldown:
+  4b
+PSX_GetDurability:
+  jmp newmem_GetDurability
+  nop 2
+return_GetDurability:
+
+[DISABLE]
+unregistersymbol(*)//unreg all
+dealloc(*)//dealoc all
+//unregistersymbol(_GetDurability)
+//unregistersymbol(PSX_GetDurability)
+//unregistersymbol(code_GetDurability)
+//dealloc(newmem_GetDurability)
+PSX_GetDurability:
+  readmem(code_GetDurability,7)
+//Alt: movups xmm0,[eax+10]
+//Alt: mov edi,[ebp+08]
+{$lua}
+if syntaxcheck then return end
+-----------------------
+memrec.Color=0x00008000
+-------------- A.B.G.R 
+{$asm}
+{
+// ORIGINAL CODE - INJECTION POINT: StoneShard.exe+13C9205
+
+StoneShard.exe+13C91B5: E8 B6 0F FD FF        - call StoneShard.exe+139A170
+StoneShard.exe+13C91BA: 83 C4 08              - add esp,08
+StoneShard.exe+13C91BD: 85 C0                 - test eax,eax
+StoneShard.exe+13C91BF: 0F 88 19 02 00 00     - js StoneShard.exe+13C93DE
+StoneShard.exe+13C91C5: 3B 05 2C 02 43 03     - cmp eax,[StoneShard.exe+248022C]
+StoneShard.exe+13C91CB: 0F 8D 0D 02 00 00     - jnl StoneShard.exe+13C93DE
+StoneShard.exe+13C91D1: 8B 0D 28 02 43 03     - mov ecx,[StoneShard.exe+2480228]
+StoneShard.exe+13C91D7: 8B 0C 81              - mov ecx,[ecx+eax*4]
+StoneShard.exe+13C91DA: 85 C9                 - test ecx,ecx
+StoneShard.exe+13C91DC: 0F 84 FC 01 00 00     - je StoneShard.exe+13C93DE
+StoneShard.exe+13C91E2: 8D 46 10              - lea eax,[esi+10]
+StoneShard.exe+13C91E5: 50                    - push eax
+StoneShard.exe+13C91E6: E8 05 64 FC FF        - call StoneShard.exe+138F5F0
+StoneShard.exe+13C91EB: 85 C0                 - test eax,eax
+StoneShard.exe+13C91ED: 75 16                 - jne StoneShard.exe+13C9205
+StoneShard.exe+13C91EF: 8B 45 08              - mov eax,[ebp+08]
+StoneShard.exe+13C91F2: 0F 57 C0              - xorps xmm0,xmm0
+StoneShard.exe+13C91F5: C7 40 0C 05 00 00 00  - mov [eax+0C],00000005
+StoneShard.exe+13C91FC: F2 0F 11 00           - movsd [eax],xmm0
+StoneShard.exe+13C9200: E9 E8 01 00 00        - jmp StoneShard.exe+13C93ED
+// ---------- INJECTING HERE ----------
+StoneShard.exe+13C9205: 0F 10 40 10           - movups xmm0,[eax+10]
+// ---------- DONE INJECTING  ----------
+StoneShard.exe+13C9209: 8B 7D 08              - mov edi,[ebp+08]
+StoneShard.exe+13C920C: 0F 11 45 DC           - movups [ebp-24],xmm0
+StoneShard.exe+13C9210: 8B 57 0C              - mov edx,[edi+0C]
+StoneShard.exe+13C9213: 8B C2                 - mov eax,edx
+StoneShard.exe+13C9215: 66 0F 73 D8 0C        - psrldq xmm0,0C
+StoneShard.exe+13C921A: 25 FF FF FF 00        - and eax,StoneShard.exe+4FFFF
+StoneShard.exe+13C921F: 66 0F 7E C1           - movd ecx,xmm0
+StoneShard.exe+13C9223: 81 E1 FF FF FF 00     - and ecx,StoneShard.exe+4FFFF
+StoneShard.exe+13C9229: 89 4D E8              - mov [ebp-18],ecx
+StoneShard.exe+13C922C: 83 E8 01              - sub eax,01
+StoneShard.exe+13C922F: 0F 84 F2 00 00 00     - je StoneShard.exe+13C9327
+StoneShard.exe+13C9235: 83 E8 01              - sub eax,01
+StoneShard.exe+13C9238: 0F 85 F8 00 00 00     - jne StoneShard.exe+13C9336
+StoneShard.exe+13C923E: 8D 42 FF              - lea eax,[edx-01]
+StoneShard.exe+13C9241: A9 FC FF FF 00        - test eax,StoneShard.exe+4FFFC
+StoneShard.exe+13C9246: 0F 85 C5 00 00 00     - jne StoneShard.exe+13C9311
+StoneShard.exe+13C924C: 8B 1F                 - mov ebx,[edi]
+StoneShard.exe+13C924E: 89 5D EC              - mov [ebp-14],ebx
+StoneShard.exe+13C9251: 85 DB                 - test ebx,ebx
+StoneShard.exe+13C9253: 0F 84 B8 00 00 00     - je StoneShard.exe+13C9311
+}
+</AssemblerScript>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>195</ID>
+                  <Description>"Durability ok"</Description>
+                  <Options moDeactivateChildrenAsWell="1"/>
+                  <LastState/>
+                  <Color>008000</Color>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>{======================
+Author   : aanpsx
+Date     : 2021-02-14
+Game     : StoneShard.exe
+Version  : 0.6.1.8
+======================}
+
+define(bytes_GetDurability,db 0F 10 40 10 8B 7D 08)
+define(fmax,(float)999999999)
+define(imax,#999999999)
+define(fmin,(float)0)
+define(mov1,mov byte ptr)
+define(cmp1,cmp byte ptr)
+define(cmp2,cmp word ptr)
+define(bit,byte ptr)
+define(4b,dd 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)
+//           0 4 8 c1014181c2024282c3034383c404448
+[ENABLE]
+{$lua}
+if syntaxcheck then return end
+-----------------------
+memrec.Color=0x000080ff
+-------------- A.B.G.R
+{$asm}
+aobscanmodule(PSX_GetDurability,StoneShard.exe,0F 10 40 10 8B 7D 08)
+alloc(newmem_GetDurability,$1000,PSX_GetDurability)
+label(_GetDurability)
+label(code_GetDurability)
+registersymbol(_GetDurability)
+registersymbol(PSX_GetDurability)
+registersymbol(code_GetDurability)
+label(Cooldown)
+registersymbol(Cooldown)
+label(Cheat)
+registersymbol(Cheat)
+newmem_GetDurability:
+  push edx
+  mov edx,eax
+  test edx,edx
+  je exit_GetDurability
+  mov edx,[edx]
+  test edx,edx
+  je exit_GetDurability
+  mov edx,[edx]
+  test edx,edx
+  je exit_GetDurability
+//================== code here
+@@://inf durability
+  cmp1 [Cheat],0
+  je @f
+  cmp [eax+1c],0
+  jne exit_GetDurability
+  cmp [edx],61727544 //Duration
+  jne @f
+  movsd xmm0,[_GetDurability]
+  movsd [eax+10],xmm0
+@@://no cooldown
+  cmp1 [Cheat+1],0
+  je @f
+  cmp2 [edx],444B //KD
+  jne @f
+  movsd xmm0,[Cooldown]
+  movsd [eax+10],xmm0
+exit_GetDurability:
+  pop edx
+code_GetDurability:
+  readmem(PSX_GetDurability,7)
+  jmp return_GetDurability
+_GetDurability:
+  dq (double)999
+Cooldown:
+  dq (double)0
+Cheat:
+  4b
+PSX_GetDurability:
+  jmp newmem_GetDurability
+  nop 2
+return_GetDurability:
+
+[DISABLE]
+unregistersymbol(*)//unreg all
+dealloc(*)//dealoc all
+//unregistersymbol(_GetDurability)
+//unregistersymbol(PSX_GetDurability)
+//unregistersymbol(code_GetDurability)
+//dealloc(newmem_GetDurability)
+PSX_GetDurability:
+  readmem(code_GetDurability,7)
+//Alt: movups xmm0,[eax+10]
+//Alt: mov edi,[ebp+08]
+{$lua}
+if syntaxcheck then return end
+-----------------------
+memrec.Color=0x00008000
+-------------- A.B.G.R 
+{$asm}
+{
+// ORIGINAL CODE - INJECTION POINT: StoneShard.exe+13C9205
+
+StoneShard.exe+13C91B5: E8 B6 0F FD FF        - call StoneShard.exe+139A170
+StoneShard.exe+13C91BA: 83 C4 08              - add esp,08
+StoneShard.exe+13C91BD: 85 C0                 - test eax,eax
+StoneShard.exe+13C91BF: 0F 88 19 02 00 00     - js StoneShard.exe+13C93DE
+StoneShard.exe+13C91C5: 3B 05 2C 02 43 03     - cmp eax,[StoneShard.exe+248022C]
+StoneShard.exe+13C91CB: 0F 8D 0D 02 00 00     - jnl StoneShard.exe+13C93DE
+StoneShard.exe+13C91D1: 8B 0D 28 02 43 03     - mov ecx,[StoneShard.exe+2480228]
+StoneShard.exe+13C91D7: 8B 0C 81              - mov ecx,[ecx+eax*4]
+StoneShard.exe+13C91DA: 85 C9                 - test ecx,ecx
+StoneShard.exe+13C91DC: 0F 84 FC 01 00 00     - je StoneShard.exe+13C93DE
+StoneShard.exe+13C91E2: 8D 46 10              - lea eax,[esi+10]
+StoneShard.exe+13C91E5: 50                    - push eax
+StoneShard.exe+13C91E6: E8 05 64 FC FF        - call StoneShard.exe+138F5F0
+StoneShard.exe+13C91EB: 85 C0                 - test eax,eax
+StoneShard.exe+13C91ED: 75 16                 - jne StoneShard.exe+13C9205
+StoneShard.exe+13C91EF: 8B 45 08              - mov eax,[ebp+08]
+StoneShard.exe+13C91F2: 0F 57 C0              - xorps xmm0,xmm0
+StoneShard.exe+13C91F5: C7 40 0C 05 00 00 00  - mov [eax+0C],00000005
+StoneShard.exe+13C91FC: F2 0F 11 00           - movsd [eax],xmm0
+StoneShard.exe+13C9200: E9 E8 01 00 00        - jmp StoneShard.exe+13C93ED
+// ---------- INJECTING HERE ----------
+StoneShard.exe+13C9205: 0F 10 40 10           - movups xmm0,[eax+10]
+// ---------- DONE INJECTING  ----------
+StoneShard.exe+13C9209: 8B 7D 08              - mov edi,[ebp+08]
+StoneShard.exe+13C920C: 0F 11 45 DC           - movups [ebp-24],xmm0
+StoneShard.exe+13C9210: 8B 57 0C              - mov edx,[edi+0C]
+StoneShard.exe+13C9213: 8B C2                 - mov eax,edx
+StoneShard.exe+13C9215: 66 0F 73 D8 0C        - psrldq xmm0,0C
+StoneShard.exe+13C921A: 25 FF FF FF 00        - and eax,StoneShard.exe+4FFFF
+StoneShard.exe+13C921F: 66 0F 7E C1           - movd ecx,xmm0
+StoneShard.exe+13C9223: 81 E1 FF FF FF 00     - and ecx,StoneShard.exe+4FFFF
+StoneShard.exe+13C9229: 89 4D E8              - mov [ebp-18],ecx
+StoneShard.exe+13C922C: 83 E8 01              - sub eax,01
+StoneShard.exe+13C922F: 0F 84 F2 00 00 00     - je StoneShard.exe+13C9327
+StoneShard.exe+13C9235: 83 E8 01              - sub eax,01
+StoneShard.exe+13C9238: 0F 85 F8 00 00 00     - jne StoneShard.exe+13C9336
+StoneShard.exe+13C923E: 8D 42 FF              - lea eax,[edx-01]
+StoneShard.exe+13C9241: A9 FC FF FF 00        - test eax,StoneShard.exe+4FFFC
+StoneShard.exe+13C9246: 0F 85 C5 00 00 00     - jne StoneShard.exe+13C9311
+StoneShard.exe+13C924C: 8B 1F                 - mov ebx,[edi]
+StoneShard.exe+13C924E: 89 5D EC              - mov [ebp-14],ebx
+StoneShard.exe+13C9251: 85 DB                 - test ebx,ebx
+StoneShard.exe+13C9253: 0F 84 B8 00 00 00     - je StoneShard.exe+13C9311
+}
+</AssemblerScript>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>189</ID>
+                  <Description>"Inf Coin on Bag"</Description>
+                  <LastState/>
+                  <Color>008000</Color>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>{======================
+Author   : aanpsx
+Date     : 2021-02-13
+Game     : StoneShard.exe
+Version  : 0.6.1.8
+======================}
+
+{$lua}
+if syntaxcheck then return end
+[ENABLE]
+-----------------------
+memrec.Color=0x000080ff
+-------------- A.B.G.R
+_CoinOnBag = createTimer()
+_CoinOnBag.setInterval(10)
+_CoinOnBag.onTimer = function()
+--------------------------------------------
+    writeDouble('["CoinOnBag"]+10',2000)
+--------------------------------------------
+end
+
+[DISABLE]
+if syntaxcheck then return end
+-----------------------
+memrec.Color=0x00008000
+-------------- A.B.G.R
+_CoinOnBag.destroy()
+</AssemblerScript>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>188</ID>
+                  <Description>"Inf Coin rung sip"</Description>
+                  <LastState/>
+                  <Color>008000</Color>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>{======================
+Author   : aanpsx
+Date     : 2021-02-13
+Game     : StoneShard.exe
+Version  : 0.6.1.8
+======================}
+{$lua}
+if syntaxcheck then return end
+[ENABLE]
+-----------------------
+memrec.Color=0x000080ff
+-------------- A.B.G.R
+_CoinOnBag = createTimer()
+_CoinOnBag.setInterval(10)
+_CoinOnBag.onTimer = function()
+--------------------------------------------
+    GoldValue = ('["CoinOnBag"]+10')
+    Coin = 2000
+if( GoldValue &lt; Coin )
+then
+    print("Gold coin kurang 2000")
+	--writeDouble('["CoinOnBag"]+10',2000)
+else
+   print("Gold coin wes 2000")
+end
+
+--------------------------------------------
+end
+
+[DISABLE]
+if syntaxcheck then return end
+-----------------------
+memrec.Color=0x00008000
+-------------- A.B.G.R
+_CoinOnBag.destroy()
+</AssemblerScript>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>169</ID>
+              <Description>"Stats"</Description>
+              <Options moHideChildren="1" moDeactivateChildrenAsWell="1"/>
+              <LastState Value="" RealAddress="00000000"/>
+              <Color>FF0000</Color>
+              <GroupHeader>1</GroupHeader>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>159</ID>
+                  <Description>"base"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>0000FF</Color>
+                  <VariableType>String</VariableType>
+                  <Length>32</Length>
+                  <Unicode>0</Unicode>
+                  <CodePage>0</CodePage>
+                  <ZeroTerminate>1</ZeroTerminate>
+                  <Address>_GetStats</Address>
+                  <Offsets>
+                    <Offset>0</Offset>
+                    <Offset>0</Offset>
+                    <Offset>0</Offset>
+                  </Offsets>
+                  <CheatEntries>
+                    <CheatEntry>
+                      <ID>160</ID>
+                      <Description>"value"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>0000FF</Color>
+                      <VariableType>Double</VariableType>
+                      <Address>_GetStats</Address>
+                      <Offsets>
+                        <Offset>10</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                  </CheatEntries>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>172</ID>
+                  <Description>"========================================"</Description>
+                  <LastState Value="" RealAddress="00000000"/>
+                  <Color>808000</Color>
+                  <GroupHeader>1</GroupHeader>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>89</ID>
+                  <Description>"AP"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>800080</Color>
+                  <VariableType>Double</VariableType>
+                  <Address>_GetStats+20</Address>
+                  <Offsets>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>90</ID>
+                  <Description>"SP"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>800080</Color>
+                  <VariableType>Double</VariableType>
+                  <Address>_GetStats+24</Address>
+                  <Offsets>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>173</ID>
+                  <Description>"========================================"</Description>
+                  <LastState Value="" RealAddress="00000000"/>
+                  <Color>808000</Color>
+                  <GroupHeader>1</GroupHeader>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>84</ID>
+                  <Description>"Strength"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>008000</Color>
+                  <VariableType>Double</VariableType>
+                  <Address>_GetStats</Address>
+                  <Offsets>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>85</ID>
+                  <Description>"Agility"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>008000</Color>
+                  <VariableType>Double</VariableType>
+                  <Address>_GetStats+4</Address>
+                  <Offsets>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>86</ID>
+                  <Description>"Perception"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>008000</Color>
+                  <VariableType>Double</VariableType>
+                  <Address>_GetStats+8</Address>
+                  <Offsets>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>87</ID>
+                  <Description>"Vitality"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>008000</Color>
+                  <VariableType>Double</VariableType>
+                  <Address>_GetStats+c</Address>
+                  <Offsets>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>88</ID>
+                  <Description>"Willpower"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>008000</Color>
+                  <VariableType>Double</VariableType>
+                  <Address>_GetStats+10</Address>
+                  <Offsets>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>174</ID>
+                  <Description>"========================================"</Description>
+                  <LastState Value="" RealAddress="00000000"/>
+                  <Color>808000</Color>
+                  <GroupHeader>1</GroupHeader>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>130</ID>
+                  <Description>"Hunger"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>808000</Color>
+                  <VariableType>Double</VariableType>
+                  <Address>_GetStats+28</Address>
+                  <Offsets>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>131</ID>
+                  <Description>"Thirsty"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>808000</Color>
+                  <VariableType>Double</VariableType>
+                  <Address>_GetStats+2c</Address>
+                  <Offsets>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>133</ID>
+                  <Description>"Intoxication"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>808000</Color>
+                  <VariableType>Double</VariableType>
+                  <Address>_GetStats+30</Address>
+                  <Offsets>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>142</ID>
+                  <Description>"Pain"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>808000</Color>
+                  <VariableType>Double</VariableType>
+                  <Address>_GetStats+34</Address>
+                  <Offsets>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>134</ID>
+                  <Description>"Morale"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>808000</Color>
+                  <VariableType>Double</VariableType>
+                  <Address>_GetStats+38</Address>
+                  <Offsets>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>135</ID>
+                  <Description>"Sanity"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>808000</Color>
+                  <VariableType>Double</VariableType>
+                  <Address>_GetStats+3c</Address>
+                  <Offsets>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>175</ID>
+                  <Description>"========================================"</Description>
+                  <LastState Value="" RealAddress="00000000"/>
+                  <Color>808000</Color>
+                  <GroupHeader>1</GroupHeader>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>161</ID>
+                  <Description>"Head"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>0080FF</Color>
+                  <VariableType>Double</VariableType>
+                  <Address>_GetStats+40</Address>
+                  <Offsets>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>162</ID>
+                  <Description>"Torso"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>0080FF</Color>
+                  <VariableType>Double</VariableType>
+                  <Address>_GetStats+44</Address>
+                  <Offsets>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>163</ID>
+                  <Description>"L Hand"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>0080FF</Color>
+                  <VariableType>Double</VariableType>
+                  <Address>_GetStats+48</Address>
+                  <Offsets>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>164</ID>
+                  <Description>"R Hand"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>0080FF</Color>
+                  <VariableType>Double</VariableType>
+                  <Address>_GetStats+4c</Address>
+                  <Offsets>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>165</ID>
+                  <Description>"L Leg"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>0080FF</Color>
+                  <VariableType>Double</VariableType>
+                  <Address>_GetStats+50</Address>
+                  <Offsets>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>166</ID>
+                  <Description>"R Leg"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>0080FF</Color>
+                  <VariableType>Double</VariableType>
+                  <Address>_GetStats+54</Address>
+                  <Offsets>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>187</ID>
+                  <Description>"========================================"</Description>
+                  <LastState Value="" RealAddress="00000000"/>
+                  <Color>808000</Color>
+                  <GroupHeader>1</GroupHeader>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>186</ID>
+                  <Description>"Coin on Bag"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>0000FF</Color>
+                  <VariableType>Double</VariableType>
+                  <Address>_GetStats+58</Address>
+                  <Offsets>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>170</ID>
+              <Description>"=========================================="</Description>
+              <LastState Value="" RealAddress="00000000"/>
+              <Color>808000</Color>
+              <GroupHeader>1</GroupHeader>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+  <Signature>
+    <SignedHash HashSize="132">0fQs8OAgKP2d?Z$Q)WxnU)^*SYVn9PZqEIo[]{$,yo!sS-hh+ZtD_g{n#?/Aut9[N;_D];:!uzx^,;J2j+$WM+YmXVEmM#)B}^(,UUC}=^)6Oz;I{fCGsxPLtN!^cIh.U]a7Ex?V^sE=B?SdL7u/RqY#==_-(3E(I}O;1</SignedHash>
+    <PublicKey Size="6360">00000i}s?vMMG0HLI3}(02_$UnKVWp^:})-*6le1vYO_I#4OPi,%He{$/RM8sv2/R($/2@Yk#NMNstIb.A2H6s5x^fj+](%azFn*gc_],]L^qfP,71w_Ktc)#^u%@){0dr8;RST0+-$yT,I!4fRafB2/[Cnmki6@l,.x%6RV(zRy3h5*dl0F^S(op2DcXg0EtjeM-2*Z3IG5A4M_8uQUCw_X8-@ICI_*q007xVg*jgB00d]2O,f$vv5tKEQIh{w03c(XQcVB:hYtV%j1K=,^Zaq]fj_HNeR%*=;5BjWJmmlY8O)D$g=9h_3NL9xLr[UWLm+IcZ*Rz1WdHz3$DNjUR8-d%htIutdZEoQ)iwV[E---fE,8EQQ5a=h7_H.^3^7l@s6a#!5dlSzpnw6Rp-8NVVj)D}U:K)TP,}BOsHkK^*:GSNdGF:r[s6}8,Gp:][t_?(wJrc8PaiHX1)pIJnJ3?{dN_Wpg-6h[^Qw4dfB}ieFj=uTzCrH6KqN0W7kawL3H+!R3.^@_zGdj=Pp5/bPtvSZz5oEoU(Q8YPC84)]65or6r[snGa^zOB#IeEiJ31-P^eX#j$7oVpM4hDQOxXQ9$UoXoKxA!Y%%wUczcGBBVxoy#042#PNs-(i(!(Bn9LRNTXAeMhnWrliX@rRIIMUPn}0di4-Rw??p1rgq[^6Q/[i^ZvIOEoxum3K@SN;H0:h0sk8Wyh(7ga7GLtw0fuTQ;mB^3=:]JbBsZ3rr0E:h-EE#ca;7pWAnp#[08k!lIeo=6Zy7*IG=)HJI3i#YJh{QRq=XUb(;HuKOifXg#4[nNB06Mk.Ab0-^o8{/@Bt=B_zwyO,XySQ@7YI@qjEyrhGmW=$mXWxizw3WG^0*8aJtOgUzn6#Z%86wPlLT}e-B;9{DMCIyJ)bDg(/,1Q#Q!,)uk%/M$cg3fIXqEBsA$T#yf^)2d2FtLo5G]WdH/:2_1j*NTAXW/DD_HJHOdG]-Jk.G:RSa/5CIZ-P}7$3]^siW1;(0+raG{W[n!s+];t=[[;s/y]yA(I7**mg]5B9A.%f:efB,-]703e;paFD(Aut10z!o=HH=RWufnX30*(drY2g!gBGC=lb3/@LI+ah}2N;BspK[h4ZCqM?^4K9Go.5xVo=tlki1dM}^U/SMa@AH4KAu;dP/RMi@3o=MrAO;U*xj^ZqAQTQoLvauf5//Dq7N]g,g)^)1s1f:WIt5+Tu0jLQJ!lk}f[^bG!w5]+sjxDv4I9G?+a]NAgW*xB9GnK^!1=e[xB^,(kHPKm1@7CA2Ofc,!=OrLhzJc*LktlH.*3]g5lAe.M;ZgZNI6o6v;.tbFLDbRL8g(,C:7}%qN5B@wkS[j2#SSDLv276qbgBHQSGQ6*GgE}Y6kTQO-3uB4bV1dFZ3#O96A$SfG$Tjpxe-w)09/_:r/S*hKA9;SYbRd.g_%;I!rO/0Hzgl9y5R$!@}o[Sb3{g*)-23Wnu-]0[:Y5G3,[*Aa*%47DvRX.;;XFxCk5%mxn9IHQ}/U25{R)dAt-{3vYw;!=W=)[!4_Qz6+Z=KaQU#NE37jc7$L.0%0=ug3v.@M0iMeMI.i^iPppbBA2+^SV25ayh0o$z9Y$y@hqwHNRp7WlXQf1o@,4(icBVJlO4$sWC3_6xsiO4^FwY!f,Arg.U(SA+eFpY)JnD4?j=/WsU[)oxmGeqvRv_^/PFJbDZG?nl#3KoYJ+gj*G4W9saa]=w5hb8bh31?bd(T_:{8%@jJAxM3_l5(:CI5}nK24N)V*0cSd:Z4ddelrI2A,Hp=Xmhs72IosQuI#SsB?7vZ1nBvQ?HYWJhQSO]GOLOQMy}PSA#E?0TbqaazJzvSUfhlEEc(a+A={avZrrxmLM5a[^Bo?@12p@1J0b/R2-Z6!aAW6fzYKDqK;SR-]K0DzX#^6.CMMSAv!Fl;)L4DIHeoQ/[y*QT9,yRo/[BQF(U0rsAlQpi-uCR%J=,qH3=oRV]CJr{}U8OLw9t)JSaZ@cgiJHBU96TCG}Y,Pu1sdWd=SdaL;*4T1)kBUYnKqg!J{Q(rPfGgq?(@S%}di:h;-wNI.8Yff87J4{0/c8B)*j,}B^PL58q(O:=Yu7hrxZk[IJJ(YbhFH!G,-c5a2-$FlLze?jx0c;Dtz%?8vFt8N8*OsmzY2DIcLz1DBVTNI_.iwVK$j2zpsKe-mv8Hi@?owW?/4-0QCP@msCJ#)yOjnrZnRc1{YNl[-GOIGXZB90KH^WR9Y5sDV!7_RWgUjw)P%L}cwpnyre6,N)/Xg5[PFZPMMO#%^4Kt[:e=}FmiZ$BW+=Ob)Y3p{3mNo+L6E=rt8rmk;HrY-t+ICY4UcY=IPTh]aS8F$7Pq(Y?KV)1Rpyt4IsB=JYsNu,VY.c?#)sN31I[C7k+}FRe,}z#zV(k(j/-9B6;fu]G,V3Xg7UEXv[SjwBJ/h$@ea6GWW1Yu(Pqe4E:WfqoFJ(+5SEJX:3ab[CSM,$3yo0/ey]T8#]_y3bd_{?ezI%KhuGCt_TiM_U^Ji{3[(xI1?lW(rJ@(NoA5azWG_*6KH=TK_5*;8G6!a$8Ik,VFL5OaMFr,)FGBh%?F=24;HLNsjWR;x%@^cLjD{-}yJ0q_Wp%D!cv#Z?!=[E6{X%SfvIkZM,P1c(LYZcZetvwSZ8O4k]8I6t)i+Abk!1QC+F:u1EVya[iST3x6tmkY.b^Tt$W5,4wOvKv7mc}xT+}RUNn}HacFOQ$+x@OGGFB3cyY7+uW^SuEPE,mB_wI/[_qmxhZWO#_Zo*ndotdxONgVci5ku.mMy:gOiZ,:5Ml*fgtQ$Q8^O!WzMg/FNA8TJ]f8E-Q}Gf!qoXYsQ7vh{lfWKZO^:X_^mwT]u{J6A1tbMEMRr{ecPpbaq[x.JWU%-:Y@$z#+e(4kT}n{5hN$t%r!y)Mf+SH5!oru=z39$T9WBntQi!]p1P*oe#=:Wg%cVZLMkj!%W]!fQn*Mdd^widn[izB2u*..V)7u^--qEK3gV!tCPh8rto!]*H_jX-=[b9@XCfW%RPbve$c}[FgStR$jA?uur(eq^647bHC;PUHd.(##i2^a._EvR.u1nJ$Hb8VDO.h!Im23nxdNbhq#CC*[T.o+J./4AI2QcIQ,Cew7(Oi#?CGv3JpaKACK@kj2sO-,S6#(+x01hRMHGL3!A5oMIO8Pjq5j@Eru/%t,dvn/KVdP[[J?Lza2W@eWLp$/7CTsTHjT-QQ8XIq4w/dnU465k/ReWfm16@b$8izwS8}(^gKmZr;oA$o,(v=IGcZV.atwS,4HIAr!T{@80)JeesFQs#oIjrJ@h!wFI}Cpe*)drQ{4Mec2]bcwYhrg8sl2Wb/6AReHMLfKUn/G*@FM0e#7cU:S{OIT=5Mp(JH;ZUby9Y;,*?^,t:?]yfZKqGIV!1a)Lt{]_jkuq/b(#XWXBEu/0TCVc^dGN9B*_9?qV-[hajb/.a.*+U]QwK}ElxvBsYNl;XC*?%+Rcr^xo;6OEH+lc%TLr+1x5^cQYs;ht.Of{f;-u708W.:5lQf9ac9H8cK[_8n8i.#cyoj:Wy;x[j1t[VJtKH{i9aZ^@/{eaCp$]#$Xb#C,xl=1zevdLO$!d4GDiki4,*8}23s]!?tB9smFU32.bRa^vG=A@-p]A[1!6-I4$R4Dv{tK}!i%=OF,RRmB.enfunfyd+$03xp6LAuO8Yy)AVCBuL%B/63Re,GCZbmK5=^mbSLm4Nomu9+Iz.)iUm09O^A#*()0I3YH]/3lJnAvI/0(knQDd[fEgLxp0hymKIE2a],CHnfYh#ynFv_^$:KdT+4+v8x{1p9H()WJ+ZX:2^.RiWzP9xO6e})kqXGxxynm!+P4R^LxP-z1qDeuB7LTCUc?LZ0U3WIoIL1qmFyG!PG_AA?un_xPTq5sFS$^?X%K+E/*DTj280v{VuAspgOyxI8U0jPlISllU$UmNqs;SuxgIj@a2BsqZwzq@335QpeQ.%@s2-?ST%r.JNVwGZ6NFeJhWS7m!]MTFC?).!h]vz9kRS*X]52V]Dy}LNM0]Z1/z-7$w,.E?oRBFfMJwM]Ub-HAOc3OB7KLmAF^sHwW}PIJgHU-Xtl{/M(vYS(%wyzi4cymLq7C]uV5m@k)b}}l!rg%(,]HaUP}4*4LJEVH94K?;lW3dI,bv=ul_sf9K6[Dq)Il:YKLR6n6B1mV=/}9)T_Jc0*7jcXTB!o{roz9=5w6eSC:S:emvAmPoJFx)[21xd6h@6vEGW+:M99X9dO+T;QO_c2(2tnKRjM5tU@%LL198ci](X+*ED#pwa1;pyH3u9al{bY}cOlDK3m5bvr{RENoDSk^xSpM.J5m1(.zkgweWZHBIgsxxnuhT!!O8=m[#ULyt+EEVT*DcUymYHJ=5qH;J79qoOI?WaG_[,_WXQpaUX7:TBMQ%;jP2xH5rMlx@yTE[u:I=}n=cIkqMh$37_WQn:XAjTDiCY7!(ZbP8E@$LPL$@jSkPfvQLe9Wm2THW1A;r:Iq+EQ38%wRz97pyiBk3q2;T7LUx1iL5HnVy^w+.UEBhE=%}:(LJQ*5;M%4)5d9Aa9kI2t2F!%PJA3$cj#8{h*[ZJQ5.ti#QAP#E)lcMlD86(gdzE)ps55Za%iwp8uP/s[)(4G%F@3LVUmj_?[]an(WxtxM;9VdLHHG.M-U0T,obqfnUXUzFBf@yIn9ZlZUngfDRa%-/cq01O$Z{[MjWh9axYWDAL+:bHrna}Jgbet%6%0d5bNoRaTQIsD?659hV4sl9uTv{FgK%1%$5PzPboIK{pmF(.YFO0-+46mpt,pBep1S8qyD(4I$]vC4uxI[^61[YsFIXvjVTA7U1zGQh;Sx]}rIaoRRq?,aXo]mDSB*GjhD:RByxUTD%#CBo46^ICILiZyMU7c.uEWx!?Ot*}6BOJ:?pqxG.h.cd#:Za,G%ftx4eJ.hqSOMa}Q1.34K.%0{QWCXhzawPGQ79XUSYbi6TeP9Hr:Xm,+49;p4$_cJc85dBPm4aZje..#jv^e+29jz/r4:CUR;/Cil6Oc/ipHvsz_0SWqyQ($8mD_Q;I$rBftV+hzv!M5Cr.jis+XzZeYnqsxc39mCm[pm%Ez0lCuz-o$JgT4Y(Kge-u78S]O7tRb-(ldeINpNR*,lvRAxYdvuoUL8HxiRya9d57?{=n)QZc?N,!x[7Xt-84[PjHPbji76GTdTcDKCJdi028,KibLN^)BQS2*sWU/cs{k;!:XEABguxpU@eG()V9p3!7lCI?^.)G5^dA{?7zbULh7%K:Qc]QZM2BQf7Fzt]7NQ)u;g:g^u%KU^Rn$,Bk[f_y?{7zs:751P0S)$mw8a6bnKqu7t_je-}/hXQVa)$l#Tu:.#nzUiZ=eYKl6iD2$Q?45#bct8+%R]=HnK92,_iJ%f_JbwJ--V=]/jRw)(.O0CS)[t^sP37fF+jI[k(dl8YMQdxeyXK#bxW8SeH}E.3e5Ykc@Tgv^9DNtWJpA#-zgHoq4fFf]]$35}KphZVG_L$sAJ1ar.*UB0b0+Zd;,V%MzJiSO@l:7BUj[2o6)j)*Zg-!{o@U)ur%v6!t+IWCK[a1SwxzCiis+AV3m,w%t#rAT91-o*m}qYYBLTnP04w[Lv{/Rshc)0?HXYTvRm8?_)!?}-El}DwBna=w#D^rDi9RF,sXMlBYnG5/2-8iTklIsST?[:LbQ;[V6@ln40rfjB3OV*,TRdKDBdlNttiL(,$UnnAA,65sK66SekZrf$1^YL]F$TDsA9s5@Zy1fnn1.s2gW3:;fBwVQetu}Go8BI8xX07I6WN/PYwFdjJf5!iw$^7FZvTrd=pnCQUS!,svkXS#hk..l_Fr4XCTyy%,JZ6q9(gX:ZOzT=V$4.OCQ*v-ya=.F.+{Hd)g[f6#yn?fj$UQYd:/o5gIvk(:.,uxA{Z:[uF(q9]r3Q6A@naEc57KSTM}jVh+8adWXGwt#_%u]A]$B99YIJ,N^S%n4+c9a5EH}MvKSl5:I{7fGQFfL)uR=YD;KYZ@;q)fEY@swuFg.3T1dCoQ{pr1j{n^QZe)XrFXg(SyFE,PC#I%aU_8i$l6YifR07:K91IA?lIt.;!d?3,5dW,oW+zRVg+D#{i]^}H3zq_nM85!?Ef2*Vcn2d}?@6Pn4todB+-[h2H)/mFTo5?}Hv3dq!qc!A.V!mfXMb/Ru.E,bGlp_Y*$@_?Q;Kt8YviA=V#V)MD2Vw!VuO){[7f.k^J#3pD;XIMq{NN8a3k*@V:lh}mKX/RnXF-!n-GUYMutr#z*64,wm3a4JuD+JT8lAa4!P}+$r}[k8S3}AYD8)svSm*yQML-3)h=B!thgO6Z9L^VP{A6WAj?t}MC[{BbQ1dS#(au{F9km]zP8=tg^1zXAo!xk:JNrb/@P9m?=@8l6b6NGD[-LjOtuipdmqZj3MB=acoB?n3A5PE8!(Dge$s@c6_y2f0gDsI[g*aP0eh935rZ}BDQ^*lY]2-hEUyIvfg@goKHAgWGa0M,Q)IbEtWIZmnNqIj!a_7h0Tk+ro6SW:lX)WL[Eji)G}8@QMCnS+=T3r}d3^4ebEeHU3NEq$vLrm]5j?**oU#Wo$BT$5;X^vg,Kd:C4$m$H6+(X0Sr75@xV9nd6!-QkE?)yQpb#irhpgDhC_v-nC]8*%Bwly{R.V9Dd.]NepbS[6jl^}vo]EJ3zi+zqp]l5+AN0eWup1S@-xkEE6El^Fv0M)yos,J)@3iK?a)+Yo@-WDj5v%?,st$xMhEm1h+NlMAe=liotFX{5h:5+K=;?Z6U3W9C,XOM^l$6:/,Y=b0XL9in%$K;c.7i18#GK3EHvfpG4)?F$EU+Swz}l95AL^xS7i2kjp*wRPqAmydBkm@mnIjaW*Dsw2y4$,CJ_7klu=}t83+j+Q#*7*Kx{X;^cI.S(z=%pcco?lpPsl)Df[(yKCNX2WJ@SEu(pmsMke;[L[N-5@Kt45?%)L3NIz{]#HF;qJKESgIw@ss-kzwVVU{1S$mzd+CkY0k!aieG;rrm,Xl/D#IJk^LXeCAxPzi}n2WM+dSDCa47sWYE](xVYQj1eew4Gj(gy@^Y75c=RcaQXC^;srgpO3t}?u-okvG35{9/t;XP^Cic@AD#2]8P7]LI)HF8d9bG5U9E^j8W%+*+9{KO?jh6@7+_/_Ch3bwsi{Ia#kw2rXziGB/L9qkyJncyH6$/}S.%:qQLe!1QP0{WhA=wD.s{8_q(Hn26T81xI(:]y/hWd:oyf,[xw+M#wQz)d5#Xt$lOptb-Kt+c([QTh4uGuBWU*kGFG5Ieu6nHhq^CU/yJw+!hEpPs8:ssY2mR](f{w/vjyb2^bQbSMs:XB%*Mto6xnKqRC4T#!T]eox,fL0+vuFLZvZ736jzbEAf+b*?%wAXu[BS+hncPgI#g%ycbeYTFtSB$rpbZ.R7(PPvAodu.ED]=zF[By$1tyd9p*U{Sx.rIiGI@z7P-2RSN)RO#[x1jX0W{$jUzWM#BQj$F#pg3*OV+}uL]TcJcI@(}8I!0SJ9bQ7y=V9yWTD.?Di{26q?_@inX[)**iFK:DolWji$*3@g*Z==E*17APt#+ZFCmhG9W9/x:v+P#cybw+Cm0i)T?PGi7g5v=c[$Rg56XVucD-JIq@ztgWEdK-4?v)kKn^z)=6L%j)W!*!bSQlylr8:=EeZ88Q1(P:5s$jK.wa@?C{TONF}{-nVN5aTS7mC,QBralt_,1qi86M=*7@F4=RJL?IfKfr/;lo]lF1Yn?c7L-ozbk/D/*YXM#LclEJ.rph2;zuF$I/b;HyA!/-m40,!{#jBRqiplV6gE(!.FpJ({4m0k4My0zE5MtWb{YF5wdX3kdlaZJ=6rtdBUS00000NkvXXu0mjfga7}l0YH,WXXC{3^7+?)HAUlfo{1mDko=.K4wLc9YGaRYLpVIkdy:@^g.X{ESSnB;#H9*_HnK5v:ej5k%ee3e(!hkfeh3J}2Q?$Wt4d5g6gJ::nIry.)-@rLQD}uaGW0Wp6U:pgXVxkZ%18Ojuq72VlRzZQ8iUCzZH[4xq3L7_</PublicKey>
+  </Signature>
+</CheatTable>
