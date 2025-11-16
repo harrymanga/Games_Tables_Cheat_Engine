@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CheatTable CheatEngineTableVersion="46">
   <CheatEntries>
-    <CheatEntry NoCheckbox="1">
+    <CheatEntry>
       <ID>57</ID>
       <Description>"======================================"</Description>
       <GroupHeader>1</GroupHeader>
@@ -30,37 +30,37 @@ LuaCall(cycleFullCompact(nil,false))
         </Hotkey>
       </Hotkeys>
     </CheatEntry>
-    <CheatEntry NoCheckbox="1">
+    <CheatEntry>
       <ID>104990</ID>
       <Description>"======================================"</Description>
       <GroupHeader>1</GroupHeader>
     </CheatEntry>
-    <CheatEntry NoCheckbox="1">
+    <CheatEntry>
       <ID>10</ID>
-      <Description>"                                       -  GAME NAME  -"</Description>
+      <Description>"                                      -  STONESHARD  -"</Description>
       <Color>008000</Color>
       <GroupHeader>1</GroupHeader>
     </CheatEntry>
-    <CheatEntry NoCheckbox="1">
+    <CheatEntry>
       <ID>11</ID>
       <Description>"                                     Steam Early Access"</Description>
       <GroupHeader>1</GroupHeader>
     </CheatEntry>
-    <CheatEntry NoCheckbox="1">
+    <CheatEntry>
       <ID>104989</ID>
       <Description>"======================================"</Description>
       <GroupHeader>1</GroupHeader>
     </CheatEntry>
     <CheatEntry>
       <ID>104783</ID>
-      <Description>"      [ Activar ] - { Haga clic Para Activar } - [Version Game]"</Description>
+      <Description>"             [Activar] - {Haga clic Para Activar} - [v.0.6.1.8]"</Description>
       <Color>808000</Color>
       <VariableType>Auto Assembler Script</VariableType>
       <AssemblerScript>{======================
-Game   : Game.exe 
-Version: *.*.*
-Date   : AAAA-MM-DD
-Author : *** , HaRrY
+Game   : StoneShard.exe
+Version: 0.6.1.8
+Date   : 2025-11-15
+Author : aanpsx , HaRrY
 ======================}
 
 [ENABLE]
@@ -73,22 +73,22 @@ if syntaxcheck then return end
 memrec.Color=0x000000ff
 -------------- A.B.G.R
 
-OpenProcess("Game.exe")
+OpenProcess("StoneShard.exe")
 
 if(process == nil) then
    ShowMessage('No se seleccionó ningún proceso')
-elseif (string.upper(process) ~= string.upper("Game.exe")) then
-   ShowMessage('Advertencia. Proceso esperado = Game.exe')
+elseif (string.upper(process) ~= string.upper("StoneShard.exe")) then
+   ShowMessage('Advertencia. Proceso esperado = StoneShard.exe')
 end
 
-mono_initialize()
+--mono_initialize()
 
-if (LaunchMonoDataCollector())==0 then
- ShowMessage('Falla en el lanzamiento de Mono')
-end
+--if (LaunchMonoDataCollector())==0 then
+----ShowMessage('Falla en el lanzamiento de Mono')
+--end
 
 {$asm}
-
+s
 [DISABLE]
 
 {$lua}
@@ -103,17 +103,18 @@ memrec.Color=0x00808000
 
 </AssemblerScript>
     </CheatEntry>
-    <CheatEntry NoCheckbox="1">
+    <CheatEntry>
       <ID>104797</ID>
       <Description>"                                        Agregar Scripts"</Description>
       <Options moHideChildren="1"/>
       <Color>FF0000</Color>
       <GroupHeader>1</GroupHeader>
     </CheatEntry>
-    <CheatEntry NoCheckbox="1">
+    <CheatEntry>
       <ID>104991</ID>
       <Description>"======================================"</Description>
       <GroupHeader>1</GroupHeader>
     </CheatEntry>
   </CheatEntries>
+  <UserdefinedSymbols/>
 </CheatTable>
