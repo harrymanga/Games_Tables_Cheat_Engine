@@ -1,2 +1,13 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# Cheat Engine tables
+*.CT text eol=lf
+*.CE text eol=lf
+*.CT2 text eol=lf
+*.CE2 text eol=lf
+
+# Documents
+*.md text eol=lf
+*.txt text eol=lf
+*.json text eol=lf
