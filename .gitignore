@@ -17,10 +17,10 @@ Thumbs.db
 *.log
 
 # Cheat Engine files
-*.CT
-*.CE
-*.CT2
-*.CE2
+#*.CT
+#*.CE
+#*.CT2
+#*.CE2
 
 # Game saves
 *.sav

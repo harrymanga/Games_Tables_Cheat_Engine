@@ -8,6 +8,7 @@ Colección de tablas para Cheat Engine 4.5 para diversos juegos.
 - **Factorio**
 - **Flood Land**
 - **Force Of Nature**
+- **Graveyard Keeper**
 - **Last Wood**
 - **Northgard**
 - **Star Bound**

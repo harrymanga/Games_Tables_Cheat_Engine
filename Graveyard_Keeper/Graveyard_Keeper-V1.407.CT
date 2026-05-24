@@ -1,0 +1,715 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="46">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>57</ID>
+      <Description>"======================================"</Description>
+      <GroupHeader>1</GroupHeader>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>0</ID>
+      <Description>"                   [F2] Vista Compacta / Vista completa"</Description>
+      <Color>0080FF</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+
+LuaCall(function cycleFullCompact(sender,force) local state = not(compactmenuitem.Caption == 'Vista Compacta'); if force~=nil then state = not force end; compactmenuitem.Caption = state and 'Vista Compacta' or 'Vista completa'; getMainForm().Splitter1.Visible = state; getMainForm().Panel4.Visible    = state; getMainForm().Panel5.Visible    = state; end; function addCompactMenu() if compactmenualreadyexists then return end; local parent = getMainForm().Menu.Items; compactmenuitem = createMenuItem(parent); parent.add(compactmenuitem); compactmenuitem.Caption = 'Vista Compacta'; compactmenuitem.OnClick = cycleFullCompact; compactmenualreadyexists = 'yes'; end; addCompactMenu(); cycleFullCompact(nil,true))
+
+[DISABLE]
+
+LuaCall(cycleFullCompact(nil,false))
+
+</AssemblerScript>
+      <Hotkeys>
+        <Hotkey>
+          <Action>Toggle Activation</Action>
+          <Keys>
+            <Key>113</Key>
+          </Keys>
+          <ID>0</ID>
+        </Hotkey>
+      </Hotkeys>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>104990</ID>
+      <Description>"======================================"</Description>
+      <GroupHeader>1</GroupHeader>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>10</ID>
+      <Description>"                                   -  Graveyard Keeper  -"</Description>
+      <Color>008000</Color>
+      <GroupHeader>1</GroupHeader>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>11</ID>
+      <Description>"                                     Steam Early Access"</Description>
+      <GroupHeader>1</GroupHeader>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>104989</ID>
+      <Description>"======================================"</Description>
+      <GroupHeader>1</GroupHeader>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>104783</ID>
+      <Description>"      [ Activar ] - { Haga clic Para Activar } - [V.1.407]"</Description>
+      <Color>0000FF</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{======================
+Game   : Graveyard Keeper.exe
+Version: 1.407
+Date   : 20026-05-23
+Author : slavka , HaRrY
+======================}
+
+[ENABLE]
+
+{$lua}
+
+if syntaxcheck then return end
+
+-----------------------
+memrec.Color=0x000000ff
+-------------- A.B.G.R
+
+OpenProcess("Graveyard Keeper.exe")
+
+if(process == nil) then
+   ShowMessage('No se seleccionó ningún proceso')
+elseif (string.upper(process) ~= string.upper("Graveyard Keeper.exe")) then
+   ShowMessage('Advertencia. Proceso esperado = Graveyard Keeper.exe')
+end
+
+mono_initialize()
+
+if (LaunchMonoDataCollector())==0 then
+ ShowMessage('Falla en el lanzamiento de Mono')
+end
+
+{$asm}
+
+[DISABLE]
+
+{$lua}
+
+if syntaxcheck then return end
+
+-----------------------
+memrec.Color=0x00808000
+-------------- A.B.G.R 
+
+{$asm}
+
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1100</ID>
+      <Description>"Herramientas Irrompibles"</Description>
+      <Color>008000</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+
+aobscan(AOB_Dura,39 00 D9 45 FC) // should be unique
+alloc(newmem_dura,$1000)
+
+label(code_dura)
+label(return_dura)
+
+registersymbol(AOB_Dura)
+
+newmem_dura:
+
+code_dura:
+  cmp [eax], eax
+  fld1
+  jmp return_dura
+
+AOB_Dura:
+  jmp newmem_dura
+return_dura:
+
+
+[DISABLE]
+
+AOB_Dura:
+  db 39 00 D9 45 FC
+
+unregistersymbol(AOB_Dura)
+dealloc(newmem_dura)
+
+{
+// ORIGINAL CODE - INJECTION POINT: 11671F42
+
+""+11671F23: 83 EC 28              -  sub esp,28
+""+11671F26: 8B 45 08              -  mov eax,[ebp+08]
+""+11671F29: 8B 40 24              -  mov eax,[eax+24]
+""+11671F2C: 89 45 F8              -  mov [ebp-08],eax
+""+11671F2F: D9 45 0C              -  fld dword ptr [ebp+0C]
+""+11671F32: D9 1C 24              -  fstp dword ptr [esp]
+""+11671F35: 8B C0                 -  mov eax,eax
+""+11671F37: E8 74 37 42 FF        -  call 10A956B0
+""+11671F3C: 8B 45 F8              -  mov eax,[ebp-08]
+""+11671F3F: D9 5D FC              -  fstp dword ptr [ebp-04]
+// ---------- INJECTING HERE ----------
+""+11671F42: 39 00                 -  cmp [eax],eax
+""+11671F44: D9 45 FC              -  fld dword ptr [ebp-04]
+// ---------- DONE INJECTING  ----------
+""+11671F47: D9 58 1C              -  fstp dword ptr [eax+1C]
+""+11671F4A: C9                    -  leave 
+""+11671F4B: C3                    -  ret 
+""+11671F4C: 00 00                 -  add [eax],al
+""+11671F4E: 00 00                 -  add [eax],al
+""+11671F50: BA F0 11 FC 0F        -  mov edx,0FFC11F0
+""+11671F55: E9 FE 9B B5 F3        -  jmp 051CBB58
+""+11671F5A: 00 00                 -  add [eax],al
+""+11671F5C: 00 00                 -  add [eax],al
+""+11671F5E: 00 00                 -  add [eax],al
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>5</ID>
+      <Description>"Stamina, Inventario, Velocidad (Activa y pierde stamina. STM debe ser &gt;90 y &lt;100)"</Description>
+      <Color>408000</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+
+aobscan(AOB_Stamina,D9 18 8B 46 10 40 89 46 10 8D 65 FC) // should be unique
+alloc(newmem,$1000)
+alloc(pStamina,4)
+alloc(pStaminaIsSet,4)
+alloc(stVal,4)
+label(codeStamina)
+label(returnStamina)
+
+registersymbol(AOB_Stamina)
+registersymbol(pStaminaIsSet)
+registersymbol(stVal)
+registersymbol(pStamina)
+
+newmem:
+  cmp [pStaminaIsSet],1
+  je codeStamina
+  fst dword ptr [stVal]
+  cmp [stVal], (float)90.0
+  jl codeStamina
+  cmp [stVal], (float)98.0
+  jg codeStamina
+  mov [pStamina],eax
+  mov [pStaminaIsSet],1
+  jmp codeStamina
+
+codeStamina:
+  fstp dword ptr [eax]
+  mov eax,[esi+10]
+  jmp returnStamina
+
+AOB_Stamina:
+  jmp newmem
+returnStamina:
+
+[DISABLE]
+
+AOB_Stamina:
+  db D9 18 8B 46 10
+
+unregistersymbol(AOB_Stamina)
+unregistersymbol(pStamina)
+unregistersymbol(pStaminaIsSet)
+unregistersymbol(stVal)
+dealloc(pStaminaIsSet)
+dealloc(pStamina)
+dealloc(newmem)
+dealloc(stVal)
+
+{
+// ORIGINAL CODE - INJECTION POINT: 2E3BE5B0
+
+""+2E3BE58F: 8B 75 08                       -  mov esi,[ebp+08]
+""+2E3BE592: 8B 46 0C                       -  mov eax,[esi+0C]
+""+2E3BE595: 39 45 0C                       -  cmp [ebp+0C],eax
+""+2E3BE598: 73 28                          -  jae 2E3BE5C2
+""+2E3BE59A: 8B 46 08                       -  mov eax,[esi+08]
+""+2E3BE59D: D9 45 10                       -  fld dword ptr [ebp+10]
+""+2E3BE5A0: 8B 4D 0C                       -  mov ecx,[ebp+0C]
+""+2E3BE5A3: 39 48 0C                       -  cmp [eax+0C],ecx
+""+2E3BE5A6: 0F 86 1E 00 00 00              -  jbe 2E3BE5CA
+""+2E3BE5AC: 8D 44 88 10                    -  lea eax,[eax+ecx*4+10]
+// ---------- INJECTING HERE ----------
+""+2E3BE5B0: D9 18                          -  fstp dword ptr [eax]
+""+2E3BE5B2: 8B 46 10                       -  mov eax,[esi+10]
+// ---------- DONE INJECTING  ----------
+""+2E3BE5B5: 40                             -  inc eax
+""+2E3BE5B6: 89 46 10                       -  mov [esi+10],eax
+""+2E3BE5B9: 8D 65 FC                       -  lea esp,[ebp-04]
+""+2E3BE5BC: 8D 65 FC                       -  lea esp,[ebp-04]
+""+2E3BE5BF: 5E                             -  pop esi
+""+2E3BE5C0: C9                             -  leave
+""+2E3BE5C1: C3                             -  ret
+""+2E3BE5C2: 90                             -  nop
+""+2E3BE5C3: E8 A8 1D FE E1                 -  call 103A0370
+""+2E3BE5C8: EB D0                          -  jmp 2E3BE59A
+}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>7</ID>
+          <Description>"stamina_set (cambie esto a 0 si la dirección STM se encontró incorrectamente, luego pierda resistencia nuevamente)"</Description>
+          <Color>FF0080</Color>
+          <VariableType>4 Bytes</VariableType>
+          <Address>pStaminaIsSet</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>8</ID>
+          <Description>"st(0)_val"</Description>
+          <Color>0600F0</Color>
+          <VariableType>Float</VariableType>
+          <Address>stVal</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>9</ID>
+          <Description>"pStamina"</Description>
+          <ShowAsHex>1</ShowAsHex>
+          <ShowAsSigned>0</ShowAsSigned>
+          <Color>0600F0</Color>
+          <VariableType>4 Bytes</VariableType>
+          <Address>pStamina</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>2333</ID>
+          <Description>"Stamina( "alt + 1" = Full Stamina)"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>Float</VariableType>
+          <Address>pStamina</Address>
+          <Offsets>
+            <Offset>0</Offset>
+          </Offsets>
+          <Hotkeys>
+            <Hotkey>
+              <Action>Set Value</Action>
+              <Keys>
+                <Key>18</Key>
+                <Key>49</Key>
+              </Keys>
+              <Value>100</Value>
+              <ID>0</ID>
+              <ActivateSound>Activate</ActivateSound>
+            </Hotkey>
+          </Hotkeys>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>104992</ID>
+          <Description>"Tamaño del Inventario"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>Float</VariableType>
+          <Address>pStamina</Address>
+          <Offsets>
+            <Offset>-8</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>1064</ID>
+          <Description>"Puntos Rojos ("alt + 6" = Maximo 999)"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>Float</VariableType>
+          <Address>pStamina</Address>
+          <Offsets>
+            <Offset>C8</Offset>
+          </Offsets>
+          <Hotkeys>
+            <Hotkey>
+              <Action>Set Value</Action>
+              <Keys>
+                <Key>18</Key>
+                <Key>54</Key>
+              </Keys>
+              <Value>999</Value>
+              <ID>0</ID>
+              <ActivateSound>Activate</ActivateSound>
+            </Hotkey>
+          </Hotkeys>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>1089</ID>
+          <Description>"Puntos Verdes ("alt + 6" = Maximo 999)"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>Float</VariableType>
+          <Address>pStamina</Address>
+          <Offsets>
+            <Offset>74</Offset>
+          </Offsets>
+          <Hotkeys>
+            <Hotkey>
+              <Action>Set Value</Action>
+              <Keys>
+                <Key>18</Key>
+                <Key>54</Key>
+              </Keys>
+              <Value>999</Value>
+              <ID>0</ID>
+              <ActivateSound>Activate</ActivateSound>
+            </Hotkey>
+          </Hotkeys>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>1085</ID>
+          <Description>"Puntos Azules ("alt + 6" = Maximo 999)"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>Float</VariableType>
+          <Address>pStamina</Address>
+          <Offsets>
+            <Offset>14C</Offset>
+          </Offsets>
+          <Hotkeys>
+            <Hotkey>
+              <Action>Set Value</Action>
+              <Keys>
+                <Key>18</Key>
+                <Key>54</Key>
+              </Keys>
+              <Value>999</Value>
+              <ID>0</ID>
+              <ActivateSound>Activate</ActivateSound>
+            </Hotkey>
+          </Hotkeys>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>12</ID>
+          <Description>"Velocidad(Bajar: "alt + 4", Subir "alt + 5")"</Description>
+          <VariableType>Float</VariableType>
+          <Address>pStamina</Address>
+          <Offsets>
+            <Offset>1c</Offset>
+          </Offsets>
+          <Hotkeys>
+            <Hotkey>
+              <Action>Decrease Value</Action>
+              <Keys>
+                <Key>18</Key>
+                <Key>52</Key>
+              </Keys>
+              <Value>2</Value>
+              <ID>0</ID>
+              <ActivateSound>Deactivate</ActivateSound>
+            </Hotkey>
+            <Hotkey>
+              <Action>Increase Value</Action>
+              <Keys>
+                <Key>18</Key>
+                <Key>53</Key>
+              </Keys>
+              <Value>2</Value>
+              <ID>1</ID>
+              <ActivateSound>Activate</ActivateSound>
+            </Hotkey>
+          </Hotkeys>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>24</ID>
+      <Description>"Script de personaje (camina un poco)"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscan(AOB_Character,D9 40 10 D9 5D FC) // should be unique
+alloc(newmem,$1000)
+alloc(pCharacter,4)
+
+label(newCharacter)
+label(codeCharacter)
+label(returnCharacter)
+
+registersymbol(AOB_Character)
+registersymbol(pCharacter)
+
+newmem:
+
+newCharacter:
+  mov [pCharacter],eax
+  jmp codeCharacter
+codeCharacter:
+  fld dword ptr [eax+10]
+  fstp dword ptr [ebp-04]
+  jmp returnCharacter
+
+AOB_Character:
+  jmp newCharacter
+  nop
+returnCharacter:
+
+
+[DISABLE]
+AOB_Character:
+  db D9 40 10 D9 5D FC
+
+unregistersymbol(AOB_Character)
+unregistersymbol(pCharacter)
+dealloc(pCharacter)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: 0131BF27
+
+""+131BF0F: 8B 7D 08              -  mov edi,[ebp+08]
+""+131BF12: 8B 47 0C              -  mov eax,[edi+0C]
+""+131BF15: 8B C8                 -  mov ecx,eax
+""+131BF17: 39 09                 -  cmp [ecx],ecx
+""+131BF19: 8B 40 50              -  mov eax,[eax+50]
+""+131BF1C: 8B C8                 -  mov ecx,eax
+""+131BF1E: 39 09                 -  cmp [ecx],ecx
+""+131BF20: 8B 40 24              -  mov eax,[eax+24]
+""+131BF23: 8B C8                 -  mov ecx,eax
+""+131BF25: 39 09                 -  cmp [ecx],ecx
+// ---------- INJECTING HERE ----------
+""+131BF27: D9 40 10              -  fld dword ptr [eax+10]
+""+131BF2A: D9 5D F8              -  fstp dword ptr [ebp-08]
+// ---------- DONE INJECTING  ----------
+""+131BF2D: D9 45 F8              -  fld dword ptr [ebp-08]
+""+131BF30: D9 5D F8              -  fstp dword ptr [ebp-08]
+""+131BF33: D9 45 F8              -  fld dword ptr [ebp-08]
+""+131BF36: D9 5D F8              -  fstp dword ptr [ebp-08]
+""+131BF39: D9 45 F8              -  fld dword ptr [ebp-08]
+""+131BF3C: D9 EE                 -  fldz
+""+131BF3E: DF F1                 -  fcomip st(0),st(1)
+""+131BF40: DD D8                 -  fstp st(0)
+""+131BF42: 7A 0B                 -  jp 0131BF4F
+""+131BF44: 73 09                 -  jae 0131BF4F
+}
+</AssemblerScript>
+      <Hotkeys>
+        <Hotkey>
+          <Action>Toggle Activation</Action>
+          <Keys>
+            <Key>119</Key>
+          </Keys>
+          <ID>0</ID>
+        </Hotkey>
+      </Hotkeys>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>25</ID>
+          <Description>"pCharacter"</Description>
+          <ShowAsHex>1</ShowAsHex>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>pCharacter</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>26</ID>
+          <Description>"Salud ( "alt + 2" = Full Salud)"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>Float</VariableType>
+          <Address>pCharacter</Address>
+          <Offsets>
+            <Offset>10</Offset>
+          </Offsets>
+          <Hotkeys>
+            <Hotkey>
+              <Action>Set Value</Action>
+              <Keys>
+                <Key>18</Key>
+                <Key>50</Key>
+              </Keys>
+              <Value>100</Value>
+              <ID>0</ID>
+              <ActivateSound>Activate</ActivateSound>
+            </Hotkey>
+          </Hotkeys>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>29</ID>
+          <Description>"Dinero (Aumentar en 1000 : "alt + 3")"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>Float</VariableType>
+          <Address>pCharacter</Address>
+          <Offsets>
+            <Offset>18</Offset>
+          </Offsets>
+          <Hotkeys>
+            <Hotkey>
+              <Action>Increase Value</Action>
+              <Keys>
+                <Key>18</Key>
+                <Key>51</Key>
+              </Keys>
+              <Value>1000</Value>
+              <ID>0</ID>
+              <ActivateSound>Activate</ActivateSound>
+            </Hotkey>
+          </Hotkeys>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1097</ID>
+      <Description>"Multiplicador de velocidad trabajo(Realiza un trabajo)"</Description>
+      <Color>008000</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+
+aobscan(AOB_Work_mult,D9 80 A0 00 00 00 DE C9 D9 5D) // should be unique
+alloc(newmem_work,$1000)
+
+label(code_work)
+label(return_work)
+
+registersymbol(workspeed)
+registersymbol(AOB_Work_mult)
+
+newmem_work:
+
+code_work:
+  fld dword ptr [eax+000000A0]
+  fmul dword ptr [workspeed]
+  jmp return_work
+
+workspeed:
+  dd (float)2.0
+
+AOB_Work_mult:
+  jmp newmem_work
+  nop
+return_work:
+
+
+[DISABLE]
+
+AOB_Work_mult:
+  db D9 80 A0 00 00 00
+
+unregistersymbol(AOB_Work_mult)
+unregistersymbol(workspeed)
+dealloc(newmem_work)
+
+{
+// ORIGINAL CODE - INJECTION POINT: 00EF7AFF
+
+""+EF7AE2: 75 07                    -  jne HPActionComponent:DoAction+83
+""+EF7AE4: 33 C0                    -  xor eax,eax
+""+EF7AE6: E9 DA 02 00 00           -  jmp HPActionComponent:DoAction+35d
+""+EF7AEB: D9 45 D4                 -  fld dword ptr [ebp-2C]
+""+EF7AEE: DD 5D C0                 -  fstp qword ptr [ebp-40]
+""+EF7AF1: 89 3C 24                 -  mov [esp],edi
+""+EF7AF4: 39 3F                    -  cmp [edi],edi
+""+EF7AF6: 90                       -  nop 
+""+EF7AF7: E8 D4 65 D8 13           -  call Item:get_definition
+""+EF7AFC: DD 45 C0                 -  fld qword ptr [ebp-40]
+// ---------- INJECTING HERE ----------
+""+EF7AFF: D9 80 A0 00 00 00        -  fld dword ptr [eax+000000A0]
+// ---------- DONE INJECTING  ----------
+""+EF7B05: DE C9                    -  fmulp st(1),st(0)
+""+EF7B07: D9 5D D4                 -  fstp dword ptr [ebp-2C]
+""+EF7B0A: 89 34 24                 -  mov [esp],esi
+""+EF7B0D: 8B C0                    -  mov eax,eax
+""+EF7B0F: E8 AC C4 D7 13           -  call WorldGameObjectComponentBase:get_components
+""+EF7B14: 89 04 24                 -  mov [esp],eax
+""+EF7B17: 39 00                    -  cmp [eax],eax
+""+EF7B19: 8B C0                    -  mov eax,eax
+""+EF7B1B: E8 C0 C4 D7 13           -  call ComponentsManager:get_craft
+""+EF7B20: 8B D8                    -  mov ebx,eax
+}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>1098</ID>
+          <Description>"Multiplicador"</Description>
+          <Color>A00000</Color>
+          <VariableType>Float</VariableType>
+          <Address>workspeed</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1095</ID>
+      <Description>"Multiplicador de velocidad de crafteo (Realiza un crafteo)"</Description>
+      <Color>008000</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+
+aobscan(INJECT3,8B 45 0C D9 18 B8 01 00 00 00 8D 65 FC 8D 65 FC) // should be unique
+alloc(newmem3,$1000)
+
+label(code3)
+label(return3)
+label(craftspeed)
+
+registersymbol(craftspeed)
+
+newmem3:
+
+code3:
+  fld [craftspeed]
+  fmulp
+
+  mov eax,[ebp+0C]
+  fstp dword ptr [eax]
+  jmp return3
+
+craftspeed:
+ dd (float)2.0
+
+INJECT3:
+  jmp newmem3
+return3:
+registersymbol(INJECT3)
+
+[DISABLE]
+
+INJECT3:
+  db 8B 45 0C D9 18
+
+unregistersymbol(INJECT3)
+unregistersymbol(craftspeed)
+dealloc(newmem3)
+
+{
+// ORIGINAL CODE - INJECTION POINT: 3C2A96E7
+
+CraftComponent:GetCraftCoeffForPlayer+98 - 8B 45 0C              - mov eax,[ebp+0C]
+CraftComponent:GetCraftCoeffForPlayer+9b - D9 00                 - fld dword ptr [eax]
+CraftComponent:GetCraftCoeffForPlayer+9d - DD 5D E8              - fstp qword ptr [ebp-18]
+CraftComponent:GetCraftCoeffForPlayer+a0 - 89 3C 24              - mov [esp],edi
+CraftComponent:GetCraftCoeffForPlayer+a3 - 39 3F                 - cmp [edi],edi
+CraftComponent:GetCraftCoeffForPlayer+a5 - 8B C0                 - mov eax,eax
+CraftComponent:GetCraftCoeffForPlayer+a7 - E8 0C4A27EF           - call Item:get_definition
+CraftComponent:GetCraftCoeffForPlayer+ac - DD 45 E8              - fld qword ptr [ebp-18]
+CraftComponent:GetCraftCoeffForPlayer+af - D9 80 90000000        - fld dword ptr [eax+00000094]
+CraftComponent:GetCraftCoeffForPlayer+b5 - DEC9                  - fmulp st(1),st(0)
+// ---------- INJECTING HERE ----------
+CraftComponent:GetCraftCoeffForPlayer+b7 - 8B 45 0C              - mov eax,[ebp+0C]
+CraftComponent:GetCraftCoeffForPlayer+ba - D9 18                 - fstp dword ptr [eax]
+// ---------- DONE INJECTING  ----------
+CraftComponent:GetCraftCoeffForPlayer+bc - B8 01000000           - mov eax,00000001
+CraftComponent:GetCraftCoeffForPlayer+c1 - 8D 65 FC              - lea esp,[ebp-04]
+CraftComponent:GetCraftCoeffForPlayer+c4 - 8D 65 FC              - lea esp,[ebp-04]
+CraftComponent:GetCraftCoeffForPlayer+c7 - 5F                    - pop edi
+CraftComponent:GetCraftCoeffForPlayer+c8 - C9                    - leave
+CraftComponent:GetCraftCoeffForPlayer+c9 - C3                    - ret
+3C2A96FA                                 - 00 00                 - add [eax],al
+3C2A96FC                                 - 00 00                 - add [eax],al
+3C2A96FE                                 - 00 00                 - add [eax],al
+CraftComponent:TrySpendPlayerEnergy      - 55                    - push ebp
+}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>1096</ID>
+          <Description>"Multiplicador"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <Color>A00000</Color>
+          <VariableType>Float</VariableType>
+          <Address>craftspeed</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>104991</ID>
+      <Description>"======================================"</Description>
+      <GroupHeader>1</GroupHeader>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+  <Comments>http://fearlessrevolution.com/viewtopic.php?f=4&amp;t=7095&amp;p=56709#p56709
+</Comments>
+</CheatTable>
