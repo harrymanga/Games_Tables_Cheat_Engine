@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="26">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>27</ID>
+      <Description>"Get Pointer to Item"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : Graveyard Keeper.exe
+  Version: 
+  Date   : 2018-06-02
+  Author : Las0mbra
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscan(Item,8B 40 30 85 C0 7E 31) // should be unique
+alloc(newmem,$1000)
+
+label(code)
+label(return)
+registersymbol(p_item)
+
+newmem:
+  mov [p_item],edi
+
+code:
+  mov eax,[eax+30]
+  test eax,eax
+  jmp return
+
+p_item:
+
+Item:
+  jmp newmem
+return:
+registersymbol(Item)
+
+[DISABLE]
+
+Item:
+  db 8B 40 30 85 C0
+
+unregistersymbol(Item)
+unregistersymbol(p_item)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: 3DD36562
+
+""+3DD36549: 00 00           -  add [eax],al
+""+3DD3654B: 00 68 30        -  add [eax+30],ch
+""+3DD3654E: DE 78 27        -  fdivr [eax+27]
+""+3DD36551: E9 D2 9A 62 C6  -  jmp 04360028
+""+3DD36556: 00 00           -  add [eax],al
+""+3DD36558: 55              -  push ebp
+""+3DD36559: 8B EC           -  mov ebp,esp
+""+3DD3655B: 56              -  push esi
+""+3DD3655C: 83 EC 04        -  sub esp,04
+""+3DD3655F: 8B 45 08        -  mov eax,[ebp+08]
+// ---------- INJECTING HERE ----------
+""+3DD36562: 8B 40 30        -  mov eax,[eax+30]
+""+3DD36565: 85 C0           -  test eax,eax
+// ---------- DONE INJECTING  ----------
+""+3DD36567: 7E 31           -  jle 3DD3659A
+""+3DD36569: 8B 45 08        -  mov eax,[ebp+08]
+""+3DD3656C: 8B 40 08        -  mov eax,[eax+08]
+""+3DD3656F: 83 EC 0C        -  sub esp,0C
+""+3DD36572: 50              -  push eax
+""+3DD36573: E8 20 FF C2 C6  -  call 04966498
+""+3DD36578: 83 C4 10        -  add esp,10
+""+3DD3657B: 85 C0           -  test eax,eax
+""+3DD3657D: 75 1B           -  jne 3DD3659A
+""+3DD3657F: 8B 45 08        -  mov eax,[ebp+08]
+}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>26</ID>
+          <Description>"Item Count"</Description>
+          <LastState Value="1" RealAddress="91FB48F0"/>
+          <VariableType>4 Bytes</VariableType>
+          <Address>p_item</Address>
+          <Offsets>
+            <Offset>30</Offset>
+          </Offsets>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

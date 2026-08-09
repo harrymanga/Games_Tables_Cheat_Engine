@@ -1,0 +1,577 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="27">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>10</ID>
+      <Description>"Infinite Items"</Description>
+      <Options moHideChildren="1"/>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscan(infinitetp, 89 41 40 85 C0)
+label(_infinitetp)
+registersymbol(_infinitetp)
+
+infinitetp:
+_infinitetp:
+db 90 90 90
+
+[DISABLE]
+dealloc(newmem)
+_infinitetp:
+db 89 41 40
+unregistersymbol(_infinitetp)
+</AssemblerScript>
+      <Hotkeys>
+        <Hotkey>
+          <Action>Toggle Activation</Action>
+          <Keys>
+            <Key>123</Key>
+          </Keys>
+          <ID>0</ID>
+        </Hotkey>
+      </Hotkeys>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1069</ID>
+      <Description>"Infinite Durability"</Description>
+      <Options moHideChildren="1"/>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscan(maxDurability, 39 00 d9 45 fc d9 58 1c c9)
+registersymbol(maxDurability)
+
+maxDurability:
+db 39 00 d9 e8 90 d9 58 1c c9
+
+[DISABLE]
+maxDurability:
+db 39 00 d9 45 fc d9 58 1c c9
+unregistersymbol(maxDurability)
+</AssemblerScript>
+      <Hotkeys>
+        <Hotkey>
+          <Action>Toggle Activation</Action>
+          <Keys>
+            <Key>123</Key>
+          </Keys>
+          <ID>0</ID>
+        </Hotkey>
+      </Hotkeys>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>17</ID>
+      <Description>"Stamina Script (walk a little)"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscan(AOB_Stamina,D9 00 D9 5D E8 D9 45 E8 DD) // should be unique D9 18 8B 46 10 40 89 46 10 8D 65 FC  D9 18 8B 46 10
+alloc(newmem,$1000)
+alloc(pStamina,4)
+alloc(pStaminaIsSet,4)
+label(newStamina)
+label(codeStamina)
+label(returnStamina)
+
+registersymbol(AOB_Stamina)
+registersymbol(pStaminaIsSet)
+registersymbol(pStamina)
+
+newmem:
+
+newStamina:
+  cmp [pStaminaIsSet],1
+  je codeStamina
+  mov [pStamina],eax
+  jmp codeStamina
+codeStamina:
+  fld dword ptr [eax]
+  fstp dword ptr [ebp-18]
+  jmp returnStamina
+
+AOB_Stamina:
+  jmp newStamina
+returnStamina:
+
+
+[DISABLE]
+AOB_Stamina:
+  db D9 00 D9 5D E8
+
+unregistersymbol(AOB_Stamina)
+unregistersymbol(pStamina)
+unregistersymbol(pStaminaIsSet)
+dealloc(pStaminaIsSet)
+dealloc(pStamina)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: 0136BA5B
+
+""+136BA38: 89 04 24           -  mov [esp],eax
+""+136BA3B: E8 68 23 B1 FF     -  call 00E7DDA8
+""+136BA40: 8B 46 08           -  mov eax,[esi+08]
+""+136BA43: 8B 4E 0C           -  mov ecx,[esi+0C]
+""+136BA46: D9 EE              -  fldz 
+""+136BA48: D9 5D F4           -  fstp dword ptr [ebp-0C]
+""+136BA4B: D9 45 F4           -  fld dword ptr [ebp-0C]
+""+136BA4E: 39 48 0C           -  cmp [eax+0C],ecx
+""+136BA51: 0F 86 1F 00 00 00  -  jbe 0136BA76
+""+136BA57: 8D 44 88 10        -  lea eax,[eax+ecx*4+10]
+// ---------- INJECTING HERE ----------
+""+136BA5B: D9 18              -  fstp dword ptr [eax]
+""+136BA5D: 8B 46 10           -  mov eax,[esi+10]
+// ---------- DONE INJECTING  ----------
+""+136BA60: 40                 -  inc eax
+""+136BA61: 89 46 10           -  mov [esi+10],eax
+""+136BA64: 8D 65 F8           -  lea esp,[ebp-08]
+""+136BA67: 8D 65 F8           -  lea esp,[ebp-08]
+""+136BA6A: 5E                 -  pop esi
+""+136BA6B: 5F                 -  pop edi
+""+136BA6C: C9                 -  leave 
+""+136BA6D: C3                 -  ret 
+""+136BA6E: 90                 -  nop 
+""+136BA6F: E8 0C 25 09 10     -  call 113FDF80
+}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>19</ID>
+          <Description>"pStamina"</Description>
+          <LastState Value="47A401B0" RealAddress="09701000"/>
+          <ShowAsHex>1</ShowAsHex>
+          <VariableType>4 Bytes</VariableType>
+          <Address>pStamina</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>1090</ID>
+          <Description>"pStaminaIsSet"</Description>
+          <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">0:False
+1:True
+</DropDownList>
+          <LastState Value="1" RealAddress="09701004"/>
+          <VariableType>4 Bytes</VariableType>
+          <Address>pStaminaIsSet</Address>
+          <Hotkeys>
+            <Hotkey>
+              <Action>Set Value</Action>
+              <Keys>
+                <Key>115</Key>
+              </Keys>
+              <Value>1</Value>
+              <ID>0</ID>
+            </Hotkey>
+          </Hotkeys>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>20</ID>
+          <Description>"Inventory Size"</Description>
+          <LastState Value="200" RealAddress="47A40010"/>
+          <VariableType>Float</VariableType>
+          <Address>pStamina</Address>
+          <Offsets>
+            <Offset>-1A0</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>1071</ID>
+          <Description>"Sanity"</Description>
+          <LastState Value="100" RealAddress="47A40014"/>
+          <VariableType>Float</VariableType>
+          <Address>pStamina</Address>
+          <Offsets>
+            <Offset>-19C</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>1070</ID>
+          <Description>"Stamina"</Description>
+          <LastState Value="100" RealAddress="47A40018"/>
+          <VariableType>Float</VariableType>
+          <Address>pStamina</Address>
+          <Offsets>
+            <Offset>-198</Offset>
+          </Offsets>
+          <Hotkeys>
+            <Hotkey>
+              <Action>Set Value</Action>
+              <Keys>
+                <Key>114</Key>
+              </Keys>
+              <Value>100</Value>
+              <ID>0</ID>
+            </Hotkey>
+          </Hotkeys>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>1066</ID>
+          <Description>"Tiredness"</Description>
+          <LastState Value="0" RealAddress="47A4005C"/>
+          <VariableType>Float</VariableType>
+          <Address>pStamina</Address>
+          <Offsets>
+            <Offset>-154</Offset>
+          </Offsets>
+          <Hotkeys>
+            <Hotkey>
+              <Action>Set Value</Action>
+              <Keys>
+                <Key>114</Key>
+              </Keys>
+              <Value>0</Value>
+              <ID>0</ID>
+            </Hotkey>
+          </Hotkeys>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>1077</ID>
+          <Description>"Sloth"</Description>
+          <LastState Value="250" RealAddress="47A4001C"/>
+          <VariableType>Float</VariableType>
+          <Address>pStamina</Address>
+          <Offsets>
+            <Offset>-194</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>1078</ID>
+          <Description>"Wrath"</Description>
+          <LastState Value="250" RealAddress="47A40020"/>
+          <VariableType>Float</VariableType>
+          <Address>pStamina</Address>
+          <Offsets>
+            <Offset>-190</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>1079</ID>
+          <Description>"Envy"</Description>
+          <LastState Value="250" RealAddress="47A40024"/>
+          <VariableType>Float</VariableType>
+          <Address>pStamina</Address>
+          <Offsets>
+            <Offset>-18C</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>1080</ID>
+          <Description>"Glut"</Description>
+          <LastState Value="250" RealAddress="47A40028"/>
+          <VariableType>Float</VariableType>
+          <Address>pStamina</Address>
+          <Offsets>
+            <Offset>-188</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>1081</ID>
+          <Description>"Lust"</Description>
+          <LastState Value="250" RealAddress="47A4002C"/>
+          <VariableType>Float</VariableType>
+          <Address>pStamina</Address>
+          <Offsets>
+            <Offset>-184</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>1082</ID>
+          <Description>"Pride"</Description>
+          <LastState Value="250" RealAddress="47A40030"/>
+          <VariableType>Float</VariableType>
+          <Address>pStamina</Address>
+          <Offsets>
+            <Offset>-180</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>1083</ID>
+          <Description>"Speed"</Description>
+          <LastState Value="5" RealAddress="47A40034"/>
+          <VariableType>Float</VariableType>
+          <Address>pStamina</Address>
+          <Offsets>
+            <Offset>-17C</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>1086</ID>
+          <Description>"Bodies Count"</Description>
+          <LastState Value="0" RealAddress="47A40070"/>
+          <VariableType>Float</VariableType>
+          <Address>pStamina</Address>
+          <Offsets>
+            <Offset>-140</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>1089</ID>
+          <Description>"Green Points"</Description>
+          <LastState Value="9695" RealAddress="47A4008C"/>
+          <VariableType>Float</VariableType>
+          <Address>pStamina</Address>
+          <Offsets>
+            <Offset>-124</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>1064</ID>
+          <Description>"Red Points"</Description>
+          <LastState Value="10218" RealAddress="47A40110"/>
+          <VariableType>Float</VariableType>
+          <Address>pStamina</Address>
+          <Offsets>
+            <Offset>-A0</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>1085</ID>
+          <Description>"Blue Points"</Description>
+          <LastState Value="9929" RealAddress="47A401B0"/>
+          <VariableType>Float</VariableType>
+          <Address>pStamina</Address>
+          <Offsets>
+            <Offset>0</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>1057</ID>
+          <Description>"Give 100% stamina"</Description>
+          <LastState/>
+          <Color>FF00FF</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+{$lua}
+local pointer = readQword( "pStamina" )
+if ( ( pointer == nil ) or ( pointer == 0 ) ) then
+  showMessage("Stamina pointer not loaded...")
+  error()
+end
+--print( string.format( "pointer: %X8", pointer ) )
+local offset = 0x198
+writeFloat(pointer-offset,100)
+{$asm}
+[DISABLE]
+
+</AssemblerScript>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>24</ID>
+      <Description>"Character Script (walk a little)"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscan(AOB_Character,D9 40 10 D9 5D FC) // should be unique
+alloc(newmem,$1000)
+alloc(pCharacter,4)
+
+label(newCharacter)
+label(codeCharacter)
+label(returnCharacter)
+
+registersymbol(AOB_Character)
+registersymbol(pCharacter)
+
+newmem:
+
+newCharacter:
+  mov [pCharacter],eax
+  jmp codeCharacter
+codeCharacter:
+  fld dword ptr [eax+10]
+  fstp dword ptr [ebp-04]
+  jmp returnCharacter
+
+AOB_Character:
+  jmp newCharacter
+  nop
+returnCharacter:
+
+
+[DISABLE]
+AOB_Character:
+  db D9 40 10 D9 5D FC
+
+unregistersymbol(AOB_Character)
+unregistersymbol(pCharacter)
+dealloc(pCharacter)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: 0131BF27
+
+""+131BF0F: 8B 7D 08              -  mov edi,[ebp+08]
+""+131BF12: 8B 47 0C              -  mov eax,[edi+0C]
+""+131BF15: 8B C8                 -  mov ecx,eax
+""+131BF17: 39 09                 -  cmp [ecx],ecx
+""+131BF19: 8B 40 50              -  mov eax,[eax+50]
+""+131BF1C: 8B C8                 -  mov ecx,eax
+""+131BF1E: 39 09                 -  cmp [ecx],ecx
+""+131BF20: 8B 40 24              -  mov eax,[eax+24]
+""+131BF23: 8B C8                 -  mov ecx,eax
+""+131BF25: 39 09                 -  cmp [ecx],ecx
+// ---------- INJECTING HERE ----------
+""+131BF27: D9 40 10              -  fld dword ptr [eax+10]
+""+131BF2A: D9 5D F8              -  fstp dword ptr [ebp-08]
+// ---------- DONE INJECTING  ----------
+""+131BF2D: D9 45 F8              -  fld dword ptr [ebp-08]
+""+131BF30: D9 5D F8              -  fstp dword ptr [ebp-08]
+""+131BF33: D9 45 F8              -  fld dword ptr [ebp-08]
+""+131BF36: D9 5D F8              -  fstp dword ptr [ebp-08]
+""+131BF39: D9 45 F8              -  fld dword ptr [ebp-08]
+""+131BF3C: D9 EE                 -  fldz
+""+131BF3E: DF F1                 -  fcomip st(0),st(1)
+""+131BF40: DD D8                 -  fstp st(0)
+""+131BF42: 7A 0B                 -  jp 0131BF4F
+""+131BF44: 73 09                 -  jae 0131BF4F
+}
+</AssemblerScript>
+      <Hotkeys>
+        <Hotkey>
+          <Action>Toggle Activation</Action>
+          <Keys>
+            <Key>119</Key>
+          </Keys>
+          <ID>0</ID>
+        </Hotkey>
+      </Hotkeys>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>25</ID>
+          <Description>"pCharacter"</Description>
+          <ShowAsHex>1</ShowAsHex>
+          <VariableType>4 Bytes</VariableType>
+          <Address>pCharacter</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>26</ID>
+          <Description>"Health"</Description>
+          <VariableType>Float</VariableType>
+          <Address>pCharacter</Address>
+          <Offsets>
+            <Offset>10</Offset>
+          </Offsets>
+          <Hotkeys>
+            <Hotkey>
+              <Action>Set Value</Action>
+              <Keys>
+                <Key>114</Key>
+              </Keys>
+              <Value>100</Value>
+              <ID>0</ID>
+            </Hotkey>
+          </Hotkeys>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>29</ID>
+          <Description>"Money"</Description>
+          <VariableType>Float</VariableType>
+          <Address>pCharacter</Address>
+          <Offsets>
+            <Offset>18</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>1058</ID>
+          <Description>"Give 100% health"</Description>
+          <LastState/>
+          <Color>FF00FF</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+{$lua}
+local pointer = readQword( "pCharacter" )
+if ( ( pointer == nil ) or ( pointer == 0 ) ) then
+  showMessage("Health pointer not loaded...")
+  error()
+end
+--print( string.format( "pointer: %X8", pointer ) )
+local offset = 0x10
+writeFloat(pointer+offset,100)
+{$asm}
+[DISABLE]
+
+</AssemblerScript>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <CheatCodes>
+    <CodeEntry>
+      <Description>Infinite Items</Description>
+      <Address>00B56CD3</Address>
+      <ModuleName/>
+      <ModuleNameOffset>0</ModuleNameOffset>
+      <Before>
+        <Byte>8B</Byte>
+        <Byte>41</Byte>
+        <Byte>40</Byte>
+        <Byte>2B</Byte>
+        <Byte>C6</Byte>
+      </Before>
+      <Actual>
+        <Byte>89</Byte>
+        <Byte>41</Byte>
+        <Byte>40</Byte>
+      </Actual>
+      <After>
+        <Byte>85</Byte>
+        <Byte>C0</Byte>
+        <Byte>7F</Byte>
+        <Byte>28</Byte>
+        <Byte>8B</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry>
+      <Description>Infinite Items Trade</Description>
+      <Address>00B56CD3</Address>
+      <ModuleName/>
+      <ModuleNameOffset>0</ModuleNameOffset>
+      <Before>
+        <Byte>8B</Byte>
+        <Byte>41</Byte>
+        <Byte>40</Byte>
+        <Byte>2B</Byte>
+        <Byte>C6</Byte>
+      </Before>
+      <Actual>
+        <Byte>89</Byte>
+        <Byte>41</Byte>
+        <Byte>40</Byte>
+      </Actual>
+      <After>
+        <Byte>85</Byte>
+        <Byte>C0</Byte>
+        <Byte>7F</Byte>
+        <Byte>28</Byte>
+        <Byte>8B</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry>
+      <Description>Infinite Karma</Description>
+      <Address>1B47A108</Address>
+      <ModuleName/>
+      <ModuleNameOffset>0</ModuleNameOffset>
+      <Before>
+        <Byte>00</Byte>
+        <Byte>8D</Byte>
+        <Byte>44</Byte>
+        <Byte>88</Byte>
+        <Byte>10</Byte>
+      </Before>
+      <Actual>
+        <Byte>D9</Byte>
+        <Byte>18</Byte>
+      </Actual>
+      <After>
+        <Byte>8B</Byte>
+        <Byte>46</Byte>
+        <Byte>10</Byte>
+        <Byte>40</Byte>
+        <Byte>89</Byte>
+      </After>
+    </CodeEntry>
+  </CheatCodes>
+  <UserdefinedSymbols/>
+</CheatTable>
